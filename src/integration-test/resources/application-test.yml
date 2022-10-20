@@ -1,0 +1,5 @@
+grails:
+  controllers:
+    upload:
+      maxFileSize: 524288
+      maxRequestSize: 1048576

@@ -1,0 +1,8 @@
+.gradle
+.idea
+build
+.DS_Store
+*.iml
+node_modules
+src/main/resources/public/dist
+src/main/webapp/users

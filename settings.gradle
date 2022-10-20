@@ -1,0 +1,8 @@
+rootProject.name = 'pingcrm-grails'
+
+// This is used for testing with local copy of the Grails Inertia Plugin
+// Also see section in build.gradle
+/*
+include 'grails-inertia-plugin'
+project(':grails-inertia-plugin').projectDir = "${System.getProperty('user.home')}/Projects/grails-plugins/grails-inertia" as File
+*/

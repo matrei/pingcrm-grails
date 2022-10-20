@@ -1,0 +1,10 @@
+{
+  "include": ["./src/main/javascript/**/*"],
+  "compilerOptions": {
+    "baseUrl": "src/main/javascript",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
