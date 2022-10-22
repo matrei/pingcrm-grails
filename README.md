@@ -8,7 +8,7 @@ It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-ine
 > There is a hosted installation of this demo application available at:\
 > https://pingcrm.mattiasreichel.com
 > 
-> The demo is restarted and the database is wiped and reseeded every hour.\
+> The demo is running in a container that is recreated and the database is wiped and reseeded every hour.\
 >**Please be respectful when editing data**.
 
 ## Requirements
@@ -27,7 +27,7 @@ me@my:~/pingcrm-grails$ npm install
 ```
 ## Running
 ### In development mode ...
-Serve client files with hot module reloading
+Serve client files with [hot module replacement](https://vitejs.dev/guide/features.html#hot-module-replacement)
 ```shell
 me@my:~/pingcrm-grails$ npm run serve
 ```
@@ -36,7 +36,7 @@ and start the grails application
 me@my:~/pingcrm-grails$ ./gradlew bootRun
 ```
 ###  ... or in production mode
-with minified client files
+with bundled/minified client files
 ```shell
 me@my:~/pingcrm-grails$ ./gradlew -Dgrails.env=production bootRun
 ```
@@ -51,9 +51,13 @@ me@my:~/pingcrm-grails$ ./gradlew check
 ```
 
 ## Build for production
-Compiles and minifies and creates a runnable jar for production (in build/libs)
+To create a runnable war for production (in `~/pingcrm-grails/build/libs`)
 ```shell
 me@my:~/pingcrm-grails$ ./gradlew assemble
+```
+that can be run with:
+```shell
+me@my:~/pingcrm-grails$ java -jar build/libs/pingcrm-grails-1.0.0-SNAPSHOT.war
 ```
 
 ## Credits
