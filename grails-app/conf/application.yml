@@ -169,3 +169,6 @@ server:
         session:
             cookie:
                 same-site: Lax
+    forward-headers-strategy: NATIVE
+    tomcat:
+        redirect-context-root: false
