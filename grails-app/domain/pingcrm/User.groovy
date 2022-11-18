@@ -54,6 +54,6 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     }
 
     String getName() { "$firstName $lastName" }
-    String getPhoto() { photoPath }
+    String getPhoto() { photoPath?.replaceAll '\\\\', '/' }
     boolean isOwner() { owner.booleanValue() }
 }
