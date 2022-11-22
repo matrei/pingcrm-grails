@@ -12,11 +12,11 @@ import org.grails.datastore.gorm.GormEntity
 abstract class DomainService<D extends LogicalDelete> {
 
     /**
-     * Returns the domain object with the id (exluding soft deleted)
+     * Returns the domain object with the id (including or excluding soft deleted)
      */
     abstract D get(Serializable id, boolean includeDeleted)
     /**
-     * Returns the domain object with the id (including soft deleted)
+     * Returns a list of domain objects (including soft deleted)
      */
     abstract List<D> list(Paginator paginator, Map filters)
     abstract int count(Map filters)
