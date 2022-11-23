@@ -3,12 +3,13 @@ package pingcrm.controller
 
 import gorm.logical.delete.LogicalDelete
 import grails.gorm.PagedResultList
+import groovy.transform.CompileStatic
 import pingcrm.AppService
 import pingcrm.Paginator
 import pingcrm.PublicData
 import pingcrm.ValidationMessageRenderer
 
-// @CompileStatic - Does not work after upgrade to Groovy 3.0.11
+@CompileStatic
 abstract class AppController<D extends LogicalDelete & PublicData> implements ValidationMessageRenderer {
 
     private static final String ATTRIBUTE_KEY_MODEL = 'demo.controller.INERTIA_MODEL'

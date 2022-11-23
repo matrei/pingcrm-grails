@@ -23,7 +23,7 @@ class AppService {
         }
     }
 
-    public <D extends PublicData> List<D> list(Class<D> domainClass, Paginator paginator, Map filters) {
+    public <D extends LogicalDelete<?> & PublicData> List<D> list(Class<D> domainClass, Paginator paginator, Map filters) {
         getDomainService(domainClass).list(paginator, filters) as List<D>
     }
 
