@@ -12,7 +12,7 @@ import pingcrm.ValidationMessageRenderer
 @CompileStatic
 abstract class AppController<D extends LogicalDelete & PublicData> implements ValidationMessageRenderer {
 
-    private static final String ATTRIBUTE_KEY_MODEL = 'demo.controller.INERTIA_MODEL'
+    private static final String ATTRIBUTE_KEY_MODEL = 'pingcrm.controller.INERTIA_MODEL'
 
     static allowedMethods = [
         index: 'GET',
