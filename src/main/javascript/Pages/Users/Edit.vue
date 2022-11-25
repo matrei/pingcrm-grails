@@ -6,8 +6,7 @@ export default { layout }
 <script setup>
 
 import {computed, watch} from 'vue'
-import { Inertia } from '@inertiajs/inertia'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import TextInput from '@/Shared/TextInput.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
@@ -48,13 +47,13 @@ const update = () => {
 
 const destroy = () => {
   if (confirm('Are you sure you want to delete this user?')) {
-    Inertia.delete(`/users/${props.user.id}`)
+    router.delete(`/users/${props.user.id}`)
   }
 }
 
 const restore = () => {
   if (confirm('Are you sure you want to restore this user?')) {
-    Inertia.put(`/users/${props.user.id}/restore`)
+    router.put(`/users/${props.user.id}/restore`)
   }
 }
 

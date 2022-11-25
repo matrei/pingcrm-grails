@@ -5,8 +5,7 @@ export default { layout }
 
 <script setup>
 
-import { Inertia } from '@inertiajs/inertia'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
@@ -34,13 +33,13 @@ const update = () => form.put(`/contacts/${props.contact.id}`)
 
 const destroy = () => {
   if (confirm('Are you sure you want to delete this contact?')) {
-    Inertia.delete(`/contacts/${props.contact.id}`)
+    router.delete(`/contacts/${props.contact.id}`)
   }
 }
 
 const restore = () => {
   if (confirm('Are you sure you want to restore this contact?')) {
-    Inertia.put(`/contacts/${props.contact.id}/restore`)
+    router.put(`/contacts/${props.contact.id}/restore`)
   }
 }
 

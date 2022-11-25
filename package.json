@@ -7,9 +7,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@inertiajs/inertia": "^0.11.1",
-    "@inertiajs/inertia-vue3": "^0.6.0",
-    "@inertiajs/progress": "^0.2.7",
+    "@inertiajs/vue3": "^1.0.0-beta.2",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "vue": "^3.2.45"

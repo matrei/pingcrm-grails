@@ -1,10 +1,7 @@
 import { createApp, h } from 'vue'
-import { createInertiaApp, Link, Head } from '@inertiajs/inertia-vue3'
-import { InertiaProgress } from '@inertiajs/progress'
+import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 
 import '@/Styles/index.pcss'
-
-InertiaProgress.init()
 
 const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
 

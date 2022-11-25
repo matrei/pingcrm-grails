@@ -5,8 +5,7 @@ export default { layout }
 
 <script setup>
 
-import { Inertia } from '@inertiajs/inertia'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import Icon from '@/Shared/Icon.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
@@ -30,13 +29,13 @@ const update = () => form.put(`/organizations/${props.organization.id}`)
 
 const destroy = () => {
   if (confirm('Are you sure you want to delete this organization?')) {
-    Inertia.delete(`/organizations/${props.organization.id}`)
+    router.delete(`/organizations/${props.organization.id}`)
   }
 }
 
 const restore = () => {
   if (confirm('Are you sure you want to restore this organization?')) {
-    Inertia.put(`/organizations/${props.organization.id}/restore`)
+    router.put(`/organizations/${props.organization.id}/restore`)
   }
 }
 

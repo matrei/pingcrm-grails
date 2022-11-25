@@ -6,7 +6,7 @@ export default { layout }
 <script setup>
 
 import { reactive, watch } from 'vue'
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import pickBy from 'lodash/pickBy'
 import throttle from 'lodash/throttle'
 import Icon from '@/Shared/Icon.vue'
@@ -26,7 +26,7 @@ const form = reactive({
 watch(
     form,
     throttle(function () {
-      Inertia.get('/organizations', pickBy(form), { preserveState: true })
+      router.get('/organizations', pickBy(form), { preserveState: true })
     }, 150),
     {deep: true}
 )
