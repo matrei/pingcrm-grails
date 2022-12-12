@@ -125,7 +125,7 @@ webdriverBinaries {
             version = '2.45.0'
             fallbackTo32Bit = true
         }
-        geckodriver '0.31.0'
+        geckodriver '0.32.0'
     }
 }
 
