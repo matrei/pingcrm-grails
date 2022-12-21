@@ -1,31 +1,38 @@
 package pingcrm.controller
 
 import grails.plugin.springsecurity.annotation.Secured
-import grails.util.Environment
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Value
+import jakarta.inject.Inject
+import pingcrm.config.AppInfo
+import pingcrm.config.GrailsInfo
 
 @CompileStatic
 @Secured('IS_AUTHENTICATED_REMEMBERED')
 class AboutController {
 
-    @Value('${info.app.name}') String name
-    @Value('${info.app.version}') String version
-    @Value('${info.app.grailsVersion}') String grailsVersion
-    String environment
+    private final AppInfo appInfo
+    private final GrailsInfo grailsInfo
+    private final String groovyVersion
+    private final String javaVersion
 
-    AboutController() {
-        this.environment = Environment.current.name
+    @Inject
+    AboutController(AppInfo appInfo, GrailsInfo grailsInfo) {
+        this.appInfo = appInfo
+        this.grailsInfo = grailsInfo
+        this.groovyVersion = GroovySystem.version
+        this.javaVersion = System.getProperty 'java.version'
     }
 
     def index() {
-        def appInfo = [
-            name: name,
-            version: version,
-            grailsVersion: grailsVersion,
-            environment: environment
+        def info = [
+            name: appInfo.name,
+            version: appInfo.version,
+            grailsVersion: appInfo.grailsVersion,
+            grailsProfile: grailsInfo.profile,
+            grailsEnvironment: grailsInfo.env,
+            groovyVersion: groovyVersion,
+            javaVersion: javaVersion
         ]
-        renderInertia 'About/Index', [appInfo: appInfo]
+        renderInertia 'About/Index', [info: info]
     }
-
 }

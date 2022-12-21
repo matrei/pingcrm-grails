@@ -5,7 +5,7 @@ export default { layout }
 
 <script setup>
 const props = defineProps({
-  appInfo: Object,
+  info: Object,
 })
 </script>
 
@@ -13,10 +13,13 @@ const props = defineProps({
   <inertia-head title="About" />
   <h1 class="mb-8 font-bold text-3xl">About</h1>
   <ul>
-    <li><strong>Name:</strong> {{ appInfo['name'] }}</li>
-    <li><strong>Version:</strong> {{ appInfo['version'] }}</li>
-    <li><strong>Grails version:</strong> {{ appInfo['grailsVersion'] }}</li>
-    <li><strong>Environment:</strong> {{ appInfo['environment'] }}</li>
+    <li><strong>App name:</strong> {{ info['name'] }}</li>
+    <li><strong>App version:</strong> {{ info['version'] }}</li>
+    <li><strong>Grails profile:</strong> {{ info['grailsProfile'] }}</li>
+    <li><strong>Grails env:</strong> {{ info['grailsEnvironment'] }}</li>
+    <li><strong>Grails version:</strong> {{ info['grailsVersion'] }}</li>
+    <li><strong>Groovy version:</strong> {{ info['groovyVersion'] }}</li>
+    <li><strong>Java version:</strong> {{ info['javaVersion'] }}</li>
   </ul>
 </template>
 
