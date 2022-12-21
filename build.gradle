@@ -73,7 +73,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:5.6.11.Final'
     implementation 'org.grails.plugins:events'
     implementation 'org.grails.plugins:gsp'
-    implementation 'io.github.matrei:grails-inertia-plugin:1.0.1'
+    implementation 'io.github.matrei:grails-inertia-plugin:1.0.2'
     implementation 'org.grails.plugins:spring-security-core:5.1.1'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
     implementation 'net.datafaker:datafaker:1.6.0'
