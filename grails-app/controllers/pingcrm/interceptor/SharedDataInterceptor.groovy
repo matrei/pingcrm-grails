@@ -5,8 +5,10 @@ import groovy.transform.CompileStatic
 import pingcrm.AppService
 
 /**
- * This interceptor helps us pass on data to the client side that we almost always want to send so we don't
- * have to do it manually everywhere. In this case we send details about the user (if logged in) and flash messages.
+ * This interceptor helps passing on data (in Inertia lingo 'shared data') to the client that is almost always
+ * needed so we don't have to do it manually in every controller.
+ *
+ * In this case we send details about the user (if logged in) and flash messages.
  */
 @CompileStatic
 class SharedDataInterceptor {
