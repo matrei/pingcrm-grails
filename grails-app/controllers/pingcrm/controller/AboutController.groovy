@@ -1,6 +1,7 @@
 package pingcrm.controller
 
 import grails.plugin.springsecurity.annotation.Secured
+import grails.util.Environment
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 import pingcrm.config.AppInfo
@@ -12,6 +13,7 @@ class AboutController {
 
     private final AppInfo appInfo
     private final GrailsInfo grailsInfo
+    private final String grailsEnvironment
     private final String groovyVersion
     private final String javaVersion
 
@@ -19,6 +21,7 @@ class AboutController {
     AboutController(AppInfo appInfo, GrailsInfo grailsInfo) {
         this.appInfo = appInfo
         this.grailsInfo = grailsInfo
+        this.grailsEnvironment = Environment.current.name
         this.groovyVersion = GroovySystem.version
         this.javaVersion = System.getProperty 'java.version'
     }
@@ -29,7 +32,7 @@ class AboutController {
             version: appInfo.version,
             grailsVersion: appInfo.grailsVersion,
             grailsProfile: grailsInfo.profile,
-            grailsEnvironment: grailsInfo.env,
+            grailsEnvironment: grailsEnvironment,
             groovyVersion: groovyVersion,
             javaVersion: javaVersion
         ]

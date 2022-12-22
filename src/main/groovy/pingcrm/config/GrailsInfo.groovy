@@ -6,6 +6,5 @@ import io.micronaut.context.annotation.ConfigurationProperties
 class GrailsInfo {
 
     String profile
-    String env
 
 }
