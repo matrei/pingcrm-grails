@@ -4,5 +4,5 @@ rootProject.name = 'pingcrm-grails'
 // Also see section in build.gradle
 /*
 include 'grails-inertia-plugin'
-project(':grails-inertia-plugin').projectDir = "${System.getProperty('user.home')}/Projects/grails-plugins/grails-inertia" as File
+project(':grails-inertia-plugin').projectDir = "${System.getProperty('user.home')}/Projects/grails-inertia-plugin" as File
 */
