@@ -1,16 +1,12 @@
 package pingcrm.pages
 
-import geb.Page
+class UserListPage extends BasePage {
 
-class UserListPage extends Page {
-
+    static heading = 'Users'
     static url = '/users'
-    static at = { waitFor { 'Users' == js.exec('return document.querySelector("h1").textContent') } }
 
     static content = {
         userLinks { $('table.w-full').find('a') }
-        flashError(required: false) { $('div.bg-red-400').text() }
-        flashSuccess(required: false) { $('div.bg-green-500').text() }
         avatarImages(required: false) { $('table.w-full').find('img.rounded-full') }
         firstAvatarImage(required: false) { avatarImages.firstElement() }
         firstAvatarImageSrc(required: false) { firstAvatarImage.getAttribute('src') }

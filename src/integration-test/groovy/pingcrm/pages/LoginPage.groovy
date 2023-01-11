@@ -1,15 +1,13 @@
 package pingcrm.pages
 
-import geb.Page
 import geb.module.Checkbox
 import geb.module.EmailInput
 import geb.module.PasswordInput
-import geb.module.TextInput
 
-class LoginPage extends Page {
+class LoginPage extends BasePage {
 
+    static heading = 'Welcome Back!'
     static url = '/login'
-    static at = { waitFor { 'Welcome Back!' == js.exec('return document.querySelector("h1").textContent') } }
 
     static content = {
         emailInput { $(type: 'email').module(EmailInput) }
