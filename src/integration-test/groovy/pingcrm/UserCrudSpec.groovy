@@ -12,8 +12,6 @@ import pingcrm.pages.UserListPage
 @Integration
 class UserCrudSpec extends GebSpec {
 
-    //def cleanupSpec() { browser.quit() }
-
     void 'the demo user can log in'() {
 
         when: 'the demo user tries to log in'
