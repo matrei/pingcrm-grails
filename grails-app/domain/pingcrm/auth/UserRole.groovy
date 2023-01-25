@@ -54,7 +54,7 @@ class UserRole implements Serializable {
 		criteriaFor(userId, roleId).count()
 	}
 
-	private static DetachedCriteria criteriaFor(Serializable userId, Serializable roleId) {
+	private static DetachedCriteria<UserRole> criteriaFor(Serializable userId, Serializable roleId) {
 
 		where {
 			user == User.load(userId) &&
