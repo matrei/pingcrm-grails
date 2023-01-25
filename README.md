@@ -12,7 +12,7 @@ It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-ine
 >**Please be respectful when editing data**.
 
 ## Requirements
-- Java 8+
+- Java 17+
 - Npm
 
 ## Installation
