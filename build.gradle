@@ -21,8 +21,8 @@ apply plugin: 'com.github.node-gradle.node'
 
 group 'io.github.matrei'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = JavaVersion.toVersion('17')
+targetCompatibility = JavaVersion.toVersion('17')
 
 repositories {
     mavenLocal()
@@ -81,7 +81,7 @@ dependencies {
     implementation 'org.grails.plugins:spring-security-core:5.2.0'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
     implementation 'net.datafaker:datafaker:1.6.0'
-    implementation 'com.github.bohnman:squiggly-filter-jackson:1.3.18'
+    implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.0'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
     implementation 'org.imgscalr:imgscalr-lib:4.2'
     profile 'org.grails.profiles:web'

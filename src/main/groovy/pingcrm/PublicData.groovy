@@ -1,8 +1,8 @@
 package pingcrm
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.bohnman.squiggly.context.provider.SquigglyFilterHolder
-import com.github.bohnman.squiggly.util.SquigglyUtils
+import dev.nicklasw.squiggly.context.provider.SquigglyFilterHolder
+import dev.nicklasw.squiggly.util.SquigglyUtils
 import grails.util.Holders
 import groovy.transform.CompileStatic
 
