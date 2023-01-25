@@ -48,6 +48,10 @@ grails {
 }
 */
 
+// Grails 5.2.5 uses Spring Boot 2.7.5 which pulls in Spring Security Core 5.7.4 (CVE issues prior to 5.7.5)
+// Also the Grails Spring Security Core Plugin 5.2.0 uses Spring Security Core 5.8.1
+ext['spring-security.version'] = '5.8.1'
+
 dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'io.micronaut:micronaut-inject-groovy'
