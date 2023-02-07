@@ -49,20 +49,24 @@ grails {
 }
 */
 
-// Grails 5.2.5 uses Spring Boot 2.7.5 which pulls in Spring Security Core 5.7.4 (CVE issues prior to 5.7.5)
+// Grails 5.3.0 declares to use Spring Boot 2.7.8 (but actually pulls in 2.7.5) which in turn
+// pulls in Spring Security Core 5.7.4 (CVE issues prior to 5.7.5)
 // Also the Grails Spring Security Core Plugin 5.2.0 uses Spring Security Core 5.8.1
 ext['spring-security.version'] = '5.8.1'
 
+// Spring Boot Starter Validation 2.7.8 pulls in snakeyml 1.30 which has several CVE issues
+ext['snakeyaml.version'] = '1.33'
+
 dependencies {
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     compileOnly 'io.micronaut:micronaut-inject-groovy'
     console 'org.grails:grails-console'
-    implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
     implementation 'org.grails:grails-core'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion"
     implementation 'org.grails:grails-web-boot'
     implementation 'org.grails:grails-logging'
     implementation 'org.grails:grails-plugin-rest'
@@ -81,7 +85,7 @@ dependencies {
     implementation 'io.github.matrei:grails-inertia-plugin:1.0.3'
     implementation 'org.grails.plugins:spring-security-core:5.2.0'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
-    implementation 'net.datafaker:datafaker:1.6.0'
+    implementation 'net.datafaker:datafaker:1.7.0'
     implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.0'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
     implementation 'org.imgscalr:imgscalr-lib:4.2'
