@@ -3,8 +3,10 @@ package pingcrm
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.nicklasw.squiggly.Squiggly
 import dev.nicklasw.squiggly.context.provider.ThreadLocalContextProvider
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.FactoryBean
 
+@CompileStatic
 class SquigglyObjectMapperFactory implements FactoryBean<ObjectMapper> {
 
     @Override

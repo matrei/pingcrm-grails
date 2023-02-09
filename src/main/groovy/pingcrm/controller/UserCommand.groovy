@@ -71,7 +71,7 @@ class UserCommand implements Validateable {
                 return true
             }
             catch(Exception e) {
-                log.info('Could not store photo', e)
+                log.info 'Could not store photo', e
                 return false
             }
         }

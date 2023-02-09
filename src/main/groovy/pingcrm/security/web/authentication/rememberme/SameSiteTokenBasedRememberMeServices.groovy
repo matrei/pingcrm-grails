@@ -1,5 +1,6 @@
 package pingcrm.security.web.authentication.rememberme
 
+import groovy.transform.CompileStatic
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseCookie
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse
  * This class provides the ability to set the same-site attribute on the remember-me cookie.
  * This was not possible with spring security at the time of writing this application.
  */
+@CompileStatic
 class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices {
 
     private String cookieDomain

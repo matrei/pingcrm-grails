@@ -1,5 +1,6 @@
 package pingcrm
 
+import groovy.transform.CompileStatic
 import net.datafaker.Faker
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
@@ -7,6 +8,7 @@ import pingcrm.auth.UserRole
 import javax.transaction.Transactional
 import java.time.Instant
 
+@CompileStatic
 class BootStrap {
 
     def init = { servletContext ->
