@@ -15,7 +15,7 @@ class SharedDataInterceptor {
 
     AppService appService
 
-    SharedDataInterceptor() { matchAll() }
+    SharedDataInterceptor() { match controller: '*' }
 
     boolean before() {
 
