@@ -1,15 +1,15 @@
 package pingcrm
 
-import grails.compiler.GrailsCompileStatic
 import grails.util.TypeConvertingMap
 import grails.validation.Validateable
 import grails.web.mapping.LinkGenerator
+import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
 import javax.inject.Inject
 import java.math.RoundingMode
 
-@GrailsCompileStatic
+@CompileStatic
 class Paginator implements Validateable {
 
     @Inject LinkGenerator linkGenerator
@@ -17,11 +17,6 @@ class Paginator implements Validateable {
 
     int max
     int offset
-
-    static constraints = {
-        max nullable: true
-        offset nullable: true
-    }
 
     static int defaultMax = 10
     static int fetchMax = 100
