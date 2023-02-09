@@ -6,8 +6,6 @@ import org.springframework.web.multipart.MultipartFile
 
 import java.awt.image.BufferedImage
 
-import static grails.web.context.ServletContextHolder.getServletContext
-
 @Slf4j
 @CompileStatic
 class FileService {
