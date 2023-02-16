@@ -49,22 +49,13 @@ grails {
 }
 */
 
-// Grails 5.3.0 declares to use Spring Boot 2.7.8 (but actually pulls in 2.7.5) which in turn
-// pulls in Spring Security Core 5.7.4 (CVE issues prior to 5.7.5)
-// Also the Grails Spring Security Core Plugin 5.2.0 uses Spring Security Core 5.8.1
-ext['spring-security.version'] = '5.8.1'
-
-// Spring Boot Starter Validation 2.7.8 pulls in Snake Yaml 1.30 which has several CVE issues
-// (although should not be a problem if it isn't used to process user generated input)
-ext['snakeyaml.version'] = '1.33'
-
 dependencies {
-    //developmentOnly "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+    //developmentOnly "org.springframework.boot:spring-boot-devtools"
     compileOnly 'io.micronaut:micronaut-inject-groovy'
     console 'org.grails:grails-console'
-    implementation "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation 'org.grails:grails-core'
-    implementation "org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation 'org.grails:grails-web-boot'
     implementation 'org.grails:grails-logging'
     implementation 'org.grails:grails-plugin-rest'
