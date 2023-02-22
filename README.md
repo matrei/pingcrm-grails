@@ -57,7 +57,7 @@ pingcrm-grails/ $ ./gradlew assemble
 ```
 that can be run with:
 ```shell
-pingcrm-grails/ $ java -jar build/libs/pingcrm-grails-1.0.0-SNAPSHOT.war
+pingcrm-grails/ $ java -jar build/libs/pingcrm-grails-2.0.4-SNAPSHOT.war
 ```
 
 ## Credits
