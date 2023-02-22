@@ -70,10 +70,10 @@ dependencies {
     //implementation 'org.grails.plugins:events'
     implementation 'org.grails.plugins:gsp'
     //implementation project(':grails-inertia-plugin')
-    implementation 'io.github.matrei:grails-inertia-plugin:1.1.0'
-    implementation 'org.grails.plugins:spring-security-core:5.2.0'
+    implementation 'io.github.matrei:grails-inertia-plugin:1.2.0'
+    implementation 'org.grails.plugins:spring-security-core:5.2.1'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
-    implementation 'net.datafaker:datafaker:1.7.0'
+    implementation 'net.datafaker:datafaker:1.8.0'
     implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.0'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
     implementation 'org.imgscalr:imgscalr-lib:4.2'
