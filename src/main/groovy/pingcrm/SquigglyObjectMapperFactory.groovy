@@ -9,9 +9,15 @@ import org.springframework.beans.factory.FactoryBean
 @CompileStatic
 class SquigglyObjectMapperFactory implements FactoryBean<ObjectMapper> {
 
+    private final ObjectMapper objectMapper
+
+    SquigglyObjectMapperFactory(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper
+    }
+
     @Override
     ObjectMapper getObject() throws Exception {
-        Squiggly.init(new ObjectMapper(), new ThreadLocalContextProvider());
+        Squiggly.init(objectMapper, new ThreadLocalContextProvider());
     }
 
     @Override Class<?> getObjectType() { ObjectMapper }
