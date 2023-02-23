@@ -48,14 +48,16 @@ grails {
     }
 }
 */
-
+ext['spring-boot.version'] = springBootVersion
 dependencies {
     //developmentOnly "org.springframework.boot:spring-boot-devtools"
     compileOnly 'io.micronaut:micronaut-inject-groovy'
     console 'org.grails:grails-console'
-    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
     implementation 'org.grails:grails-core'
-    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion"
     implementation 'org.grails:grails-web-boot'
     implementation 'org.grails:grails-logging'
     implementation 'org.grails:grails-plugin-rest'
@@ -80,6 +82,7 @@ dependencies {
     profile 'org.grails.profiles:web'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
+    testImplementation "org.springframework.boot:spring-boot-test:$springBootVersion"
     testImplementation 'io.micronaut:micronaut-inject-groovy'
     testImplementation 'org.grails:grails-gorm-testing-support'
     testImplementation 'org.mockito:mockito-core'
