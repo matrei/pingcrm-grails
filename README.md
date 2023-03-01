@@ -18,27 +18,27 @@ It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-ine
 ## Installation
 Clone the repo locally
 ```shell
-$ git clone https://github.com/matrei/pingcrm-grails.git
-$ cd pingcrm-grails
+git clone https://github.com/matrei/pingcrm-grails.git
+cd pingcrm-grails
 ```
 Install client dependencies
 ```shell
-pingcrm-grails/ $ npm install
+npm install
 ```
 ## Running
 ### In development mode ...
 Serve client files with [hot module replacement](https://vitejs.dev/guide/features.html#hot-module-replacement)
 ```shell
-pingcrm-grails/ $ npm run serve
+npm run serve
 ```
 and start the grails application
 ```shell
-pingcrm-grails/ $ ./gradlew bootRun
+./gradlew bootRun
 ```
 ###  ... or in production mode
 with bundled/minified client files
 ```shell
-pingcrm-grails/ $ ./gradlew -Dgrails.env=production bootRun
+./gradlew -Dgrails.env=production bootRun
 ```
 
 ### You're ready to go!
@@ -47,17 +47,17 @@ Visit Ping CRM in your browser - http://localhost:8080
 ## Running tests
 To run the Ping CRM test suite, run:
 ```shell
-pingcrm-grails/ $ ./gradlew check
+./gradlew check
 ```
 
 ## Build for production
 To create a runnable war for production (in `~/pingcrm-grails/build/libs`)
 ```shell
-pingcrm-grails/ $ ./gradlew assemble
+./gradlew assemble
 ```
 that can be run with:
 ```shell
-pingcrm-grails/ $ java -jar build/libs/pingcrm-grails-2.0.4-SNAPSHOT.war
+java -jar build/libs/pingcrm-grails-2.0.4-SNAPSHOT.war
 ```
 
 ## Credits
