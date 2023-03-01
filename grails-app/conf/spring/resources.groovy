@@ -40,7 +40,7 @@ beans = {
     }
 
     /*
-        This is a Jackson ObjectMapper that in cooperation with Squiggly (https://github.com/bohnman/squiggly)
+        This is a Jackson ObjectMapper that in cooperation with Squiggly (https://github.com/NicklasWallgren/squiggly)
         will help us select which properties to send to the client side.
     */
     publicDataMapper(SquigglyObjectMapperFactory)
