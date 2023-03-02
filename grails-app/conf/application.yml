@@ -159,6 +159,8 @@ grails:
                 - pattern: '/static/**'
                   access: ['permitAll']
             filterChain.chainMap:
+                - pattern: '/favicon.ico'
+                  filters: 'none'
                 - pattern: '/static/**'
                   filters: 'none'
                 - pattern: '/**'
