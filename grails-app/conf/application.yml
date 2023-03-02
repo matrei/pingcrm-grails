@@ -156,10 +156,12 @@ grails:
                   access: ['permitAll']
                 - pattern: '/error'
                   access: ['permitAll']
+                - pattern: '/**/favicon.ico'
+                  access: ['permitAll']
                 - pattern: '/static/**'
                   access: ['permitAll']
             filterChain.chainMap:
-                - pattern: '/favicon.ico'
+                - pattern: '/**/favicon.ico'
                   filters: 'none'
                 - pattern: '/static/**'
                   filters: 'none'

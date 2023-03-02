@@ -84,6 +84,7 @@ dependencies {
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
     testImplementation "org.springframework.boot:spring-boot-test:$springBootVersion"
     testImplementation 'io.micronaut:micronaut-inject-groovy'
+    testImplementation 'io.micronaut:micronaut-http-client'
     testImplementation 'org.grails:grails-gorm-testing-support'
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.grails:grails-web-testing-support'
