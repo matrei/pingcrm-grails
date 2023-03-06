@@ -15,17 +15,17 @@
  */
 package pingcrm.controller
 
-import pingcrm.User
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
 import org.springframework.web.multipart.support.StandardServletMultipartResolver
+import pingcrm.User
 import pingcrm.UserService
+import pingcrm.config.UploadConfig
 
 import javax.servlet.http.HttpServletRequest
 
@@ -39,13 +39,12 @@ import javax.servlet.http.HttpServletRequest
 class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
 
     private final UserService userService
-
-    @Value('${grails.controllers.upload.maxFileSize}')
-    long maxUploadSize
+    private final UploadConfig uploadConfig
 
     @Inject
-    MaxFileUploadSizeResolver(UserService userService) {
+    MaxFileUploadSizeResolver(UserService userService, UploadConfig uploadConfig) {
         this.userService = userService
+        this.uploadConfig = uploadConfig
     }
 
     @Override
@@ -61,7 +60,7 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
             def multipartParams = new LinkedHashMap<String, String[]>()
 
             if(request.requestURL =~ /\/users$/) {
-                multipartParams.serverSaysPhotoTooLarge = [maxUploadSize]
+                multipartParams.serverSaysPhotoTooLarge = [uploadConfig.maxFileSize]
             }
             else if(request.requestURL =~ /\/users\/\d+/) {
 
@@ -79,7 +78,7 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
                 multipartParams.lastName = [user.lastName]
                 multipartParams.email = [user.email]
                 multipartParams.owner = [user.owner ? '1' : '0']
-                multipartParams.serverSaysPhotoTooLarge = [maxUploadSize]
+                multipartParams.serverSaysPhotoTooLarge = [uploadConfig.maxFileSize]
             } else {
                 throw e
             }

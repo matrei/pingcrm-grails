@@ -18,11 +18,11 @@ package pingcrm.controller
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
-import org.springframework.beans.factory.annotation.Value
 import pingcrm.AppService
 import pingcrm.Paginator
 import pingcrm.User
 import pingcrm.UserService
+import pingcrm.config.UploadConfig
 
 import javax.servlet.http.HttpServletRequest
 
@@ -37,20 +37,19 @@ import javax.servlet.http.HttpServletRequest
 class UsersController extends AppController<User> {
 
     private final UserService userService
+    private final UploadConfig uploadConfig
 
     final List<String> indexProperties = ['id', 'name', 'email', 'owner', 'photo', 'deleted']
     final List<String> editProperties = ['id', 'firstName', 'lastName', 'email', 'owner', 'photo', 'deleted']
     final List<String> filterNames = ['search', 'trashed', 'role']
 
-    @Value('${grails.controllers.upload.maxFileSize}')
-    private Long maxPhotoSize
-
     static allowedMethods = [ index: 'GET', create: 'GET', storeUser: 'POST', edit: ['GET', 'PUT', 'DELETE'], updateUser: ['PUT','POST'], delete: 'DELETE', restore: 'PUT' ]
 
     @Inject
-    UsersController(AppService appService, UserService userService) {
+    UsersController(AppService appService, UserService userService, UploadConfig uploadConfig) {
         super(User, appService)
         this.userService = userService
+        this.uploadConfig = uploadConfig
     }
 
     @Override
@@ -68,7 +67,7 @@ class UsersController extends AppController<User> {
     def create() {
 
         addToModel([
-            maxPhotoSize: maxPhotoSize,
+            maxPhotoSize: uploadConfig.maxFileSize,
             testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
         ])
         super.create()
@@ -85,7 +84,7 @@ class UsersController extends AppController<User> {
 
         renderInertia editComponent, [
             user: userPublicData,
-            maxPhotoSize: maxPhotoSize,
+            maxPhotoSize: uploadConfig.maxFileSize,
             testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
         ]
     }
