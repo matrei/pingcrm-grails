@@ -43,7 +43,15 @@ class UsersController extends AppController<User> {
     final List<String> editProperties = ['id', 'firstName', 'lastName', 'email', 'owner', 'photo', 'deleted']
     final List<String> filterNames = ['search', 'trashed', 'role']
 
-    static allowedMethods = [ index: 'GET', create: 'GET', storeUser: 'POST', edit: ['GET', 'PUT', 'DELETE'], updateUser: ['PUT','POST'], delete: 'DELETE', restore: 'PUT' ]
+    static final allowedMethods = [
+        index: 'GET',
+        create: 'GET',
+        storeUser: 'POST',
+        edit: ['GET', 'PUT', 'DELETE'],
+        updateUser: ['PUT','POST'],
+        delete: 'DELETE',
+        restore: 'PUT'
+    ]
 
     @Inject
     UsersController(AppService appService, UserService userService, UploadConfig uploadConfig) {

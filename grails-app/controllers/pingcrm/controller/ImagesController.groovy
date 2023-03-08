@@ -42,7 +42,7 @@ class ImagesController {
 
     private final FileService fileService
 
-    final static defaultAction = 'thumbnail'
+    static final defaultAction = 'thumbnail'
 
     @Inject
     ImagesController(FileService fileService) {
