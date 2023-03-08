@@ -12,8 +12,6 @@ import pingcrm.pages.UserListPage
 @Integration
 class LoginSpec extends GebSpec {
 
-    //def cleanupSpec() { browser.quit() }
-
     void 'accessing the application without logging in is not allowed'() {
 
         given: 'the user is not logged in'
