@@ -38,18 +38,26 @@ trait PublicData {
     // if the trait is implemented by Grails domain classes.
     def objectMapper = Holders.grailsApplication.mainContext.getBean 'publicDataMapper'
 
-    private static final String[] noProperties = [] as String[]
+    /**
+     * The default properties to select when calling the publicData methods.
+     * @return a list of property names
+     */
+    List<String> getPublicProperties() { Collections.emptyList() }
 
-    String[] getPublicProperties() { noProperties }
+    @SuppressWarnings('unused')
+    Map publicData() {
+        publicData publicProperties
+    }
 
     Map publicData(String ...propertiesToShow) {
-        String[] props = propertiesToShow ?: publicProperties
-        // Squiggly is setup to use a ThreadLocal to set/get the filter with this object mapper
-        SquigglyFilterHolder.filter = props.join ','
-        SquigglyUtils.objectify objectMapper as ObjectMapper, this, Map
+        publicData Arrays.asList(propertiesToShow)
     }
 
     Map publicData(List<String> propertiesToShow) {
-        publicData propertiesToShow as String[]
+        // TODO: Remove squiggly dependency
+        // Using Squiggly here because it can resolve "deep" properties of Object (eg. contact['organization.name'])
+        // Squiggly is setup to use a ThreadLocal to set/get the filter with this object mapper
+        SquigglyFilterHolder.filter = propertiesToShow.join ','
+        SquigglyUtils.objectify objectMapper as ObjectMapper, this, Map
     }
 }
