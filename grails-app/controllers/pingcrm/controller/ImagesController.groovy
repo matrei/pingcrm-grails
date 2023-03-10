@@ -81,7 +81,7 @@ class ImageThumbnailCommand implements Validateable {
     Integer w,  h
 
     @SuppressWarnings('unused')
-    static constraints = {
+    static final constraints = {
         w min: 20, max: 480
         h min: 20, max: 480
         fit nullable: true, inList: ImageProcessor.ResizingMode.validValues

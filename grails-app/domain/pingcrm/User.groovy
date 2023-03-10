@@ -58,7 +58,7 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     /** A User hasMany Roles */
     Set<Role> getRoles() { UserRole.findAllRolesForUser this }
 
-    static constraints = {
+    static final constraints = {
         firstName maxLength: 25
         lastName maxLength: 25
         email maxLength: 50, unique: true
@@ -67,7 +67,7 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
         photoPath maxLength: 100, nullable: true
     }
 
-    static mapping = {
+    static final mapping = {
         account lazy: false
 	    password column: '`password`'
         sort lastName: 'asc', firstName: 'asc'

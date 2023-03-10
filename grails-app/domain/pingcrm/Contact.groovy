@@ -47,7 +47,7 @@ class Contact implements LogicalDelete<Contact>, PublicData {
     /** A Contact belongsTo an Organization */
     Organization organization
 
-    static constraints = {
+    static final constraints = {
         firstName maxSize: 25
         lastName maxSize: 25
         email maxSize: 50, nullable: true, email: true
@@ -60,7 +60,7 @@ class Contact implements LogicalDelete<Contact>, PublicData {
         organization nullable: true
     }
 
-    static mapping = { sort lastName: 'asc', firstName: 'asc' }
+    static final mapping = { sort lastName: 'asc', firstName: 'asc' }
 
     String getName() { "$firstName $lastName" }
 }

@@ -35,8 +35,8 @@ class Role implements Serializable {
 
 	String authority
 
-	static constraints = { authority nullable: false, blank: false, unique: true }
-	static mapping = { cache true }
+	static final constraints = { authority nullable: false, blank: false, unique: true }
+	static final mapping = { cache true }
 
 	static Role findByAuthority(String auth) {
 		createCriteria().get {

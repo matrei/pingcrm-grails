@@ -51,7 +51,8 @@ class UserCommand implements Validateable {
     private String photoFilename
     String createPhotoPath() { photoFilename ? "$photoStorage${File.separator}$photoFilename" : null }
 
-    static constraints = {
+    @SuppressWarnings('unused')
+    static final constraints = {
         id nullable: true
         email email: true, validator: { String email, UserCommand cmd, Errors errors ->
             if(!UserService.isEmailUniqueIgnoreId(email, cmd.id)) {

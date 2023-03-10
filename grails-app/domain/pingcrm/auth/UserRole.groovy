@@ -39,7 +39,7 @@ class UserRole implements Serializable {
 	User user
 	Role role
 
-	static constraints = {
+	static final constraints = {
 		user nullable: false
 		role nullable: false, validator: { Role r, UserRole ur ->
 			if (ur.user?.id) {
@@ -50,7 +50,7 @@ class UserRole implements Serializable {
 		}
 	}
 
-	static mapping = {
+	static final mapping = {
 		id composite: ['user', 'role']
 		version false
 	}

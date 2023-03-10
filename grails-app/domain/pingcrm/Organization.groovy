@@ -46,7 +46,7 @@ class Organization implements LogicalDelete<Organization>, PublicData {
     /** An Organization hasMany Contacts */
     List<Contact> getContacts() { Contact.findAllByOrganization this, [sort: [firstName: 'asc', lastName: 'asc']] }
 
-    static constraints = {
+    static final constraints = {
         name maxSize: 100
         email maxSize: 50, nullable: true, email: true
         phone maxSize: 50, nullable: true
