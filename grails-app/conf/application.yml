@@ -175,4 +175,6 @@ server:
                 same-site: Lax
     forward-headers-strategy: NATIVE
     tomcat:
+        max-swallow-size: 1048576
+        max-post-size: 1048576
         redirect-context-root: false
