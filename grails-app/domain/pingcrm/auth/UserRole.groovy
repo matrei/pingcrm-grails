@@ -61,7 +61,7 @@ class UserRole implements Serializable {
 	}
 
 	static UserRole get(User user, Role role) {
-		get(user.id, role.id)
+		get user.id, role.id
 	}
 
 	static UserRole get(Serializable userId, Serializable roleId) {

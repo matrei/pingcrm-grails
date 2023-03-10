@@ -55,7 +55,7 @@ class UserCommand implements Validateable {
         id nullable: true
         email email: true, validator: { String email, UserCommand cmd, Errors errors ->
             if(!UserService.isEmailUniqueIgnoreId(email, cmd.id)) {
-                errors.rejectValue('email','user.email.not.unique', ['email', email] as Object[], 'The email has already been taken.')
+                errors.rejectValue 'email','user.email.not.unique', ['email', email] as Object[], 'The email has already been taken.'
                 return true
             }
             false
@@ -63,11 +63,11 @@ class UserCommand implements Validateable {
         photo nullable: true, validator: { MultipartFile file, UserCommand cmd, Errors errors ->
             if(cmd.clientSaysPhotoTooLarge || cmd.serverSaysPhotoTooLarge) {
                 long limit = cmd.clientSaysPhotoTooLarge ?: cmd.serverSaysPhotoTooLarge
-                errors.rejectValue('photo','user.photo.max.size.exceeded', [FileUtils.byteCountToDisplaySize(limit)] as Object[], 'The maximum file size of {0} was exceeded.')
+                errors.rejectValue 'photo','user.photo.max.size.exceeded', [FileUtils.byteCountToDisplaySize(limit)] as Object[], 'The maximum file size of {0} was exceeded.'
                 return true
             }
             if(file && !FileService.getSupportedFileExtension(file.contentType)) {
-                errors.rejectValue('photo','user.photo.invalid.type', [file.contentType] as Object[], 'Invalid file type.')
+                errors.rejectValue 'photo','user.photo.invalid.type', [file.contentType] as Object[], 'Invalid file type.'
                 return true
             }
             false
@@ -80,7 +80,7 @@ class UserCommand implements Validateable {
         user.firstName = firstName
         user.lastName = lastName
         user.owner = owner
-        user.email = email.toLowerCase(Locale.ENGLISH)
+        user.email = email.toLowerCase Locale.ENGLISH
         if(photo) user.photoPath = createPhotoPath()
         if(password) user.password = password
     }

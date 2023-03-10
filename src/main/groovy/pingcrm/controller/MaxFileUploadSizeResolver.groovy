@@ -70,7 +70,7 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
                 def id = url.substring(url.lastIndexOf('/') + 1) as Long
 
                 // Load the data from the db
-                User user = userService.get(id, true)
+                User user = userService.get id, true
 
                 // Set the params from the loaded user
                 multipartParams.id = [id]

@@ -56,7 +56,7 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     Account account
 
     /** A User hasMany Roles */
-    Set<Role> getRoles() { UserRole.findAllRolesForUser(this) }
+    Set<Role> getRoles() { UserRole.findAllRolesForUser this }
 
     static constraints = {
         firstName maxLength: 25
@@ -74,6 +74,7 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     }
 
     String getName() { "$firstName $lastName" }
+    @SuppressWarnings('unused')
     String getPhoto() { photoPath?.replaceAll '\\\\', '/' }
     boolean isOwner() { owner.booleanValue() }
 }
