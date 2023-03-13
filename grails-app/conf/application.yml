@@ -34,6 +34,10 @@ spring:
                 - '**/*.gson'
                 - 'logback.groovy'
                 - '*.properties'
+
+# Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
+# spring.h2.console.enabled: true
+
 management:
     endpoints:
         enabled-by-default: false
@@ -162,11 +166,17 @@ grails:
                   access: ['permitAll']
                 - pattern: '/static/**'
                   access: ['permitAll']
+                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
+                # - pattern: '/h2-console/**'
+                #   access: ['permitAll']
             filterChain.chainMap:
                 - pattern: '/**/favicon.ico'
                   filters: 'none'
                 - pattern: '/static/**'
                   filters: 'none'
+                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
+                # - pattern: '/h2-console/**'
+                #   filters: 'none'
                 - pattern: '/**'
                   filters: 'JOINED_FILTERS'
 ---
