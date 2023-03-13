@@ -68,6 +68,7 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     }
 
     static final mapping = {
+        table name: 'user_account' // Needed for compatibility with H2 >= 2.x.x
         account lazy: false
 	    password column: '`password`'
         sort lastName: 'asc', firstName: 'asc'
