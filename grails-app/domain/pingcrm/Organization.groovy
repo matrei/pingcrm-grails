@@ -18,7 +18,7 @@ package pingcrm
 import gorm.logical.delete.LogicalDelete
 import grails.compiler.GrailsCompileStatic
 
-import java.time.Instant
+import java.time.LocalDateTime
 
 /**
  * An organization domain object.
@@ -37,8 +37,10 @@ class Organization implements LogicalDelete<Organization>, PublicData {
     String region
     String country
     String postalCode
-    @SuppressWarnings('unused') Instant dateCreated
-    @SuppressWarnings('unused') Instant lastUpdated
+
+    /* timestamps in UTC set by hibernate.jdbc.time_zone */
+    @SuppressWarnings('unused') LocalDateTime dateCreated
+    @SuppressWarnings('unused') LocalDateTime lastUpdated
 
     /** An Organization belongsTo an Account */
     Account account

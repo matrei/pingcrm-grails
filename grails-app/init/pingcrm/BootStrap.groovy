@@ -21,7 +21,8 @@ import pingcrm.auth.Role
 import pingcrm.auth.UserRole
 
 import javax.transaction.Transactional
-import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 /**
  * A class that bootstraps the application with some initial data.
@@ -50,6 +51,7 @@ class BootStrap {
                 firstName: 'John',
                 lastName: 'Doe',
                 email: 'johndoe@example.com',
+                emailVerifiedAt: LocalDateTime.now(ZoneOffset.UTC),
                 password: 'secret',
                 owner: true
         ).save failOnError: true
@@ -63,7 +65,7 @@ class BootStrap {
                     firstName: faker.name().firstName(),
                     lastName: faker.name().lastName(),
                     email: faker.internet().safeEmailAddress(),
-                    emailVerifiedAt: Instant.now(),
+                    emailVerifiedAt: LocalDateTime.now(ZoneOffset.UTC),
                     password: faker.internet().password(),
                     owner: false
             ).save failOnError: true

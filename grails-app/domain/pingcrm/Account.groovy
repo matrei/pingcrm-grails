@@ -17,7 +17,7 @@ package pingcrm
 
 import grails.compiler.GrailsCompileStatic
 
-import java.time.Instant
+import java.time.LocalDateTime
 
 /**
  * An account domain object.
@@ -29,8 +29,10 @@ import java.time.Instant
 class Account {
 
     String name
-    @SuppressWarnings('unused') Instant dateCreated
-    @SuppressWarnings('unused') Instant lastUpdated
+
+    /** timestamps in UTC set by hibernate.jdbc.time_zone */
+    @SuppressWarnings('unused') LocalDateTime dateCreated
+    @SuppressWarnings('unused') LocalDateTime lastUpdated
 
     /** An Account hasMany Organizations */
     List<Organization> getOrganizations() { Organization.findAllByAccount this, [sort: 'name', order: 'asc'] }

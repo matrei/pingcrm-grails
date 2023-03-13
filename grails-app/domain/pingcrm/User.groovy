@@ -22,7 +22,7 @@ import groovy.transform.ToString
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
 
-import java.time.Instant
+import java.time.LocalDateTime
 
 /**
  * A user domain object.
@@ -41,7 +41,6 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     String firstName
     String lastName
     String email
-    Instant emailVerifiedAt
     String password
     Boolean owner = false
     String photoPath
@@ -49,8 +48,11 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     Boolean accountExpired = false
     Boolean accountLocked = false
     Boolean passwordExpired = false
-    @SuppressWarnings('unused') Instant dateCreated
-    @SuppressWarnings('unused') Instant lastUpdated
+
+    /* timestamps in UTC set by hibernate.jdbc.time_zone */
+    LocalDateTime emailVerifiedAt
+    @SuppressWarnings('unused') LocalDateTime dateCreated
+    @SuppressWarnings('unused') LocalDateTime lastUpdated
 
     /** A User belongsTo an Account */
     Account account

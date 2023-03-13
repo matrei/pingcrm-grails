@@ -18,7 +18,7 @@ package pingcrm
 import gorm.logical.delete.LogicalDelete
 import grails.compiler.GrailsCompileStatic
 
-import java.time.Instant
+import java.time.LocalDateTime
 
 /**
  * A contact domain object.
@@ -38,8 +38,10 @@ class Contact implements LogicalDelete<Contact>, PublicData {
     String region
     String country
     String postalCode
-    @SuppressWarnings('unused') Instant dateCreated
-    @SuppressWarnings('unused') Instant lastUpdated
+
+    /* timestamps in UTC set by hibernate.jdbc.time_zone */
+    @SuppressWarnings('unused') LocalDateTime lastUpdated
+    @SuppressWarnings('unused') LocalDateTime dateCreated
 
     /** A Contact belongsTo an Account */
     Account account
