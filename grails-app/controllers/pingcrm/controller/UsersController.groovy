@@ -109,13 +109,13 @@ class UsersController extends AppController<User> {
 
         if(!user) {
             flash.error = 'Failed to create user.'
-            redirect action: 'create'; return
+            seeOtherRedirect action: 'create'; return
         }
 
         if(user.hasErrors()) { chain action: 'create', model: [errors: renderErrors(user.errors)]; return }
 
         flash.success = 'User created.'
-        redirect action: 'index'
+        seeOtherRedirect action: 'index'
     }
 
     def updateUser(UpdateUserCommand userCmd) {
@@ -130,12 +130,12 @@ class UsersController extends AppController<User> {
                 chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(user.errors)]; return
             } else {
                 flash.error = 'User not found.'
-                redirect action: 'index'; return
+                seeOtherRedirect action: 'index'; return
             }
         }
 
         flash.success = 'User updated.'
-        redirect action: 'edit', id: userCmd.id
+        seeOtherRedirect action: 'edit', id: userCmd.id
     }
 
     @Override
@@ -144,21 +144,21 @@ class UsersController extends AppController<User> {
         if(isCurrentUser id) {
             if(appService.delete User, id) {
                 session.invalidate()
-                redirect controller: 'login'; return
+                seeOtherRedirect controller: 'login'
             } else {
                 flash.error = 'Failed to delete user.'
-                redirect action: 'edit', id: id; return
+                seeOtherRedirect action: 'edit', id: id
             }
+            return
         }
 
         if(appService.delete User, id) {
             userService.invalidateSessionsForUserId id
             flash.success = 'User deleted.'
-        } else {
-            flash.error = 'Failed to delete user.'
+            seeOtherRedirect action: 'edit', id: id; return
         }
-
-        redirect action: 'edit', id: id
+        flash.error = 'Failed to delete user.'
+        seeOtherRedirect action: 'edit', id: id
     }
 
     private boolean isCurrentUser(Long id) { userService.isCurrentUser id }

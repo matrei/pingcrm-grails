@@ -16,6 +16,7 @@
 package pingcrm.interceptor
 
 import groovy.transform.CompileStatic
+import org.grails.web.util.GrailsApplicationAttributes
 import pingcrm.UserService
 
 /**
@@ -41,7 +42,10 @@ class EditPreventionInterceptor {
         def id = params.long 'id'
         if(userService.isDemoUser id) {
             flash.error = "${actionName == 'delete' ? 'Deleting' : 'Updating'} the demo user is not allowed."
-            redirect controller: 'users', action: 'edit', id: id
+            def url = grailsLinkGenerator.link(controller: 'users', action: 'edit', id: id)
+            response.status = 303
+            response.setHeader 'Location', url
+            request.setAttribute GrailsApplicationAttributes.REDIRECT_ISSUED, url
             return false
         }
         true

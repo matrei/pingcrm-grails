@@ -19,6 +19,7 @@ package pingcrm.controller
 import gorm.logical.delete.LogicalDelete
 import grails.gorm.PagedResultList
 import groovy.transform.CompileStatic
+import org.grails.web.util.GrailsApplicationAttributes
 import pingcrm.AppService
 import pingcrm.Paginator
 import pingcrm.PublicData
@@ -100,13 +101,13 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         D entity = appService.create domainClass, request.JSON
         if(!entity) {
             flash.error = "Failed to create $entityNameLC"
-            redirect action: 'create'; return
+            seeOtherRedirect action: 'create'; return
         }
 
         if(entity.hasErrors()) { chain action: 'create', model: [errors: renderErrors(entity.errors)]; return }
 
         flash.success = "$entityName created."
-        redirect action: 'index'
+        seeOtherRedirect action: 'index'
     }
 
     def update(Long id) {
@@ -119,7 +120,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         }
 
         flash.success = "$entityName updated."
-        redirect action: 'edit', id: id
+        seeOtherRedirect action: 'edit', id: id
     }
 
     def delete(Long id) {
@@ -128,7 +129,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         if(deleted) flash.success = "$entityName deleted."
         else flash.error = "Failed to delete $entityNameLC."
 
-        redirect action: 'edit', id: id
+        seeOtherRedirect action: 'edit', id: id
     }
 
     def restore(Long id) {
@@ -137,7 +138,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         if(restored) flash.success = "$entityName restored."
         else flash.error = "Failed to restore $entityNameLC."
 
-        redirect action: 'edit', id: id
+        seeOtherRedirect action: 'edit', id: id
     }
 
     private int getTotalCount(List list, Map filters) {
@@ -153,7 +154,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         D entity = errors.hasErrors() ? null : appService.find(domainClass, id)
         if(!entity) {
             flash.error = "$entityName not found."
-            redirect action: 'index'; return null
+            seeOtherRedirect action: 'index'; return null
         }
 
         entity
@@ -167,4 +168,14 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     protected final Map getCurrentModel() { request.getAttribute(ATTRIBUTE_KEY_MODEL) as Map ?: [:] }
+
+    protected final void seeOtherRedirect(Map argMap, int status = 303) {
+        seeOtherRedirect grailsLinkGenerator.link(argMap), status
+    }
+
+    protected final void seeOtherRedirect(String url, int status = 303) {
+        response.status = status
+        response.setHeader 'Location', url
+        request.setAttribute GrailsApplicationAttributes.REDIRECT_ISSUED, url
+    }
 }
