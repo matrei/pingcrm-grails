@@ -35,7 +35,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
 
     private static final String ATTRIBUTE_KEY_MODEL = 'pingcrm.controller.INERTIA_MODEL'
 
-    static final allowedMethods = [
+    static final Map allowedMethods = [
         index: 'GET',
         create: 'GET',
         store: 'POST',

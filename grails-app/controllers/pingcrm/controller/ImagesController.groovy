@@ -42,7 +42,8 @@ class ImagesController {
 
     private final FileService fileService
 
-    static final defaultAction = 'thumbnail'
+    static final String defaultAction = 'thumbnail'
+    static final Map allowedMethods = [thumbnail: 'GET']
 
     @Inject
     ImagesController(FileService fileService) {

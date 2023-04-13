@@ -28,6 +28,8 @@ import groovy.transform.CompileStatic
 @Secured('IS_AUTHENTICATED_REMEMBERED')
 class DashboardController {
 
+    static final Map allowedMethods = [index: 'GET']
+
     def index() { renderInertia 'Dashboard/Index' }
 
 }

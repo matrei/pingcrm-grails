@@ -34,6 +34,8 @@ import pingcrm.config.GrailsInfo
 @Secured('IS_AUTHENTICATED_REMEMBERED')
 class AboutController {
 
+    static final Map allowedMethods = [index: 'GET']
+
     private final Map info = [:]
 
     @Inject

@@ -43,12 +43,12 @@ class UsersController extends AppController<User> {
     final List<String> editProperties = ['id', 'firstName', 'lastName', 'email', 'owner', 'photo', 'deleted']
     final List<String> filterNames = ['search', 'trashed', 'role']
 
-    static final allowedMethods = [
+    static final Map allowedMethods = [
         index: 'GET',
         create: 'GET',
         storeUser: 'POST',
-        edit: ['GET', 'PUT', 'DELETE'],
-        updateUser: ['PUT','POST'],
+        edit: 'GET',
+        updateUser: ['PUT', 'POST'],
         delete: 'DELETE',
         restore: 'PUT'
     ]
