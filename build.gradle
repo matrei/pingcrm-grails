@@ -72,7 +72,7 @@ dependencies {
     //implementation 'org.grails.plugins:events'
     implementation 'org.grails.plugins:gsp'
     //implementation project(':grails-inertia-plugin')
-    implementation 'io.github.matrei:grails-inertia-plugin:1.2.0'
+    implementation 'io.github.matrei:grails-inertia-plugin:1.2.1'
     implementation 'org.grails.plugins:spring-security-core:5.2.1'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
     implementation 'net.datafaker:datafaker:1.8.0'
