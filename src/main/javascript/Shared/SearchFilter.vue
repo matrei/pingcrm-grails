@@ -2,12 +2,13 @@
 
 import Dropdown from '@/Shared/Dropdown.vue'
 
-defineEmits(['update:modelValue', 'reset'])
+defineEmits(['reset'])
 
 defineProps({
-    modelValue: String,
     maxWidth: { type: Number, default: 300 }
 })
+
+const modelValue = defineModel({ type: String })
 
 </script>
 
@@ -29,7 +30,7 @@ defineProps({
           </div>
         </template>
       </dropdown>
-      <input class="relative px-6 py-3 w-full rounded-r focus:shadow-outline" autocomplete="off" type="text" name="search" placeholder="Search…" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+      <input class="relative px-6 py-3 w-full rounded-r focus:shadow-outline" autocomplete="off" type="text" name="search" placeholder="Search…" v-model="modelValue" />
     </div>
     <button class="ml-3 text-slate-500 hover:text-slate-700 focus:text-indigo-500 text-sm" type="button" @click="$emit('reset')">Reset</button>
   </div>

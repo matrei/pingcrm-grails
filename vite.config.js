@@ -15,7 +15,11 @@ export default defineConfig(({ command }) => ({
     }
   },
 
-  plugins: [vue()],
+  plugins: [vue({
+    script: {
+      defineModel: true
+    }
+  })],
 
   resolve: {
     alias: {

@@ -1,19 +1,18 @@
 <script setup>
 import { ref, watch } from 'vue'
 
-const emit = defineEmits(['update:modelValue'])
-
 const props = defineProps({
-  modelValue: File,
   label: String,
   accept: String,
   errors: { type: Array, default: () => [] }
 })
 
+const modelValue = defineModel({ type: File })
+
 const file = ref(null)
 
 watch (
-  () => props.modelValue,
+  () => modelValue,
   (value) => { if (!value) file.value.value = '' }
 )
 
@@ -23,8 +22,8 @@ const filesize = (size) => {
 }
 
 const browse = () => file.value.click()
-const change = (e) => emit('update:modelValue', e.target.files[0])
-const remove = () => emit('update:modelValue', null)
+const change = (e) => modelValue.value = e.target.files[0]
+const remove = () => modelValue.value = null
 
 </script>
 
