@@ -20,7 +20,7 @@ import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
 
 /**
- * A role that can be assigned to a user.
+ * A role domain class (that can be assigned to a user).
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -40,7 +40,7 @@ class Role implements Serializable {
 
 	static Role findByAuthority(String auth) {
 		createCriteria().get {
-			eq'authority', auth
+			eq 'authority', auth
 		} as Role
 	}
 }

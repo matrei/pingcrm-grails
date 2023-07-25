@@ -16,11 +16,12 @@
 package pingcrm
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.CompileDynamic
 
 import java.time.LocalDateTime
 
 /**
- * An account domain object.
+ * An account domain class.
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -35,10 +36,19 @@ class Account {
     @SuppressWarnings('unused') LocalDateTime lastUpdated
 
     /** An Account hasMany Organizations */
-    List<Organization> getOrganizations() { Organization.findAllByAccount this, [sort: 'name', order: 'asc'] }
+    List<Organization> getOrganizations() {
+        Organization.createCriteria().list() {
+            eq 'account', this
+            order 'name', 'asc'
+        } as List<Organization>
+    }
 
     /** An Account hasMany Contacts */
-    List<Contact> getContacts() { Contact.findAllByAccount this }
+    List<Contact> getContacts() {
+        Contact.createCriteria().list() {
+            eq 'account', this
+        } as List<Contact>
+    }
 
     static constraints = {
         name maxSize: 50

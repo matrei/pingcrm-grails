@@ -21,7 +21,7 @@ import grails.compiler.GrailsCompileStatic
 import java.time.LocalDateTime
 
 /**
- * A contact domain object.
+ * A contact domain class.
  *
  * @author Mattias Reichel
  * @since 1.0.0

@@ -17,11 +17,12 @@ package pingcrm
 
 import gorm.logical.delete.LogicalDelete
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.CompileDynamic
 
 import java.time.LocalDateTime
 
 /**
- * An organization domain object.
+ * An organization domain class.
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -46,7 +47,13 @@ class Organization implements LogicalDelete<Organization>, PublicData {
     Account account
 
     /** An Organization hasMany Contacts */
-    List<Contact> getContacts() { Contact.findAllByOrganization this, [sort: [firstName: 'asc', lastName: 'asc']] }
+    List<Contact> getContacts() {
+        Contact.createCriteria().list() {
+            eq 'organization', this
+            order 'firstName', 'asc'
+            order 'lastName', 'asc'
+        } as List<Contact>
+    }
 
     static final constraints = {
         name maxSize: 100

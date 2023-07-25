@@ -25,7 +25,7 @@ import pingcrm.auth.UserRole
 import java.time.LocalDateTime
 
 /**
- * A user domain object.
+ * A user domain class.
  *
  * @author Mattias Reichel
  * @since 1.0.0
