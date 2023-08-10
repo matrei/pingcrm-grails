@@ -15,8 +15,6 @@
  */
 package pingcrm
 
-import grails.web.mapping.UrlMapping
-
 /**
  * A class that defines the URL mappings for the application.
  *
@@ -49,12 +47,7 @@ class UrlMappings {
         "/users/$id"         (controller: 'users', action: [PUT: 'updateUser', POST: 'updateUser', DELETE: 'delete'])
         "/users/$id/restore" (controller: 'users', action: 'restore')
 
-        /*
-         * Use a named route to make requests like
-         * /img/users/user-1-123.jpg?w=60&h=60&fit=crop
-         * work.
-         */
-        name (image: ("/img/$path**" (controller: 'images')) as UrlMapping)
+        "/img/$path**" (controller: 'images', action: 'thumbnail')
 
         "500" (view: '/error')
         "404" (view: '/notFound')

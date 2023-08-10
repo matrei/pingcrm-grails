@@ -166,7 +166,7 @@ class UsersController extends AppController<User> {
     private Map addPhotoUrl(Map user, Map photoParams) {
 
         if(user.photo) {
-            def photoUrl = grailsLinkGenerator.link mapping: 'image', params: photoParams + [path: user.photo]
+            def photoUrl = grailsLinkGenerator.link controller: 'images', action: 'thumbnail', params: photoParams + [path: user.photo]
             user.photo = photoUrl
         }
 

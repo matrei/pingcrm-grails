@@ -34,5 +34,13 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
 
         expect: "calls to /about go to the about controller"
         verifyUrlMapping('/about', controller: 'about', action: 'index', method: 'GET')
+
+        when: "calling the images controller"
+        assertForwardUrlMapping('/img/users/user-1-123.jpg?w=100&h=100', controller: 'images', action: 'thumbnail') {
+            path = 'users/user-1-123.jpg'
+        }
+
+        then:
+        noExceptionThrown()
     }
 }
