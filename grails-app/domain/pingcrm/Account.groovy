@@ -16,7 +16,6 @@
 package pingcrm
 
 import grails.compiler.GrailsCompileStatic
-import groovy.transform.CompileDynamic
 
 import java.time.LocalDateTime
 
