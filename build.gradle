@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
-        classpath 'org.grails.plugins:hibernate5:7.3.0'
+        classpath 'org.grails.plugins:hibernate5:7.3.1'
         classpath 'gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.7'
         classpath 'org.ysb33r.gradle:grolifant50:2.0.0' // this is used to be able to run webdriver on java 17 https://github.com/erdi/webdriver-binaries-gradle-plugin/issues/30#issuecomment-1378906611
         classpath 'com.github.node-gradle:gradle-node-plugin:3.4.0'
@@ -22,8 +22,8 @@ apply plugin: 'com.github.node-gradle.node'
 
 group 'io.github.matrei'
 
-sourceCompatibility = JavaVersion.toVersion 17
-targetCompatibility = JavaVersion.toVersion 17
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenLocal()
@@ -66,7 +66,7 @@ dependencies {
     implementation 'org.grails:grails-plugin-url-mappings'
     implementation 'org.grails:grails-plugin-interceptors'
     implementation 'org.grails.plugins:async'
-    implementation 'org.grails.plugins:hibernate5'
+    implementation 'org.grails.plugins:hibernate5:7.3.1'
     implementation 'org.hibernate:hibernate-core:5.6.15.Final'
     //implementation 'org.grails.plugins:events'
     implementation 'org.grails.plugins:gsp'
