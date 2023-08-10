@@ -1,29 +1,16 @@
-buildscript {
-    repositories {
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://repo.grails.org/grails/core' }
-    }
-    dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
-        classpath 'org.grails.plugins:hibernate5:7.3.1'
-        classpath 'gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.7'
-        classpath 'org.ysb33r.gradle:grolifant50:2.0.0' // this is used to be able to run webdriver on java 17 https://github.com/erdi/webdriver-binaries-gradle-plugin/issues/30#issuecomment-1378906611
-        classpath 'com.github.node-gradle:gradle-node-plugin:3.4.0'
-    }
+plugins {
+    id 'groovy'
+    id 'org.grails.grails-web'
+    id 'org.grails.grails-gsp'
+    id 'com.github.erdi.webdriver-binaries'
+    id 'war'
+    id 'application'
+    id 'idea'
+    id 'eclipse'
+    id 'com.github.node-gradle.node'
 }
 
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'war'
-apply plugin: 'org.grails.grails-web'
-apply plugin: 'com.github.erdi.webdriver-binaries'
-apply plugin: 'org.grails.grails-gsp'
-apply plugin: 'com.github.node-gradle.node'
-
 group 'io.github.matrei'
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenLocal()
@@ -32,9 +19,13 @@ repositories {
 }
 
 configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
+    configureEach {
+        //resolutionStrategy.force 'org.codehaus.groovy:groovy-xml:3.0.13'
+        resolutionStrategy.eachDependency { DependencyResolveDetails details->
+            if (details.requested.group == 'org.seleniumhq.selenium') {
+                details.useVersion '4.10.0'
+            }
+        }
     }
 }
 
@@ -49,28 +40,22 @@ grails {
 }
 */
 dependencies {
-    //developmentOnly "org.springframework.boot:spring-boot-devtools"
-    compileOnly 'io.micronaut:micronaut-inject-groovy'
-    console 'org.grails:grails-console'
-    implementation "org.springframework.boot:spring-boot:$springBootVersion"
-    implementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
-    implementation "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
     implementation 'org.grails:grails-core'
-    implementation "org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion"
-    implementation 'org.grails:grails-web-boot'
     implementation 'org.grails:grails-logging'
-    implementation 'org.grails:grails-plugin-rest'
     implementation 'org.grails:grails-plugin-databinding'
     implementation 'org.grails:grails-plugin-i18n'
+    implementation 'org.grails:grails-plugin-interceptors'
+    implementation 'org.grails:grails-plugin-rest'
     implementation 'org.grails:grails-plugin-services'
     implementation 'org.grails:grails-plugin-url-mappings'
-    implementation 'org.grails:grails-plugin-interceptors'
-    implementation 'org.grails.plugins:async'
-    implementation 'org.grails.plugins:hibernate5:7.3.1'
-    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
-    //implementation 'org.grails.plugins:events'
+    implementation 'org.grails:grails-web-boot'
     implementation 'org.grails.plugins:gsp'
-    //implementation project(':grails-inertia-plugin')
+    implementation 'org.grails.plugins:hibernate5'
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation 'io.github.matrei:grails-inertia-plugin:1.2.1'
     implementation 'org.grails.plugins:spring-security-core:5.2.1'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
@@ -78,66 +63,55 @@ dependencies {
     implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.0'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
     implementation 'org.imgscalr:imgscalr-lib:4.2'
-    profile 'org.grails.profiles:web'
+    implementation 'org.grails.plugins:async'
+    //implementation 'org.grails.plugins:events'
+    //implementation project(':grails-inertia-plugin')
+    compileOnly 'io.micronaut:micronaut-inject-groovy'
+    console 'org.grails:grails-console'
+    //profile 'org.grails.profiles:web'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
-    testImplementation "org.springframework.boot:spring-boot-test:$springBootVersion"
     testImplementation 'io.micronaut:micronaut-inject-groovy'
-    testImplementation 'io.micronaut:micronaut-http-client'
     testImplementation 'org.grails:grails-gorm-testing-support'
-    testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.grails:grails-web-testing-support'
     testImplementation 'org.grails.plugins:geb'
     testImplementation "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'io.micronaut:micronaut-http-client'
     testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 }
 
-springBoot.mainClass = 'pingcrm.Application'
-bootRun {
-    ignoreExitValue true
-    jvmArgs(
-        '-Dspring.output.ansi.enabled=always', 
-        '-noverify', 
-        '-XX:TieredStopAtLevel=1',
-        '-Xmx1024m')
-    sourceResources sourceSets.main
-    String springProfilesActive = 'spring.profiles.active'
-    systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+application {
+    mainClass.set 'pingcrm.Application'
 }
 
-tasks.withType(GroovyCompile).configureEach {
-    configure(groovyOptions) {
-        forkOptions.jvmArgs = ['-Xmx1024m']
-    }
-}
-
-webdriverBinaries {
-    if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
-        chromedriver {
-            version = '2.45.0'
-            fallbackTo32Bit = true
-        }
-        geckodriver '0.32.0'
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(Test).configureEach {
 
     useJUnitPlatform()
 
-    systemProperty 'geb.env', System.getProperty('geb.env')
-    systemProperty 'geb.build.reportsDir', reporting.file('geb/integrationTest')
-    if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
-        systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
-        systemProperty 'webdriver.gecko.driver', System.getProperty('webdriver.gecko.driver')
-    } else {
-        systemProperty 'webdriver.chrome.driver', '${System.getenv('CHROMEWEBDRIVER')}/chromedriver'
-        systemProperty 'webdriver.gecko.driver', '${System.getenv('GECKOWEBDRIVER')}/geckodriver'
-    }
+    systemProperty "geb.env", System.getProperty('geb.env')
+    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+    systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
+    systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
 }
+
+tasks.withType(War).configureEach { War war ->
+    war.dependsOn compileGroovyPages
+}
+webdriverBinaries {
+    chromedriver '110.0.5481.77'
+    geckodriver '0.32.2'
+    edgedriver '110.0.1587.57'
+}
+
 
 node {
     download = true
