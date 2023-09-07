@@ -190,6 +190,9 @@ server:
         max-swallow-size: 1048576
         max-post-size: 1048576
         redirect-context-root: false
+    error:
+        whitelabel:
+          enabled: false
 ---
 inertia:
     ssr:
