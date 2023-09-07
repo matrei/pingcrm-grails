@@ -54,4 +54,8 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
 
         chain controller: 'login', model: [errors: errors]
     }
+
+    def denied() { renderInertia 'Error/Index', [status: 403] }
+
+    def ajaxDenied() { denied() }
 }
