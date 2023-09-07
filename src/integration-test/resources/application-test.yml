@@ -3,3 +3,8 @@ grails:
     upload:
       maxFileSize: 524288
       maxRequestSize: 1048576
+---
+inertia:
+  ssr:
+    enabled: true
+    url: 'http://localhost:13714/render'

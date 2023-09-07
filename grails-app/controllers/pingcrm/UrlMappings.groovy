@@ -49,7 +49,12 @@ class UrlMappings {
 
         "/img/$path**" (controller: 'images', action: 'thumbnail')
 
-        "500" (view: '/error')
-        "404" (view: '/notFound')
+        "/test-500-error" (controller: 'errorTest', action: 'generateInternalServerError')
+
+        "/error" (view: '/error')
+        "403" (controller: 'errorHandling', action: 'forbidden')
+        "404" (controller: 'errorHandling', action: 'notFound')
+        "500" (controller: 'errorHandling', action: 'internalServerError')
+        "503" (controller: 'errorHandling', action: 'serviceUnavailable')
     }
 }

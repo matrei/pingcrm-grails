@@ -19,7 +19,6 @@ import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.Validateable
 import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
 import jakarta.inject.Inject
 import pingcrm.FileService
 import pingcrm.image.ImageProcessor
@@ -35,7 +34,6 @@ import java.awt.image.BufferedImage
  * @author Mattias Reichel
  * @since 1.0.0
  */
-@Slf4j
 @CompileStatic
 @Secured('IS_AUTHENTICATED_REMEMBERED')
 class ImagesController {
@@ -52,7 +50,7 @@ class ImagesController {
 
     def thumbnail(ImageThumbnailCommand cmd) {
 
-        if(!cmd.validate()) { render status: UNPROCESSABLE_ENTITY; return }
+        if (!cmd.validate()) { render status: UNPROCESSABLE_ENTITY; return }
 
         try {
 
@@ -61,7 +59,7 @@ class ImagesController {
             def contentType = 'image/jpg'
             def formatName = 'JPG'
 
-            if(image.type == BufferedImage.TYPE_INT_ARGB) {
+            if (image.type == BufferedImage.TYPE_INT_ARGB) {
                 contentType = 'image/png'
                 formatName = 'PNG'
             }
@@ -70,8 +68,8 @@ class ImagesController {
             ImageIO.write image, formatName, response.outputStream
 
         }
-        catch(FileNotFoundException ignore) { render status: NOT_FOUND }
-        catch(Exception ignore) { render status: INTERNAL_SERVER_ERROR }
+        catch (FileNotFoundException ignore) { render status: NOT_FOUND }
+        catch (Exception ignore) { render status: INTERNAL_SERVER_ERROR }
     }
 }
 

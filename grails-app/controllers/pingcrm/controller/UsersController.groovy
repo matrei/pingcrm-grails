@@ -85,7 +85,7 @@ class UsersController extends AppController<User> {
     def edit(Long id) {
 
         def user = findOrRedirect id
-        if(!user) return null
+        if (!user) return null
 
         def userPublicData = user.publicData editProperties
         addPhotoUrl userPublicData, [w: 60, h: 60, fit: 'crop']
@@ -100,19 +100,19 @@ class UsersController extends AppController<User> {
     def storeUser(UserCommand userCmd) {
 
         // Validate the photo field first. If the max upload size was hit, no other fields will be available
-        if(!userCmd.validate(['photo'])) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate(['photo'])) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
 
-        if(!userCmd.validate()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
 
         def user = userService.createUser userCmd
-        if(userCmd.hasErrors()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (userCmd.hasErrors()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
 
-        if(!user) {
+        if (!user) {
             flash.error = 'Failed to create user.'
             seeOtherRedirect action: 'create'; return
         }
 
-        if(user.hasErrors()) { chain action: 'create', model: [errors: renderErrors(user.errors)]; return }
+        if (user.hasErrors()) { chain action: 'create', model: [errors: renderErrors(user.errors)]; return }
 
         flash.success = 'User created.'
         seeOtherRedirect action: 'index'
@@ -120,13 +120,13 @@ class UsersController extends AppController<User> {
 
     def updateUser(UpdateUserCommand userCmd) {
 
-        if(!userCmd.validate()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
 
         def user = userService.updateUser userCmd
-        if(userCmd.hasErrors()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
+        if (userCmd.hasErrors()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
 
-        if(user.hasErrors()) {
-            if(user.errors.fieldErrors) {
+        if (user.hasErrors()) {
+            if (user.errors.fieldErrors) {
                 chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(user.errors)]; return
             } else {
                 flash.error = 'User not found.'
@@ -141,8 +141,8 @@ class UsersController extends AppController<User> {
     @Override
     def delete(Long id) {
 
-        if(isCurrentUser id) {
-            if(appService.delete User, id) {
+        if (isCurrentUser id) {
+            if (appService.delete User, id) {
                 session.invalidate()
                 seeOtherRedirect controller: 'login'
             } else {
@@ -152,7 +152,7 @@ class UsersController extends AppController<User> {
             return
         }
 
-        if(appService.delete User, id) {
+        if (appService.delete User, id) {
             userService.invalidateSessionsForUserId id
             flash.success = 'User deleted.'
             seeOtherRedirect action: 'edit', id: id; return
@@ -165,7 +165,7 @@ class UsersController extends AppController<User> {
 
     private Map addPhotoUrl(Map user, Map photoParams) {
 
-        if(user.photo) {
+        if (user.photo) {
             def photoUrl = grailsLinkGenerator.link controller: 'images', action: 'thumbnail', params: photoParams + [path: user.photo]
             user.photo = photoUrl
         }

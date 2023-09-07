@@ -18,8 +18,9 @@
             <link rel="stylesheet" href="/static/dist/${inertiaCss}">
         </g:each>
     </g:else>
+    <inertia:head/>
 </head>
 <body class="font-sans leading-none text-slate-700 antialiased">
-<inertia:app>${inertiaPage}</inertia:app>
+<inertia:app/>
 </body>
 </html>

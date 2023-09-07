@@ -6,7 +6,7 @@ import { usePage } from '@inertiajs/vue3'
 const show = ref(true)
 
 const flash = computed(() => usePage().props.flash)
-const errors = computed(() => usePage().props.errors)
+const errors = computed(() => usePage().props.errors || {})
 
 watch (
   () => flash,

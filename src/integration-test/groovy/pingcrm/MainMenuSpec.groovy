@@ -20,7 +20,7 @@ class MainMenuSpec extends GebSpec {
         def page = to testPage
 
         then: 'the corresponding menu item is highlighted'
-        page.menuItemIsSelected()
+        waitFor { page.menuItemIsSelected() }
 
         where: 'the pages are'
         testPage << [DashboardPage, OrganizationListPage, ContactsListPage, ReportsPage, UserListPage, AboutPage]

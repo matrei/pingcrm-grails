@@ -89,7 +89,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def edit(Long id) {
 
         D entity = findOrRedirect(id)
-        if(!entity) return null
+        if (!entity) return null
 
         renderInertia editComponent, currentModel + [
             (entityNameLC): (entity as PublicData).publicData(editProperties)
@@ -99,12 +99,12 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def store() {
 
         D entity = appService.create domainClass, request.JSON
-        if(!entity) {
+        if (!entity) {
             flash.error = "Failed to create $entityNameLC"
             seeOtherRedirect action: 'create'; return
         }
 
-        if(entity.hasErrors()) { chain action: 'create', model: [errors: renderErrors(entity.errors)]; return }
+        if (entity.hasErrors()) { chain action: 'create', model: [errors: renderErrors(entity.errors)]; return }
 
         flash.success = "$entityName created."
         seeOtherRedirect action: 'index'
@@ -113,9 +113,9 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def update(Long id) {
 
         D entity = findOrRedirect id
-        if(!entity) return
+        if (!entity) return
 
-        if(!appService.bindAndSave(domainClass, entity, request.JSON)) {
+        if (!appService.bindAndSave(domainClass, entity, request.JSON)) {
             chain action: 'edit', id: id, model: [errors: renderErrors(entity.errors)]; return
         }
 
@@ -126,7 +126,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def delete(Long id) {
 
         def deleted = appService.delete domainClass, id
-        if(deleted) flash.success = "$entityName deleted."
+        if (deleted) flash.success = "$entityName deleted."
         else flash.error = "Failed to delete $entityNameLC."
 
         seeOtherRedirect action: 'edit', id: id
@@ -135,7 +135,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def restore(Long id) {
 
         def restored = appService.restore domainClass, id
-        if(restored) flash.success = "$entityName restored."
+        if (restored) flash.success = "$entityName restored."
         else flash.error = "Failed to restore $entityNameLC."
 
         seeOtherRedirect action: 'edit', id: id
@@ -143,7 +143,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
 
     private int getTotalCount(List list, Map filters) {
 
-        if(list instanceof PagedResultList) {
+        if (list instanceof PagedResultList) {
             return (list as PagedResultList).totalCount
         }
         appService.count domainClass, filters
@@ -152,7 +152,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     protected D findOrRedirect(Serializable id) {
 
         D entity = errors.hasErrors() ? null : appService.find(domainClass, id)
-        if(!entity) {
+        if (!entity) {
             flash.error = "$entityName not found."
             seeOtherRedirect action: 'index'; return null
         }
