@@ -24,9 +24,11 @@ import io.micronaut.context.annotation.ConfigurationProperties
  * @author Mattias Reichel
  * @since 1.0.0
  */
-@ConfigurationProperties('info.app')
 @CompileStatic
+@ConfigurationProperties(PREFIX)
 class AppInfo {
+
+    private static final String PREFIX = 'info.app'
 
     String name
     String version

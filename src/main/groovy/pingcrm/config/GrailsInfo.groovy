@@ -24,9 +24,11 @@ import io.micronaut.context.annotation.ConfigurationProperties
  * @author Mattias Reichel
  * @since 1.0.0
  */
-@ConfigurationProperties('grails')
 @CompileStatic
+@ConfigurationProperties(PREFIX)
 class GrailsInfo {
+
+    private static final String PREFIX = 'grails'
 
     String profile
 

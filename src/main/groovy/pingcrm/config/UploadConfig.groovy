@@ -25,8 +25,10 @@ import io.micronaut.context.annotation.ConfigurationProperties
  * @since 2.0.5
  */
 @CompileStatic
-@ConfigurationProperties('grails.controllers.upload')
+@ConfigurationProperties(PREFIX)
 class UploadConfig {
+
+    private static final String PREFIX = 'grails.controllers.upload'
 
     long maxFileSize
     //long maxRequestSize
