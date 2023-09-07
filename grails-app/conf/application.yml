@@ -196,7 +196,7 @@ server:
 ---
 inertia:
     ssr:
-        enabled: true
+        enabled: false
         # The default url should preferably be picked up from Inertia Plugins plugin.yml,
         # but sadly is not working when using Micronaut ConfigurationProperties, so I'm setting it here as well.
         # https://github.com/grails/grails-core/issues/11767

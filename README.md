@@ -57,8 +57,14 @@ To create a runnable war for production (in `~/pingcrm-grails/build/libs`)
 ```
 that can be run with:
 ```shell
-java -jar build/libs/pingcrm-grails-2.1.2-SNAPSHOT.war
+java -jar build/libs/pingcrm-grails-3.0.1-SNAPSHOT.war
 ```
+
+## SSR
+To run the application in server-side rendering mode, you need node >= v18 installed on your system.
+SRR is disabled by default. To enable it, set the `inertia.ssr.enabled` config property to `true` in `application.yml`.
+The default location of the SSR bundle is `src/main/resources/ssr/ssr.mjs`.
+You can change it by setting/adding the `inertia.ssr.bundle` config property.
 
 ## Credits
 * Port to Grails by Mattias Reichel (@mattias_reichel)
