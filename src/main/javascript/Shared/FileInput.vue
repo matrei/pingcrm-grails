@@ -7,7 +7,7 @@ const props = defineProps({
   errors: { type: Array, default: () => [] }
 })
 
-const modelValue = defineModel({ type: File })
+const modelValue = defineModel()
 
 const file = ref(null)
 

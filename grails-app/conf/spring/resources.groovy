@@ -1,3 +1,4 @@
+import grails.plugin.inertia.ssr.ServerSideRenderer
 import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
 import pingcrm.SquigglyObjectMapperFactory
@@ -44,4 +45,6 @@ beans = {
         will help us select which properties to send to the client side.
     */
     publicDataMapper(SquigglyObjectMapperFactory)
+
+    serverSideRenderer(ServerSideRenderer)
 }

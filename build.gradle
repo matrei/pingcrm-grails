@@ -124,4 +124,12 @@ tasks.register('viteBuild', NpmTask) {
     args = ['run', 'build']
 }
 
-processResources.dependsOn 'viteBuild'
+tasks.register('copyNodeModulesForSsr', Copy) {
+    dependsOn 'npmInstall'
+    group = 'build'
+    description = 'Copy node_modules for SSR'
+    from 'node_modules'
+    into 'build/resources/main/node_modules'
+}
+
+processResources.dependsOn 'viteBuild', 'copyNodeModulesForSsr'

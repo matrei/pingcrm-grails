@@ -5,4 +5,5 @@ build
 *.iml
 node_modules
 src/main/resources/public/dist
+src/main/resources/ssr
 src/main/webapp/users

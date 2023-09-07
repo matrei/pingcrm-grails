@@ -22,6 +22,7 @@ const props = defineProps({
         <li><strong>Grails version:</strong> {{ info['grailsVersion'] }}</li>
         <li><strong>Groovy version:</strong> {{ info['groovyVersion'] }}</li>
         <li><strong>JVM version:</strong> {{ info['javaVersion'] }}</li>
+        <li><strong>SSR enabled:</strong> {{ info['ssrEnabled'] }}</li>
       </ul>
     </div>
     <h2 class="mt-8 sm:mt-1 mb-4 sm:mb-6 lg:mb-4 font-bold text-2xl">Artefacts</h2>

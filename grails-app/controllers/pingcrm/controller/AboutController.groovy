@@ -52,6 +52,7 @@ class AboutController {
             grailsEnvironment = Environment.current.name
             groovyVersion = GroovySystem.version
             javaVersion = System.getProperty 'java.version'
+            ssrEnabled = grailsApplication.config.getProperty('inertia.ssr.enabled', Boolean, false)
             plugins = pluginManager.allPlugins.collect {[name: it.name, version: it.version] }.sort { it.name }
             numControllers = grailsApplication.getArtefacts('Controller').size()
             numDomains = grailsApplication.getArtefacts('Domain').size()
