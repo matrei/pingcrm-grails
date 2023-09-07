@@ -41,8 +41,8 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
         def errors = [:]
         def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
 
-        if(exception) {
-            switch(exception) {
+        if (exception) {
+            switch (exception) {
                 case AccountExpiredException:        errors.username = messageSource.getMessage 'springSecurity.errors.login.expired',               null, "Account Expired", request.locale; break
                 case CredentialsExpiredException:    errors.password = messageSource.getMessage 'springSecurity.errors.login.passwordExpired',       null, "Password Expired", request.locale; break
                 case DisabledException:              errors.username = messageSource.getMessage 'springSecurity.errors.login.disabled',              null, "Account Disabled", request.locale; break

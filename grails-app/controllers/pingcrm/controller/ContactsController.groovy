@@ -52,7 +52,7 @@ class ContactsController extends AppController<Contact> {
     def edit(Long id) {
 
         def contact = findOrRedirect id
-        if(!contact) return
+        if (!contact) return
 
         def contactPublicData = contact.publicData editProperties
 

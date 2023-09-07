@@ -42,7 +42,7 @@ class OrganizationsController extends AppController<Organization> {
     def edit(Long id) {
 
         def organization = findOrRedirect id
-        if(!organization) return
+        if (!organization) return
 
         def contacts = appService.findAllContactsInOrganization organization
         def contactsPublicData = contacts*.publicData 'id', 'name', 'city', 'phone'
