@@ -38,7 +38,7 @@ class OrganizationCrudSpec extends GebSpec {
         def orgPage = to OrganizationListPage, max: 101
 
         then: 'there are 100 organizations listed'
-        100 == orgPage.table.rowCount
+        waitFor { 100 == orgPage.table.rowCount }
 
         where: 'the user details are'
         user << [ownerUserDetails, nonOwnerUserDetails]
