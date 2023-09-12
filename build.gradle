@@ -98,8 +98,8 @@ tasks.withType(Test).configureEach {
 
     useJUnitPlatform()
 
-    systemProperty "geb.env", System.getProperty('geb.env')
-    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+    systemProperty 'geb.env', System.getProperty('geb.env')
+    systemProperty 'geb.build.reportsDir', reporting.file('geb/integrationTest')
     systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
     systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
 }
