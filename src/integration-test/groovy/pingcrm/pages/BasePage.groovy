@@ -13,7 +13,10 @@ abstract class BasePage extends Page {
         def h1 = delegate.class.heading
         if(h1 == null) throw new IllegalStateException("No heading defined for page ${delegate.class.name}")
 
-        waitFor { h1 == js.exec('return document.querySelector("h1").textContent') }
+        waitFor {
+            h1 == js.exec('return document.querySelector("h1").textContent')
+            menuItemIsSelected // Without this I have gotten StaleElementReferenceException
+        }
     }
 
     static content = {

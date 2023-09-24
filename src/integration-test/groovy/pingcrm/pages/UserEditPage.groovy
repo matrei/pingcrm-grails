@@ -16,7 +16,10 @@ class UserEditPage extends Page {
     String convertToPath(Object[] args) { "/$userId/edit${testServerMaxUploadSizeValidation ? '?testServerMaxUploadSizeValidation' : ''}" }
 
     static btnText = 'Update User'
-    static at = { waitFor { btnText == js.exec('return document.querySelector("[type=submit]").textContent') } }
+    static at = { waitFor {
+        btnText == js.exec('return document.querySelector("[type=submit]").textContent')
+        submitBtn.displayed // Without this I have gotten StaleElementReferenceException
+    } }
 
     static content = {
         submitBtn(to: new UserEditPage(userId)) { $(type: 'submit') }

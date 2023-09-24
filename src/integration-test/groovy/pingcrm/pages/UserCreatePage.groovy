@@ -1,7 +1,6 @@
 package pingcrm.pages
 
 import geb.Page
-import geb.module.EmailInput
 import geb.module.FileInput
 import geb.module.PasswordInput
 import geb.module.Select
@@ -11,7 +10,10 @@ class UserCreatePage extends Page {
 
     static url = '/users/create'
     static btnText = 'Create User'
-    static at = { waitFor { btnText == js.exec('return document.querySelector("[type=submit]").textContent') } }
+    static at = { waitFor {
+        btnText == js.exec('return document.querySelector("[type=submit]").textContent')
+        firstNameField.displayed // Without this I have gotten StaleElementReferenceException
+    } }
 
     static content = {
         firstNameField { $('form').find('input', 0).module(TextInput) }
