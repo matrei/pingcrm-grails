@@ -4,7 +4,7 @@ repositories {
 }
 dependencies {
     implementation "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion" // needed to get latest spring boot version
-    implementation 'org.grails:grails-gradle-plugin:6.0.0'
+    implementation "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
     implementation "org.grails.plugins:views-gradle:3.0.0"
     implementation 'org.grails.plugins:hibernate5:8.0.0'
     implementation 'gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.7'
