@@ -46,7 +46,7 @@ class OrganizationService extends DomainService<Organization> {
     }
 
 
-    @Transactional @Override
+    @ReadOnly @Override
     Organization get(Serializable id, boolean includeDeleted) {
         (includeDeleted ? Organization.withDeleted { Organization.get(id) } : Organization.get(id)) as Organization
     }
