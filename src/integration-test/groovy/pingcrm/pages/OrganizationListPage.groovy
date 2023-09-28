@@ -1,7 +1,5 @@
 package pingcrm.pages
 
-
-import geb.Page
 import pingcrm.modules.PaginationModule
 import pingcrm.modules.TableModule
 
