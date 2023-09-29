@@ -58,7 +58,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation 'io.github.matrei:grails-inertia-plugin:2.0.0'
-    implementation 'org.grails.plugins:spring-security-core:6.0.0'
+    implementation 'org.grails.plugins:spring-security-core:6.0.1'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
     implementation 'net.datafaker:datafaker:1.8.0'
     implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.0'
