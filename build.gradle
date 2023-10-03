@@ -73,14 +73,14 @@ dependencies {
     testImplementation 'io.micronaut:micronaut-inject-groovy'
     testImplementation 'org.grails:grails-gorm-testing-support'
     testImplementation 'org.grails:grails-web-testing-support'
-    testImplementation 'org.grails.plugins:geb'
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver"
-    testImplementation "org.seleniumhq.selenium:selenium-api"
-    testImplementation "org.seleniumhq.selenium:selenium-support"
     testImplementation 'org.spockframework:spock-core'
     testImplementation 'io.micronaut:micronaut-http-client'
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver"
+    integrationTestImplementation 'org.grails.plugins:geb'
+    integrationTestRuntimeOnly 'org.seleniumhq.selenium:selenium-remote-driver'
+    integrationTestRuntimeOnly 'org.seleniumhq.selenium:selenium-api'
+    integrationTestRuntimeOnly 'org.seleniumhq.selenium:selenium-support'
+    integrationTestRuntimeOnly 'org.seleniumhq.selenium:selenium-chrome-driver'
+    integrationTestRuntimeOnly 'org.seleniumhq.selenium:selenium-firefox-driver'
 }
 
 application {
