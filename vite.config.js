@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
@@ -15,11 +17,19 @@ export default defineConfig(({ command }) => ({
     }
   },
 
-  plugins: [vue({
-    script: {
-      defineModel: true
-    }
-  })],
+  plugins: [
+      vue({
+        script: {
+          defineModel: true
+        },
+      }),
+      Components({
+        dirs: ['src/main/javascript/Shared'],
+      }),
+      AutoImport({
+        imports: ['vue']
+      })
+  ],
 
   resolve: {
     alias: {

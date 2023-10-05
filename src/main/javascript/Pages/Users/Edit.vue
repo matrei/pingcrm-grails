@@ -5,13 +5,7 @@ export default { layout }
 
 <script setup>
 
-import {computed, watch} from 'vue'
 import { router, useForm } from '@inertiajs/vue3'
-import TextInput from '@/Shared/TextInput.vue'
-import FileInput from '@/Shared/FileInput.vue'
-import SelectInput from '@/Shared/SelectInput.vue'
-import LoadingButton from '@/Shared/LoadingButton.vue'
-import TrashedMessage from '@/Shared/TrashedMessage.vue'
 import { formatFileSizeBinary } from '@/Use/use-files.js'
 
 const props = defineProps({

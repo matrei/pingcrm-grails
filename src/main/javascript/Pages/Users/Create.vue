@@ -5,12 +5,7 @@ export default { layout }
 
 <script setup>
 
-import { computed, watch } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import FileInput from '@/Shared/FileInput.vue'
-import TextInput from '@/Shared/TextInput.vue'
-import SelectInput from '@/Shared/SelectInput.vue'
-import LoadingButton from '@/Shared/LoadingButton.vue'
 import { formatFileSizeBinary } from '@/Use/use-files.js'
 
 const props = defineProps({

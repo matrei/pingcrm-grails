@@ -1,11 +1,5 @@
 <script setup>
 
-import Icon from '@/Shared/Icon.vue'
-import Logo from '@/Shared/Logo.vue'
-import Dropdown from '@/Shared/Dropdown.vue'
-import MainMenu from '@/Shared/MainMenu.vue'
-import FlashMessages from '@/Shared/FlashMessages.vue'
-
 defineProps({
   auth: { type: Object, default: () => ({}) }
 })

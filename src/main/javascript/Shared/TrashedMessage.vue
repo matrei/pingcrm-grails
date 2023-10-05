@@ -1,7 +1,5 @@
 <script setup>
 
-import Icon from '@/Shared/Icon.vue'
-
 defineEmits(['restore'])
 
 </script>

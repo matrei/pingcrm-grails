@@ -1,7 +1,5 @@
 <script setup>
 
-import { ref, watch } from 'vue'
-
 const props = defineProps({
   id: { type: String, default() { return `select-input-${Math.round(Math.random() * 10000)}` } },
   label: String,

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 
 defineProps({
   id: { type: String, default() { return `textarea-input-${Math.round(Math.random() * 10000)}` } },

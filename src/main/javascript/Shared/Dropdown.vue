@@ -1,6 +1,5 @@
 <script setup>
 
-import { ref, watch, nextTick, onMounted } from 'vue'
 import Popper from 'popper.js'
 
 const props = defineProps({

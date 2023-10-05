@@ -1,7 +1,5 @@
 <script setup>
 
-import Dropdown from '@/Shared/Dropdown.vue'
-
 defineEmits(['reset'])
 
 defineProps({

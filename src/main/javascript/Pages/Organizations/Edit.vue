@@ -6,11 +6,6 @@ export default { layout }
 <script setup>
 
 import { router, useForm } from '@inertiajs/vue3'
-import Icon from '@/Shared/Icon.vue'
-import TextInput from '@/Shared/TextInput.vue'
-import SelectInput from '@/Shared/SelectInput.vue'
-import LoadingButton from '@/Shared/LoadingButton.vue'
-import TrashedMessage from '@/Shared/TrashedMessage.vue'
 
 const props = defineProps({ organization: Object })
 

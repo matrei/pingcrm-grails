@@ -1,6 +1,4 @@
 <script setup>
-import { computed } from 'vue'
-import Logo from "@/Shared/Logo.vue";
 
 const props = defineProps({
   status: Number,

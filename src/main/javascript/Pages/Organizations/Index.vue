@@ -5,13 +5,9 @@ export default { layout }
 
 <script setup>
 
-import { reactive, watch } from 'vue'
 import { router } from '@inertiajs/vue3'
 import pickBy from 'lodash/pickBy'
 import throttle from 'lodash/throttle'
-import Icon from '@/Shared/Icon.vue'
-import Pagination from '@/Shared/Pagination.vue'
-import SearchFilter from '@/Shared/SearchFilter.vue'
 
 const props = defineProps({
   filters: Object,
