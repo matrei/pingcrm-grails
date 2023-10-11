@@ -102,47 +102,44 @@ hibernate:
         use_query_cache: false
     jdbc:
         time_zone: UTC
+
 dataSource:
+    dbCreate: create-drop
+    url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
     pooled: true
-    jmxExport: true
     driverClassName: org.h2.Driver
     username: sa
     password: ''
+    # Uncomment the next two lines to log sql queries (also look in logback.xml)
+    #logSql: true
+    #formatSql: true
+    properties: # https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
+        # autoCommit: true # Default: true
+        # connectionTimeout: 30000 # Default: 30000 (30 seconds)
+        # idleTimeout: 600000 # Default: 600000 (10 minutes)
+        # keepAliveTime: 0 # Default: 0 (disabled)
+        # maxLifetime: 1800000 # Default: 1800000 (30 minutes)
+        # connectionTextQuery: SELECT 1 # Should not be used on JDBC 4+ drivers
+        # minimumIdle: 10 # Default: same as maximumPoolSize
+        # maximumPoolSize: 10 # Default: 10
+        # healthCheckProperties: # This property is only available via programmatic configuration or IoC container.
+        # poolName: myJdbcConnectionPool # Default: auto-generated
+        # initializationFailTimeout: 1 # Default: 1 (second)
+        # isolateInternalQueries: false # Default: false
+        # allowPoolSuspension: false # Default: false
+        # readOnly: false # Default: false
+        # registerMbeans: false # Default: false
+        # catalog: someCatalog # Default: driver default
+        # connectionInitSql: SELECT 1 # Default: none
+        # transactionIsolation: TRANSACTION_READ_COMMITTED # Default: default isolate level (H2 = read committed)
+        # validationTimeout: 5000 # Default: 5000 (5 seconds)
+        # leakDetectionThreshold: 0 # Default: 0 (disabled)
+        # dataSource: # This property is only available via programmatic configuration or IoC container.
+        # schema: # Default: none
+        # threadFactory: # This property is only available via programmatic configuration or IoC container.
+        # scheduledExecutor: # This property is only available via programmatic configuration or IoC container.
 
-environments:
-    development:
-        dataSource:
-            dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
-            # Uncomment the next two lines to log sql queries (also look in logback.xml)
-            #logSql: true
-            #formatSql: true
-    test:
-        dataSource:
-            dbCreate: update
-            url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
-    production:
-        dataSource:
-            dbCreate: create-drop
-            url: jdbc:h2:mem:prodDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+environments.test.dataSource.dbCreate: update
 ---
 grails:
     plugin:

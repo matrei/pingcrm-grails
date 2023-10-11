@@ -69,7 +69,7 @@ dependencies {
     compileOnly 'io.micronaut:micronaut-inject-groovy'
     console 'org.grails:grails-console'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
+    runtimeOnly 'com.zaxxer:HikariCP:5.0.1'
     testImplementation 'io.micronaut:micronaut-inject-groovy'
     testImplementation 'org.grails:grails-gorm-testing-support'
     testImplementation 'org.grails:grails-web-testing-support'
