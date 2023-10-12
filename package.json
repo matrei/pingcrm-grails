@@ -7,7 +7,7 @@
     "build": "vite build && vite build --outDir src/main/resources/ssr --ssr src/main/javascript/ssr.js"
   },
   "dependencies": {
-    "@inertiajs/vue3": "^1.0.11",
+    "@inertiajs/vue3": "^1.0.12",
     "@vue/server-renderer": "^3.3.4",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
