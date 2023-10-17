@@ -59,7 +59,7 @@ dependencies {
     implementation 'io.github.matrei:grails-inertia-plugin:2.0.0'
     implementation 'org.grails.plugins:spring-security-core:6.0.2'
     implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
-    implementation 'net.datafaker:datafaker:1.8.0'
+    implementation 'net.datafaker:datafaker:2.0.2'
     implementation 'dev.nicklasw:squiggly-filter-jackson:2.0.1'
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
     implementation 'org.imgscalr:imgscalr-lib:4.2'
