@@ -8,8 +8,6 @@ const props = defineProps({
 
 const modelValue = defineModel({ type: [String, Number, Boolean] })
 
-const input = ref(null)
-
 </script>
 
 <template>
