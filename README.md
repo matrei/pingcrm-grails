@@ -1,15 +1,17 @@
 # Ping CRM on Grails
 A demo application built with **[Grails](https://grails.org)** and **[Vue.js](https://vuejs.org)** to illustrate how **[Inertia.js](https://inertiajs.com/)** works.\
-This is a port to Grails/Groovy of the [original Ping CRM](https://github.com/inertiajs/pingcrm) written in Laravel/PHP.\
 It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-inertia-plugin) plugin.
+>[!NOTE]
+>This is a port to Grails/Groovy of the [original Ping CRM](https://github.com/inertiajs/pingcrm) written in Laravel/PHP.
 
 ![Screenshot of the Ping CRM application](screenshot.png)
 
-> There is a hosted installation of this demo application available at:\
-> https://pingcrm.mattiasreichel.com
+>[!NOTE]
+> There is a live demo of this application at:
+> **https://pingcrm.mattiasreichel.com**
 > 
-> The demo is running in a container that is recreated and the database is wiped and reseeded every hour.\
->**Please be respectful when editing data**.
+> The demo is running in a container that is destroyed/recreated at the top of every hour.\
+>**Please be respectful when editing data!**
 
 ## Requirements
 - Java 17+
@@ -21,6 +23,7 @@ Clone the repo locally
 git clone https://github.com/matrei/pingcrm-grails.git
 cd pingcrm-grails
 ```
+\
 Install client dependencies
 ```shell
 npm install
@@ -31,10 +34,12 @@ Serve client files with [hot module replacement](https://vitejs.dev/guide/featur
 ```shell
 npm run serve
 ```
+\
 and start the grails application
 ```shell
 ./gradlew bootRun
 ```
+
 ###  ... or in production mode
 with bundled/minified client files
 ```shell
