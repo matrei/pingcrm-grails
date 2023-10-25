@@ -2,7 +2,7 @@ plugins {
     id 'groovy'
     id 'org.grails.grails-web'
     id 'org.grails.grails-gsp'
-    id 'com.github.erdi.webdriver-binaries'
+    id 'com.github.erdi.webdriver-binaries' version '3.2'
     id 'war'
     id 'application'
     id 'idea'

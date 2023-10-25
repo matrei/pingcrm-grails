@@ -7,7 +7,5 @@ dependencies {
     implementation "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
     implementation "org.grails.plugins:views-gradle:3.0.0"
     implementation 'org.grails.plugins:hibernate5:8.0.0'
-    implementation 'gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.7'
-    implementation 'org.ysb33r.gradle:grolifant-herd:2.0.2' // this is used to be able to run webdriver on java 17 https://github.com/erdi/webdriver-binaries-gradle-plugin/issues/30#issuecomment-1378906611
     implementation 'com.github.node-gradle:gradle-node-plugin:3.4.0'
 }
