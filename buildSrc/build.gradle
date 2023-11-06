@@ -7,5 +7,5 @@ dependencies {
     implementation "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
     implementation 'org.grails.plugins:views-gradle:3.1.0'
     implementation 'org.grails.plugins:hibernate5:8.0.1'
-    implementation 'com.github.node-gradle:gradle-node-plugin:3.4.0'
+    implementation 'com.github.node-gradle:gradle-node-plugin:7.0.1'
 }
