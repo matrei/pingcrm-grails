@@ -17,7 +17,6 @@ const props = defineProps({
       <ul>
         <li><strong>App name:</strong> {{ info['name'] }}</li>
         <li><strong>App version:</strong> {{ info['version'] }}</li>
-        <li><strong>Grails profile:</strong> {{ info['grailsProfile'] }}</li>
         <li><strong>Grails env:</strong> {{ info['grailsEnvironment'] }}</li>
         <li><strong>Grails version:</strong> {{ info['grailsVersion'] }}</li>
         <li><strong>Groovy version:</strong> {{ info['groovyVersion'] }}</li>

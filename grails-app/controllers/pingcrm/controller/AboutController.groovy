@@ -22,7 +22,6 @@ import grails.util.Environment
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 import pingcrm.config.AppInfo
-import pingcrm.config.GrailsInfo
 
 /**
  * A controller that renders the about page.
@@ -40,7 +39,6 @@ class AboutController {
 
     @Inject
     AboutController(AppInfo appInfo,
-                    GrailsInfo grailsInfo,
                     GrailsApplication grailsApplication,
                     GrailsPluginManager pluginManager)
     {
@@ -48,7 +46,6 @@ class AboutController {
             name = appInfo.name
             version = appInfo.version
             grailsVersion = appInfo.grailsVersion
-            grailsProfile = grailsInfo.profile
             grailsEnvironment = Environment.current.name
             groovyVersion = GroovySystem.version
             javaVersion = System.getProperty 'java.version'
