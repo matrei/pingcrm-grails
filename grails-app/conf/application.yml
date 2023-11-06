@@ -1,22 +1,9 @@
-grails:
-    profile: web
-    codegen:
-        defaultPackage: pingcrm
-    gorm:
-        reactor:
-            # Whether to translate GORM events into Reactor events
-            # Disabled by default for performance reasons
-            events: false
-    controllers:
-        upload:
-            maxFileSize: 524288
-            maxRequestSize: 1048576
 info:
     app:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
-
+---
 spring:
     jmx:
         unique-names: true
@@ -37,13 +24,23 @@ spring:
 
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
-
+---
 management:
     endpoints:
         enabled-by-default: false
 
 ---
 grails:
+    gorm:
+        reactor:
+            # Whether to translate GORM events into Reactor events
+            # Disabled by default for performance reasons
+            events: false
+    controllers:
+        default-scope: singleton
+        upload:
+            max-file-size: 524288
+            max-request-size: 1048576
     mime:
         disable:
             accept:
@@ -79,8 +76,6 @@ grails:
     urlmapping:
         cache:
             maxsize: 1000
-    controllers:
-        defaultScope: singleton
     converters:
         encoding: UTF-8
     views:
@@ -94,6 +89,41 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
+    plugin:
+        springsecurity:
+            auth.loginFormUrl: /login
+            authority.className: pingcrm.auth.Role
+            userLookup:
+                userDomainClassName: pingcrm.User
+                authorityJoinClassName: pingcrm.auth.UserRole
+            rememberMe:
+                cookieName: pingcrm-remember-me
+                key: this-should-be-unique-per-application
+                sameSite: Lax
+
+            controllerAnnotations.staticRules:
+                - pattern: '/'
+                  access: ['permitAll']
+                - pattern: '/error'
+                  access: ['permitAll']
+                - pattern: '/**/favicon.ico'
+                  access: ['permitAll']
+                - pattern: '/static/**'
+                  access: ['permitAll']
+                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
+                # - pattern: '/h2-console/**'
+                #   access: ['permitAll']
+            filterChain.chainMap:
+                - pattern: '/**/favicon.ico'
+                  filters: 'none'
+                - pattern: '/static/**'
+                  filters: 'none'
+                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
+                # - pattern: '/h2-console/**'
+                #   filters: 'none'
+                - pattern: '/**'
+                  filters: 'JOINED_FILTERS'
+
 ---
 hibernate:
     cache:
@@ -102,7 +132,7 @@ hibernate:
         use_query_cache: false
     jdbc:
         time_zone: UTC
-
+---
 dataSource:
     dbCreate: create-drop
     url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
@@ -140,42 +170,6 @@ dataSource:
         # scheduledExecutor: # This property is only available via programmatic configuration or IoC container.
 
 environments.test.dataSource.dbCreate: update
----
-grails:
-    plugin:
-        springsecurity:
-            auth.loginFormUrl: /login
-            authority.className: pingcrm.auth.Role
-            userLookup:
-                userDomainClassName: pingcrm.User
-                authorityJoinClassName: pingcrm.auth.UserRole
-            rememberMe:
-                cookieName: pingcrm-remember-me
-                key: this-should-be-unique-per-application
-                sameSite: Lax
-
-            controllerAnnotations.staticRules:
-                - pattern: '/'
-                  access: ['permitAll']
-                - pattern: '/error'
-                  access: ['permitAll']
-                - pattern: '/**/favicon.ico'
-                  access: ['permitAll']
-                - pattern: '/static/**'
-                  access: ['permitAll']
-                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
-                # - pattern: '/h2-console/**'
-                #   access: ['permitAll']
-            filterChain.chainMap:
-                - pattern: '/**/favicon.ico'
-                  filters: 'none'
-                - pattern: '/static/**'
-                  filters: 'none'
-                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
-                # - pattern: '/h2-console/**'
-                #   filters: 'none'
-                - pattern: '/**'
-                  filters: 'JOINED_FILTERS'
 ---
 server:
     servlet:
