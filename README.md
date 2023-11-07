@@ -62,7 +62,7 @@ To create a runnable war for production (in `~/pingcrm-grails/build/libs`)
 ```
 that can be run with:
 ```shell
-java -jar build/libs/pingcrm-grails-3.0.2-SNAPSHOT.war
+java -jar build/libs/pingcrm-grails-3.1.1-SNAPSHOT.war
 ```
 
 ## SSR
