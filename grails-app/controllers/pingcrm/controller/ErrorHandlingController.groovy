@@ -33,7 +33,7 @@ class ErrorHandlingController {
          * This will pop up in a modal window, which is useful for debugging.
          */
         if(development) {
-            request.setAttribute Inertia.INERTIA_ATTRIBUTE_CANCEL_INERTIA, true
+            Inertia.cancel()
             return new ModelAndView(viewName: status == 404 ? '/notFound': '/error')
         }
 
