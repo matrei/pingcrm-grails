@@ -24,6 +24,9 @@ configurations {
             if (details.requested.group == 'org.seleniumhq.selenium') {
                 details.useVersion "$seleniumVersion"
             }
+            if (details.requested.group == 'org.gebish') {
+                details.useVersion "$gebVersion"
+            }
         }
     }
 }
