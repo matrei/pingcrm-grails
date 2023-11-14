@@ -62,7 +62,7 @@ dependencies {
     implementation 'org.grails.plugins:hibernate5'
     implementation 'org.grails.plugins:async'
     implementation 'org.grails.plugins:spring-security-core:6.1.0'
-    implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.M2'
+    implementation 'org.grails.plugins:gorm-logical-delete:2.0.0.BUILD-SNAPSHOT'
     implementation 'io.github.matrei:grails-inertia-plugin:2.1.0'
     //implementation project(':grails-inertia-plugin')
 
