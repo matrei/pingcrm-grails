@@ -66,7 +66,7 @@ dependencies {
     implementation 'io.github.matrei:grails-inertia-plugin:2.1.0'
     //implementation project(':grails-inertia-plugin')
 
-    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    implementation 'org.hibernate:hibernate-core:6.3.1.Final'
 
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework.boot:spring-boot-starter'
