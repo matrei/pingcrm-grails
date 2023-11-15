@@ -7,7 +7,6 @@ import org.openqa.selenium.firefox.GeckoDriverService
 private static FirefoxDriver createFirefoxDriver(FirefoxOptions options = new FirefoxOptions()) {
     def osName = System.getProperty('os.name').toLowerCase()
     def profileRoot = osName.contains('linux') && new File('/snap/firefox').exists() ? createProfileRootInUserHome() : null
-    println "profileRoot: ${profileRoot}"
     profileRoot ? new FirefoxDriver(createGeckoDriverService(profileRoot), options) : new FirefoxDriver(options)
 }
 
