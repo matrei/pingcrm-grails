@@ -1,4 +1,4 @@
-name: Java CI
+name: Tests
 on: pull_request
 jobs:
   gradle:
