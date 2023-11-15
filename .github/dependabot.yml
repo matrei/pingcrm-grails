@@ -9,9 +9,6 @@
       open-pull-requests-limit: 10
       labels:
         - "type: dependency upgrade"
-      ignore:
-        - dependency-name: "*"
-          versions: ["*-SNAPSHOT"]
 
     - package-ecosystem: "npm"
       directory: "/"
