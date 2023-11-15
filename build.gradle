@@ -83,7 +83,7 @@ dependencies {
     console 'org.grails:grails-console'
 
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'com.zaxxer:HikariCP:5.0.1'
+    runtimeOnly 'com.zaxxer:HikariCP:5.1.0'
 
     testImplementation 'io.micronaut:micronaut-inject-groovy'
     testImplementation 'org.grails:grails-gorm-testing-support'
