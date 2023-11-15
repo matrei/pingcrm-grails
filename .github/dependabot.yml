@@ -1,5 +1,7 @@
   version: 2
+
   updates:
+
     - package-ecosystem: "gradle"
       directory: "/"
       schedule:
@@ -7,6 +9,10 @@
       open-pull-requests-limit: 10
       labels:
         - "type: dependency upgrade"
+      ignore:
+        - dependency-name: "*"
+          versions: ["*-SNAPSHOT"]
+
     - package-ecosystem: "npm"
       directory: "/"
       schedule:
