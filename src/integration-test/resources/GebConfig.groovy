@@ -1,6 +1,42 @@
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.FirefoxOptions
+import org.openqa.selenium.firefox.GeckoDriverService
+
+private static FirefoxDriver createFirefoxDriver(FirefoxOptions options = new FirefoxOptions()) {
+    def osName = System.getProperty('os.name').toLowerCase()
+    def profileRoot = osName.contains('linux') && new File('/snap/firefox').exists() ? createProfileRootInUserHome() : null
+    println "profileRoot: ${profileRoot}"
+    profileRoot ? new FirefoxDriver(createGeckoDriverService(profileRoot), options) : new FirefoxDriver(options)
+}
+
+private static String createProfileRootInUserHome() {
+    def profileRoot = [System.getProperty('user.home'), 'snap/firefox/common/.firefox-profile-root'] as File
+    if ( ! profileRoot.exists()) {
+        if ( ! profileRoot.mkdirs()) {
+            return null
+        }
+    }
+    profileRoot.absolutePath
+}
+
+private static GeckoDriverService createGeckoDriverService(String tmpProfileDir) {
+    new GeckoDriverService.Builder() {
+        @Override
+        protected List<String> createArgs() {
+            def args = new ArrayList(super.createArgs())
+            def idx = args.indexOf('--profile-root')
+            if (idx > -1) {
+                args.remove(idx + 1)
+                args.remove(idx)
+            }
+            args.add '--profile-root'
+            args.add tmpProfileDir
+            args
+        }
+    }.build()
+}
 
 environments {
 
@@ -13,14 +49,22 @@ environments {
     chromeHeadless {
         driver = {
             ChromeOptions o = new ChromeOptions()
-            o.addArguments('headless=new')
-            o.addArguments('--remote-allow-origins=*')
+            o.addArguments '--headless=new'
+            o.addArguments '--remote-allow-origins=*'
             new ChromeDriver(o)
         }
     }
 
     // run via “./gradlew -Dgeb.env=firefox iT”
     firefox {
-        driver = { new FirefoxDriver() }
+        driver = { createFirefoxDriver() }
+    }
+
+    firefoxHeadless {
+        driver = {
+            FirefoxOptions o = new FirefoxOptions()
+            o.addArguments '-headless'
+            createFirefoxDriver o
+        }
     }
 }
