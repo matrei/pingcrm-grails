@@ -1,0 +1,74 @@
+[versions]
+datafaker = '2.0.2'
+geb = '6.0'
+gorm-logical-delete = '2.0.0.M2'
+grails = '6.1.0'
+grails-gradle-plugin = '6.1.0'
+grails-hibernate5 = '8.0.1'
+grails-inertia = '2.1.0'
+grails-spring-security-core = '6.1.0'
+grails-views = '3.1.0'
+groovy = '3.0.19'
+h2database = '2.2.224'
+hibernate = '5.6.15.Final'
+hikari = '5.1.0'
+imgscalr = '4.2'
+metadata-extractor = '2.18.0'
+node-gradle-plugin = '7.0.1'
+snakeyaml = '2.2'
+spring = '5.3.30'
+spring-boot = '2.7.17'
+spring-security = '5.8.8'
+tomcat = '9.0.82'
+selenium = '4.15.0'
+squiggly = '2.0.1'
+
+[libraries]
+datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
+geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
+geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
+grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
+grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
+grails-spring-security-core = { module = 'org.grails.plugins:spring-security-core', version.ref = 'grails-spring-security-core' }
+groovy-core = { module = 'org.codehaus.groovy:groovy', version.ref = 'groovy' }
+groovy-ant = { module = 'org.codehaus.groovy:groovy-ant', version.ref = 'groovy' }
+groovy-groovydoc = { module = 'org.codehaus.groovy:groovy-groovydoc', version.ref = 'groovy' }
+groovy-jmx = { module = 'org.codehaus.groovy:groovy-jmx', version.ref = 'groovy' }
+groovy-json = { module = 'org.codehaus.groovy:groovy-json', version.ref = 'groovy' }
+groovy-macro = { module = 'org.codehaus.groovy:groovy-macro', version.ref = 'groovy' }
+groovy-sql = { module = 'org.codehaus.groovy:groovy-sql', version.ref = 'groovy' }
+groovy-templates = { module = 'org.codehaus.groovy:groovy-templates', version.ref = 'groovy' }
+groovy-test = { module = 'org.codehaus.groovy:groovy-test', version.ref = 'groovy' }
+groovy-xml = { module = 'org.codehaus.groovy:groovy-xml', version.ref = 'groovy' }
+h2database = { module = 'com.h2database:h2', version.ref = 'h2database' }
+hibernate-core = { module = 'org.hibernate:hibernate-core', version.ref = 'hibernate' }
+hikari = { module = 'com.zaxxer:HikariCP', version.ref = 'hikari' }
+imgscalr = { module = 'org.imgscalr:imgscalr-lib', version.ref = 'imgscalr' }
+metadata-extractor = { module = 'com.drewnoakes:metadata-extractor', version.ref = 'metadata-extractor' }
+selenium-api = { module = 'org.seleniumhq.selenium:selenium-api', version.ref = 'selenium' }
+selenium-chrome-driver = { module = 'org.seleniumhq.selenium:selenium-chrome-driver', version.ref = 'selenium' }
+selenium-chromium-driver = { module = 'org.seleniumhq.selenium:selenium-chromium-driver', version.ref = 'selenium' }
+selenium-devtools-v85 = { module = 'org.seleniumhq.selenium:selenium-devtools-v85', version.ref = 'selenium' }
+selenium-firefox-driver = { module = 'org.seleniumhq.selenium:selenium-firefox-driver', version.ref = 'selenium' }
+selenium-http = { module = 'org.seleniumhq.selenium:selenium-http', version.ref = 'selenium' }
+selenium-json = { module = 'org.seleniumhq.selenium:selenium-json', version.ref = 'selenium' }
+selenium-remote-driver = { module = 'org.seleniumhq.selenium:selenium-remote-driver', version.ref = 'selenium' }
+selenium-support = { module = 'org.seleniumhq.selenium:selenium-support', version.ref = 'selenium' }
+snakeyaml = { module = 'org.yaml:snakeyaml', version.ref = 'snakeyaml' }
+spring-security-core = { module = 'org.springframework.security:spring-security-core', version.ref = 'spring-security' }
+spring-security-crypto = { module = 'org.springframework.security:spring-security-crypto', version.ref = 'spring-security' }
+spring-security-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
+squiggly = { module = 'dev.nicklasw:squiggly-filter-jackson', version.ref = 'squiggly' }
+
+# plugins
+node-gradle-plugin = { module = 'com.github.node-gradle:gradle-node-plugin', version.ref = 'node-gradle-plugin' }
+grails-gradle-plugin = { module = 'org.grails:grails-gradle-plugin', version.ref = 'grails-gradle-plugin' }
+grails-views-gradle-plugin = { module = 'org.grails.plugins:views-gradle', version.ref = 'grails-views' }
+spring-boot-gradle-plugin = { module = 'org.springframework.boot:spring-boot-gradle-plugin', version.ref = 'spring-boot' }
+grails-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'grails-hibernate5' }
+
+[bundles]
+geb = ['geb-core', 'geb-spock']
+groovy = ['groovy-core', 'groovy-ant', 'groovy-groovydoc', 'groovy-jmx', 'groovy-json', 'groovy-macro', 'groovy-sql', 'groovy-templates', 'groovy-xml']
+selenium = ['selenium-api', 'selenium-chrome-driver', 'selenium-chromium-driver', 'selenium-devtools-v85', 'selenium-firefox-driver', 'selenium-http', 'selenium-json', 'selenium-remote-driver', 'selenium-support']
+spring-security = ['spring-security-core', 'spring-security-crypto', 'spring-security-web']

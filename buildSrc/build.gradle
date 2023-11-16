@@ -1,15 +1,16 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://repo.grails.org/grails/core' }
 }
 
-def versions = new Properties()
-versions.load(new FileInputStream(file('../gradle.properties')))
-
 dependencies {
-    implementation "org.springframework.boot:spring-boot-gradle-plugin:$versions.springBootVersion" // needed to get latest spring boot version
-    implementation "org.grails:grails-gradle-plugin:$versions.grailsGradlePluginVersion"
-    implementation 'org.grails.plugins:views-gradle:3.1.0'
-    implementation 'org.grails.plugins:hibernate5:8.0.1'
-    implementation 'com.github.node-gradle:gradle-node-plugin:7.0.1'
+    implementation libs.spring.boot.gradle.plugin
+    implementation libs.grails.gradle.plugin
+    implementation libs.grails.views.gradle.plugin
+    implementation libs.grails.hibernate5
+    implementation libs.node.gradle.plugin
 }

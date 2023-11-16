@@ -1,0 +1,9 @@
+rootProject.name = 'pingcrm-grails'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files('../gradle/libs.versions.toml'))
+        }
+    }
+}
