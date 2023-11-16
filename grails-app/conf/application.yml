@@ -186,6 +186,8 @@ server:
           enabled: false
 ---
 inertia:
+    manifest:
+        location: 'classpath:public/dist/.vite/manifest.json'
     ssr:
         enabled: false
         # The default url should preferably be picked up from Inertia Plugins plugin.yml,
