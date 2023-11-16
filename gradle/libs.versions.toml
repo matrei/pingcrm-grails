@@ -60,7 +60,7 @@ spring-security-crypto = { module = 'org.springframework.security:spring-securit
 spring-security-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
 squiggly = { module = 'dev.nicklasw:squiggly-filter-jackson', version.ref = 'squiggly' }
 
-# plugins
+# plugins - defined as libraries to allow for inclusion in buildSrd
 node-gradle-plugin = { module = 'com.github.node-gradle:gradle-node-plugin', version.ref = 'node-gradle-plugin' }
 grails-gradle-plugin = { module = 'org.grails:grails-gradle-plugin', version.ref = 'grails-gradle-plugin' }
 grails-views-gradle-plugin = { module = 'org.grails.plugins:views-gradle', version.ref = 'grails-views' }
