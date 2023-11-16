@@ -145,4 +145,6 @@ tasks.register('copyNodeModulesForSsr', Copy) {
     into 'build/resources/main/node_modules'
 }
 
-processResources.dependsOn 'viteBuild', 'copyNodeModulesForSsr'
+tasks.named('processResources').configure {
+    dependsOn 'viteBuild', 'copyNodeModulesForSsr'
+}
