@@ -9,6 +9,15 @@
       open-pull-requests-limit: 10
       labels:
         - "type: dependency upgrade"
+      ignore:
+        - dependency-name: "org.springframework.boot:spring-boot-starter-plugin"
+          update-types: ["version-update:semver-major"]
+        - dependency-name: "org.springframework.security:spring-security-core"
+          update-types: ["version-update:semver-major"]
+        - dependency-name: "org.gebish:geb-core"
+          update-types: ["version-update:semver-major"]
+        - dependency-name: "org.gebish:geb-spock"
+          update-types: ["version-update:semver-major"]
 
     - package-ecosystem: "npm"
       directory: "/"
