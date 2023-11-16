@@ -1,5 +1,5 @@
 # Ping CRM on Grails
-[![Java CI](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml)
+[![Java CI](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml/badge.svg?event=push)](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml)
 
 A demo application built with **[Grails](https://grails.org)** and **[Vue.js](https://vuejs.org)** to illustrate how **[Inertia.js](https://inertiajs.com/)** works.\
 It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-inertia-plugin) plugin.
