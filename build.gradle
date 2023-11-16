@@ -90,7 +90,7 @@ dependencies {
 }
 
 application {
-    mainClass.set 'pingcrm.Application'
+    mainClass = 'pingcrm.Application'
 }
 
 java {
@@ -116,6 +116,7 @@ tasks.withType(Test).configureEach {
 tasks.withType(War).configureEach { War war ->
     war.dependsOn compileGroovyPages
 }
+
 webdriverBinaries {
     chromedriver {
         version = '110.0.5481.77'
@@ -124,7 +125,6 @@ webdriverBinaries {
     geckodriver = '0.32.2'
     edgedriver = '110.0.1587.57'
 }
-
 
 node {
     download = true
