@@ -9,10 +9,9 @@
   },
   "dependencies": {
     "@inertiajs/vue3": "^1.0.14",
-    "@vue/server-renderer": "^3.3.8",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
-    "vue": "^3.3.8"
+    "vue": "^3.3.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
