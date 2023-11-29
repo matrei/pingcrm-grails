@@ -105,6 +105,8 @@ tasks.withType(Test).configureEach {
 
     testLogging {
         events 'passed', 'skipped', 'failed'
+        showStackTraces = true
+        showStandardStreams = true
     }
 
     systemProperty 'geb.env', System.getProperty('geb.env')
