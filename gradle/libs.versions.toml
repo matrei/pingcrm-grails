@@ -19,7 +19,7 @@ selenium = '4.15.0'
 snakeyaml = '2.2'
 spring = '5.3.30'
 spring-boot = '2.7.18'
-spring-security = '5.8.8'
+spring-security = '6.2.0'
 squiggly = '2.0.1'
 tomcat = '9.0.82'
 
