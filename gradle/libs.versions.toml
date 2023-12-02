@@ -1,6 +1,6 @@
 [versions]
 datafaker = '2.0.2'
-geb = '6.0'
+geb = '7.0'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.1.0'
 grails-gradle-plugin = '6.1.0'
