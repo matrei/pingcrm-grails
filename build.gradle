@@ -133,18 +133,27 @@ node {
 }
 
 tasks.register('viteBuild', NpmTask) {
-    dependsOn 'npmInstall'
-    group = 'build'
     description = 'Build the client bundle'
+    group = 'build'
+
+    inputs.files(fileTree('node_modules'))
+    inputs.files(fileTree('src/main/javascript'))
+    inputs.files('package.json', 'vite.config.js', 'tailwind.config.js', 'postcss.config.js', 'babel.config.js', 'jsconfig.json')
+
+    outputs.dir('src/main/resources/public/dist')
+
+    dependsOn 'npmInstall'
     args = ['run', 'build']
 }
 
 tasks.register('copyNodeModulesForSsr', Copy) {
-    dependsOn 'npmInstall'
     group = 'build'
     description = 'Copy node_modules for SSR'
+
     from 'node_modules'
     into 'build/resources/main/node_modules'
+
+    dependsOn 'npmInstall'
 }
 
 tasks.named('processResources') {
