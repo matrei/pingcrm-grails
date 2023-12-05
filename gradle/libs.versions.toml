@@ -8,6 +8,8 @@ grails-hibernate5 = '8.0.1'
 grails-inertia = '2.1.0'
 grails-spring-security-core = '6.1.0'
 grails-views = '3.1.0'
+grails-async = '5.0.0'
+grails-events = '5.0.0'
 groovy = '3.0.19'
 h2database = '2.2.224'
 hibernate = '5.6.15.Final'
@@ -27,6 +29,8 @@ tomcat = '9.0.82'
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
 geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
 geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
+grails-async = { module = 'org.grails.plugins:async', version.ref = 'grails-async' }
+grails-events = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
 grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
 grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
 grails-spring-security-core = { module = 'org.grails.plugins:spring-security-core', version.ref = 'grails-spring-security-core' }
