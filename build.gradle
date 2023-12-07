@@ -105,9 +105,7 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
 
     testLogging {
-        events 'passed', 'skipped', 'failed'
-        showStackTraces = true
-        showStandardStreams = true
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
     }
 
     systemProperty 'geb.env', System.getProperty('geb.env')
