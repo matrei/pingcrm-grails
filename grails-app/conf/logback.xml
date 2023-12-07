@@ -24,7 +24,7 @@
     <!--<logger name="org.springframework.security" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
 
     <!-- Uncomment next line to log inertia plugin -->
-    <!--<logger name="se.originalab.grails.inertia" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
+    <!--<logger name="grails.plugin.inertia" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
 
     <!-- Uncomment next two lines to log grails web mapping -->
     <!--<logger name="org.grails.web.mapping" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
