@@ -142,7 +142,7 @@ class UserCrudSpec extends GebSpec {
         userListPage.flashSuccess == 'User created.'
 
         and: 'the avatar image is shown'
-        waitFor { js.exec userListPage.firstAvatarImage, 'return arguments[0].complete' }
+        waitFor(10, 0.5) { js.exec userListPage.firstAvatarImage, 'return arguments[0].complete' }
         js.exec(userListPage.firstAvatarImage, 'return arguments[0].naturalHeight') > 0
 
         cleanup: 'remove the generated avatar image'
