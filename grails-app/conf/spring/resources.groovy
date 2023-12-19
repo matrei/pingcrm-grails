@@ -4,6 +4,7 @@ import pingcrm.SessionTracker
 import pingcrm.SquigglyObjectMapperFactory
 import pingcrm.UserPasswordEncoderListener
 import pingcrm.controller.MaxFileUploadSizeResolver
+import pingcrm.controller.ResourceCachingConfig
 import pingcrm.image.ScalrImageProcessor
 import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
 import grails.plugin.springsecurity.SpringSecurityUtils
@@ -47,4 +48,6 @@ beans = {
     publicDataMapper(SquigglyObjectMapperFactory)
 
     serverSideRenderer(ServerSideRenderer)
+
+    resourceCachingConfig(ResourceCachingConfig)
 }
