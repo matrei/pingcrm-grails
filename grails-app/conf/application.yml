@@ -37,10 +37,10 @@ grails:
             # Disabled by default for performance reasons
             events: false
     controllers:
-        default-scope: singleton
+        defaultScope: singleton
         upload:
-            max-file-size: 524288
-            max-request-size: 1048576
+            maxFileSize: 524288
+            maxRequestSize: 1048576
     mime:
         disable:
             accept:
