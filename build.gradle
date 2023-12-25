@@ -39,7 +39,6 @@ dependencies {
     implementation 'org.grails:grails-plugin-databinding'
     implementation 'org.grails:grails-plugin-i18n'
     implementation 'org.grails:grails-plugin-interceptors'
-    implementation 'org.grails:grails-plugin-rest'
     implementation 'org.grails:grails-plugin-services'
     implementation 'org.grails:grails-plugin-url-mappings'
     implementation 'org.grails:grails-web-boot'
@@ -47,7 +46,6 @@ dependencies {
     implementation 'org.grails.plugins:gsp'
     implementation 'org.grails.plugins:views-json'
     implementation 'org.grails.plugins:hibernate5'
-    implementation libs.grails.async
     implementation libs.grails.events
     implementation libs.grails.spring.security.core
     implementation libs.bundles.spring.security
