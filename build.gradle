@@ -37,6 +37,7 @@ dependencies {
     implementation 'org.grails:grails-core'
     implementation 'org.grails:grails-logging'
     implementation 'org.grails:grails-plugin-databinding'
+    implementation 'org.grails:grails-plugin-controllers'
     implementation 'org.grails:grails-plugin-i18n'
     implementation 'org.grails:grails-plugin-interceptors'
     implementation 'org.grails:grails-plugin-services'
