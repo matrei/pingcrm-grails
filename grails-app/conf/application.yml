@@ -12,15 +12,6 @@ spring:
     groovy:
         template:
             check-template-location: false
-    devtools:
-        restart:
-            additional-exclude:
-                - '*.gsp'
-                - '**/*.gsp'
-                - '*.gson'
-                - '**/*.gson'
-                - 'logback.groovy'
-                - '*.properties'
 
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
@@ -31,11 +22,6 @@ management:
 
 ---
 grails:
-    gorm:
-        reactor:
-            # Whether to translate GORM events into Reactor events
-            # Disabled by default for performance reasons
-            events: false
     controllers:
         defaultScope: singleton
         upload:
