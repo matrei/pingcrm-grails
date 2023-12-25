@@ -4,22 +4,8 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 ---
-spring:
-    jmx:
-        unique-names: true
-    main:
-        banner-mode: "off"
-    groovy:
-        template:
-            check-template-location: false
-
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
----
-management:
-    endpoints:
-        enabled-by-default: false
-
 ---
 grails:
     controllers:
