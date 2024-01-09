@@ -32,10 +32,13 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @CompileStatic
 class LoginController extends grails.plugin.springsecurity.LoginController {
 
-    def index() { renderInertia'Auth/Login' }
+    @Override
+    def index() { renderInertia 'Auth/Login' }
 
+    @Override
     def authAjax() { redirect controller: 'login' }
 
+    @Override
     def authfail() {
 
         def errors = [:]
@@ -55,7 +58,9 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
         chain controller: 'login', model: [errors: errors]
     }
 
+    @Override
     def denied() { renderInertia 'Error/Index', [status: 403] }
 
+    @Override
     def ajaxDenied() { denied() }
 }
