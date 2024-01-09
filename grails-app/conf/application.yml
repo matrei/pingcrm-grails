@@ -3,10 +3,8 @@ info:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
----
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
----
 grails:
     controllers:
         defaultScope: singleton
@@ -72,7 +70,6 @@ grails:
                 cookieName: pingcrm-remember-me
                 key: this-should-be-unique-per-application
                 sameSite: Lax
-
             controllerAnnotations.staticRules:
                 - pattern: '/'
                   access: ['permitAll']
@@ -95,8 +92,6 @@ grails:
                 #   filters: 'none'
                 - pattern: '/**'
                   filters: 'JOINED_FILTERS'
-
----
 hibernate:
     cache:
         queries: false
@@ -104,7 +99,6 @@ hibernate:
         use_query_cache: false
     jdbc:
         time_zone: UTC
----
 dataSource:
     dbCreate: create-drop
     url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
@@ -142,7 +136,6 @@ dataSource:
         # scheduledExecutor: # This property is only available via programmatic configuration or IoC container.
 
 environments.test.dataSource.dbCreate: update
----
 server:
     servlet:
         session:
@@ -156,7 +149,6 @@ server:
     error:
         whitelabel:
           enabled: false
----
 inertia:
     manifest:
         location: 'classpath:public/dist/.vite/manifest.json'
