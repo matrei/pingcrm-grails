@@ -8,9 +8,15 @@ repositories {
 }
 
 dependencies {
-    implementation libs.spring.boot.gradle.plugin
-    implementation libs.grails.gradle.plugin
-    implementation libs.grails.views.gradle.plugin
-    implementation libs.grails.hibernate5
-    implementation libs.node.gradle.plugin
+
+    implementation buildsrcLibs.spring.boot.gradle.plugin
+
+    implementation buildsrcLibs.grails.gradle.plugin
+    implementation buildsrcLibs.grails.views.gradle.plugin
+
+    implementation buildsrcLibs.grails.hibernate5
+
+    implementation buildsrcLibs.node.gradle.plugin
+    implementation buildsrcLibs.webdriver.binaries.gradle.plugin
+
 }

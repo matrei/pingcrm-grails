@@ -3,11 +3,8 @@ datafaker = '2.1.0'
 geb = '6.0'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.1.1'
-grails-gradle-plugin = '6.1.1'
-grails-hibernate5 = '8.0.2'
 grails-inertia = '2.1.1'
 grails-spring-security-core = '6.1.1'
-grails-views = '3.1.1'
 grails-async = '5.0.2'
 grails-events = '5.0.2'
 groovy = '3.0.20'
@@ -16,14 +13,10 @@ hibernate = '5.6.15.Final'
 hikari = '5.1.0'
 imgscalr = '4.2'
 metadata-extractor = '2.19.0'
-node-gradle-plugin = '7.0.1'
 selenium = '4.16.1'
 snakeyaml = '2.2'
-spring = '5.3.30'
-spring-boot = '2.7.18'
 spring-security = '5.8.9'
 squiggly = '2.0.1'
-tomcat = '9.0.82'
 
 [libraries]
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
@@ -63,13 +56,6 @@ spring-security-core = { module = 'org.springframework.security:spring-security-
 spring-security-crypto = { module = 'org.springframework.security:spring-security-crypto', version.ref = 'spring-security' }
 spring-security-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
 squiggly = { module = 'dev.nicklasw:squiggly-filter-jackson', version.ref = 'squiggly' }
-
-# plugins - defined as libraries to allow for inclusion in buildSrd
-node-gradle-plugin = { module = 'com.github.node-gradle:gradle-node-plugin', version.ref = 'node-gradle-plugin' }
-grails-gradle-plugin = { module = 'org.grails:grails-gradle-plugin', version.ref = 'grails-gradle-plugin' }
-grails-views-gradle-plugin = { module = 'org.grails.plugins:views-gradle', version.ref = 'grails-views' }
-spring-boot-gradle-plugin = { module = 'org.springframework.boot:spring-boot-gradle-plugin', version.ref = 'spring-boot' }
-grails-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'grails-hibernate5' }
 
 [bundles]
 geb = ['geb-core', 'geb-spock']
