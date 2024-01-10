@@ -14,8 +14,6 @@ dependencies {
     implementation buildsrcLibs.grails.gradle.plugin
     implementation buildsrcLibs.grails.views.gradle.plugin
 
-    implementation buildsrcLibs.grails.hibernate5
-
     implementation buildsrcLibs.node.gradle.plugin
     implementation buildsrcLibs.webdriver.binaries.gradle.plugin
 
