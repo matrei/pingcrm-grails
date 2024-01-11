@@ -1,12 +1,15 @@
 [versions]
 node-gradle-plugin = '7.0.1'
 grails-gradle-plugin = '6.1.1'
+#grails-hibernate5 = '8.0.2'
 grails-views = '3.1.1'
 spring-boot = '2.7.18'
 webdriver-binaries = '3.2'
 
 [libraries]
 grails-gradle-plugin = { module = 'org.grails:grails-gradle-plugin', version.ref = 'grails-gradle-plugin' }
+# Needed for schemaExport command
+#grails-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'grails-hibernate5' }
 grails-views-gradle-plugin = { module = 'org.grails.plugins:views-gradle', version.ref = 'grails-views' }
 node-gradle-plugin = { module = 'com.github.node-gradle:gradle-node-plugin', version.ref = 'node-gradle-plugin' }
 spring-boot-gradle-plugin = { module = 'org.springframework.boot:spring-boot-gradle-plugin', version.ref = 'spring-boot' }
