@@ -1,7 +1,5 @@
-import grails.plugin.inertia.ssr.ServerSideRenderer
 import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
-import pingcrm.SquigglyObjectMapperFactory
 import pingcrm.UserPasswordEncoderListener
 import pingcrm.controller.MaxFileUploadSizeResolver
 import pingcrm.controller.ResourceCachingConfig
@@ -40,14 +38,6 @@ beans = {
         cookieName = securityConfig.rememberMe.cookieName
         sameSite = securityConfig.rememberMe.sameSite
     }
-
-    /*
-        This is a Jackson ObjectMapper that in cooperation with Squiggly (https://github.com/NicklasWallgren/squiggly)
-        will help us select which properties to send to the client side.
-    */
-    publicDataMapper(SquigglyObjectMapperFactory)
-
-    serverSideRenderer(ServerSideRenderer)
 
     resourceCachingConfig(ResourceCachingConfig)
 }

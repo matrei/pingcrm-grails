@@ -15,11 +15,15 @@
  */
 package pingcrm
 
+import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.nicklasw.squiggly.Squiggly
 import dev.nicklasw.squiggly.context.provider.ThreadLocalContextProvider
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.FactoryBean
+import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.Nullable
+import jakarta.inject.Named
+import jakarta.inject.Singleton
 
 /**
  * A factory bean that initializes the Squiggly library.
@@ -27,19 +31,23 @@ import org.springframework.beans.factory.FactoryBean
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@Factory
 @CompileStatic
-class SquigglyObjectMapperFactory implements FactoryBean<ObjectMapper> {
+class SquigglyObjectMapperFactory {
 
     private final ObjectMapper objectMapper
 
-    SquigglyObjectMapperFactory(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper
+    SquigglyObjectMapperFactory(@Nullable JsonFactory jsonFactory) {
+        this.objectMapper = new ObjectMapper(jsonFactory)
     }
 
-    @Override
-    ObjectMapper getObject() throws Exception {
-        Squiggly.init objectMapper, new ThreadLocalContextProvider()
+    /**
+     * This is a Jackson ObjectMapper that in cooperation with Squiggly (https://github.com/NicklasWallgren/squiggly)
+     * will help us select which properties to send to the client side.
+     */
+    @Singleton
+    @Named('publicDataMapper')
+    ObjectMapper getObjectMapper() throws Exception {
+        Squiggly.init(objectMapper, new ThreadLocalContextProvider())
     }
-
-    @Override Class<?> getObjectType() { ObjectMapper }
 }

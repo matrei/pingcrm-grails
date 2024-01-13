@@ -15,10 +15,6 @@
  */
 package pingcrm
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import dev.nicklasw.squiggly.context.provider.SquigglyFilterHolder
-import dev.nicklasw.squiggly.util.SquigglyUtils
-import grails.util.Holders
 import groovy.transform.CompileStatic
 
 /**
@@ -32,32 +28,11 @@ import groovy.transform.CompileStatic
  * @since 1.0.0
  */
 @CompileStatic
-trait PublicData {
-
-    // Using def instead of explicit type to prevent GORM from handling this property
-    // if the trait is implemented by Grails domain classes.
-    def objectMapper = Holders.grailsApplication.mainContext.getBean 'publicDataMapper'
+interface PublicData {
 
     /**
      * The default properties to select when calling the publicData methods.
      * @return a list of property names
      */
-    List<String> getPublicProperties() { Collections.emptyList() }
-
-    @SuppressWarnings('unused')
-    Map publicData() {
-        publicData publicProperties
-    }
-
-    Map publicData(String ...propertiesToShow) {
-        publicData Arrays.asList(propertiesToShow)
-    }
-
-    Map publicData(List<String> propertiesToShow) {
-        // TODO: Remove squiggly dependency
-        // Using Squiggly here because it can resolve "deep" properties of Object (eg. contact['organization.name'])
-        // Squiggly is setup to use a ThreadLocal to set/get the filter with this object mapper
-        SquigglyFilterHolder.filter = propertiesToShow.join ','
-        SquigglyUtils.objectify objectMapper as ObjectMapper, this, Map
-    }
+    default List<String> getPublicProperties() { Collections.emptyList() }
 }

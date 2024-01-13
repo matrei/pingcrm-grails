@@ -20,6 +20,8 @@ import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 import pingcrm.AppService
 import pingcrm.Contact
+import pingcrm.PublicData
+import pingcrm.PublicDataMapper
 
 /**
  * A CRUD controller for contacts.
@@ -37,13 +39,13 @@ class ContactsController extends AppController<Contact> {
     final List<String> filterNames = ['search', 'trashed']
 
     @Inject
-    ContactsController(AppService appService) { super(Contact, appService) }
+    ContactsController(AppService appService, PublicDataMapper publicDataMapper) { super(Contact, appService, publicDataMapper) }
 
     @Override
     def create() {
 
         def organizations = appService.currentUser.account.organizations
-        def organizationsPublicData = organizations*.publicData organizationProperties
+        def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
 
         renderInertia createComponent, [ organizations: organizationsPublicData ]
     }
@@ -54,10 +56,10 @@ class ContactsController extends AppController<Contact> {
         def contact = findOrRedirect id
         if (!contact) return
 
-        def contactPublicData = contact.publicData editProperties
+        def contactPublicData = publicDataMapper.map(contact, editProperties)
 
         def organizations = appService.currentUser.account.organizations
-        def organizationsPublicData = organizations*.publicData organizationProperties
+        def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
 
         renderInertia editComponent, [
             contact: contactPublicData,

@@ -18,10 +18,7 @@ package pingcrm.controller
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
-import pingcrm.AppService
-import pingcrm.Paginator
-import pingcrm.User
-import pingcrm.UserService
+import pingcrm.*
 import pingcrm.config.UploadConfig
 
 import javax.servlet.http.HttpServletRequest
@@ -54,8 +51,8 @@ class UsersController extends AppController<User> {
     ]
 
     @Inject
-    UsersController(AppService appService, UserService userService, UploadConfig uploadConfig) {
-        super(User, appService)
+    UsersController(AppService appService, UserService userService, PublicDataMapper publicDataMapper, UploadConfig uploadConfig) {
+        super(User, appService, publicDataMapper)
         this.userService = userService
         this.uploadConfig = uploadConfig
     }
@@ -65,7 +62,7 @@ class UsersController extends AppController<User> {
 
         def filters = params.subMap filterNames
         def users = appService.list User, null, filters
-        def usersPublicData = users*.publicData indexProperties
+        def usersPublicData = publicDataMapper.map(users as List<PublicData>, indexProperties)
         usersPublicData = usersPublicData.collect {userData -> addPhotoUrl userData, [w: 40, h: 40, fit: 'crop'] }
 
         renderInertia indexComponent, [users: usersPublicData, filters: filters]
@@ -87,7 +84,7 @@ class UsersController extends AppController<User> {
         def user = findOrRedirect id
         if (!user) return null
 
-        def userPublicData = user.publicData editProperties
+        def userPublicData = publicDataMapper.map(user, editProperties)
         addPhotoUrl userPublicData, [w: 60, h: 60, fit: 'crop']
 
         renderInertia editComponent, [

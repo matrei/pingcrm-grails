@@ -15,15 +15,11 @@
  */
 package pingcrm.controller
 
-
 import gorm.logical.delete.LogicalDelete
 import grails.gorm.PagedResultList
 import groovy.transform.CompileStatic
 import org.grails.web.util.GrailsApplicationAttributes
-import pingcrm.AppService
-import pingcrm.Paginator
-import pingcrm.PublicData
-import pingcrm.ValidationMessageRenderer
+import pingcrm.*
 
 /**
  * Base class for CRUD controllers.
@@ -56,9 +52,12 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     protected final String createComponent
     protected final String editComponent
 
-    protected AppController(Class<D> domainClass, AppService appService) {
+    protected final PublicDataMapper publicDataMapper
+
+    protected AppController(Class<D> domainClass, AppService appService, PublicDataMapper publicDataMapper) {
         this.domainClass = domainClass
         this.appService = appService
+        this.publicDataMapper = publicDataMapper
         entityName = domainClass.simpleName
         entityNameLC = entityName.toLowerCase Locale.ENGLISH
         collectionName = "${entityNameLC}s"
@@ -74,9 +73,9 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def index(Paginator paginator) {
 
         def filters = params.subMap filterNames
-        def list = appService.list domainClass, paginator, filters
-        def totalCount = getTotalCount list, filters
-        def publicData = list*.publicData indexProperties
+        def list = appService.list(domainClass, paginator, filters)
+        def totalCount = getTotalCount(list, filters)
+        def publicData = publicDataMapper.map(list as List<PublicData>, indexProperties)
 
         renderInertia indexComponent, currentModel + [
             (collectionName): paginator.paginate(publicData, params, [total: totalCount, locale: request.locale]),
@@ -92,7 +91,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         if (!entity) return null
 
         renderInertia editComponent, currentModel + [
-            (entityNameLC): (entity as PublicData).publicData(editProperties)
+            (entityNameLC): publicDataMapper.map((PublicData) entity, editProperties)
         ]
     }
 
