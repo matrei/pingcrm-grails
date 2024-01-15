@@ -20,23 +20,23 @@ beans = {
         This is needed because we don't want Spring Security to treat our Inertia requests as Ajax calls.
         Client side Inertia will expect regular responses.
     */
-    def securityConfig = SpringSecurityUtils.securityConfig
+    def securityConfig = SpringSecurityUtils.securityConfig.flatten()
     authenticationSuccessHandler(SavedRequestAwareAuthenticationSuccessHandler) {
         requestCache = ref('requestCache')
         redirectStrategy = ref('redirectStrategy')
-        defaultTargetUrl = securityConfig.successHandler.defaultTargetUrl
-        alwaysUseDefaultTargetUrl = securityConfig.successHandler.alwaysUseDefault
-        targetUrlParameter = securityConfig.successHandler.targetUrlParameter
-        useReferer = securityConfig.successHandler.useReferer
+        defaultTargetUrl = securityConfig.get('successHandler.defaultTargetUrl')
+        alwaysUseDefaultTargetUrl = securityConfig.get('successHandler.alwaysUseDefault')
+        targetUrlParameter = securityConfig.get('successHandler.targetUrlParameter')
+        useReferer = securityConfig.get('successHandler.useReferer')
     }
 
     /*
         The spring security rememberMeServices is overridden to be able to set the same-site attribute on the remember-me cookie.
         This was not possible with a simple config setting at the time of writing this application.
     */
-    rememberMeServices(SameSiteTokenBasedRememberMeServices, securityConfig.rememberMe.key, ref('userDetailsService')) {
-        cookieName = securityConfig.rememberMe.cookieName
-        sameSite = securityConfig.rememberMe.sameSite
+    rememberMeServices(SameSiteTokenBasedRememberMeServices, securityConfig.get('rememberMe.key'), ref('userDetailsService')) {
+        cookieName = securityConfig.get('rememberMe.cookieName')
+        sameSite = securityConfig.get('rememberMe.sameSite')
     }
 
     resourceCachingConfig(ResourceCachingConfig)
