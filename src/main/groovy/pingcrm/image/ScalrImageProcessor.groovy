@@ -16,6 +16,7 @@
 package pingcrm.image
 
 import groovy.transform.CompileStatic
+import jakarta.inject.Singleton
 import org.imgscalr.Scalr
 
 import java.awt.*
@@ -28,9 +29,9 @@ import java.awt.image.BufferedImage
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@Singleton
 @CompileStatic
 class ScalrImageProcessor extends Scalr implements ImageProcessor {
-
 
     @Override
     BufferedImage resize(BufferedImage src, int targetWidth, int targetHeight,

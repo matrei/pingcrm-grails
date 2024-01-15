@@ -20,7 +20,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.Validateable
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
-import pingcrm.FileService
+import pingcrm.services.FileService
 import pingcrm.image.ImageProcessor
 
 import static org.springframework.http.HttpStatus.*

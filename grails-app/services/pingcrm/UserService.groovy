@@ -27,6 +27,7 @@ import org.springframework.transaction.TransactionDefinition
 import org.springframework.transaction.interceptor.TransactionAspectSupport
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
+import pingcrm.services.FileService
 
 /**
  * A service for CRUD operations on {@link pingcrm.User} domain objects.

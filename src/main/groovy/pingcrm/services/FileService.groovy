@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pingcrm
+package pingcrm.services
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import jakarta.inject.Singleton
 import org.springframework.web.multipart.MultipartFile
+import pingcrm.image.ImageService
 
 import java.awt.image.BufferedImage
 
@@ -28,10 +30,15 @@ import java.awt.image.BufferedImage
  * @since 1.0.0
  */
 @Slf4j
+@Singleton
 @CompileStatic
 class FileService {
 
-    ImageService imageService
+    private final ImageService imageService
+
+    FileService(ImageService imageService) {
+        this.imageService = imageService
+    }
 
     BufferedImage createImageThumbnail(String path, Map options) throws FileNotFoundException, IOException {
 

@@ -3,7 +3,6 @@ package pingcrm.controller
 import grails.testing.web.UrlMappingsUnitTest
 import org.grails.plugins.web.taglib.ValidationTagLib
 import pingcrm.AppService
-import pingcrm.FileService
 import pingcrm.UrlMappings
 import pingcrm.UserService
 import spock.lang.Specification
@@ -13,7 +12,6 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
     Closure doWithSpring() {
         { ->
             appService(AppService)
-            fileService(FileService)
             userService(UserService)
         }
     }

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pingcrm
+package pingcrm.image
 
 import groovy.transform.CompileStatic
-import pingcrm.image.ImageProcessor
+import jakarta.inject.Singleton
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -27,10 +27,15 @@ import java.awt.image.BufferedImage
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@Singleton
 @CompileStatic
 class ImageService {
 
-    ImageProcessor imageProcessor
+    private final ImageProcessor imageProcessor
+
+    ImageService(ImageProcessor imageProcessor) {
+        this.imageProcessor = imageProcessor
+    }
 
     BufferedImage resizeImage(File file, Map options) throws IOException {
 

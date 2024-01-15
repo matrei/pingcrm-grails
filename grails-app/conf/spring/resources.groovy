@@ -3,7 +3,6 @@ import pingcrm.SessionTracker
 import pingcrm.UserPasswordEncoderListener
 import pingcrm.controller.MaxFileUploadSizeResolver
 import pingcrm.controller.ResourceCachingConfig
-import pingcrm.image.ScalrImageProcessor
 import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
 import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
@@ -14,7 +13,6 @@ beans = {
     userDetailsService(AppUserDetailsService)
     sessionTracker(SessionTracker)
     multipartResolver(MaxFileUploadSizeResolver)
-    imageProcessor(ScalrImageProcessor)
 
     /*
         This is needed because we don't want Spring Security to treat our Inertia requests as Ajax calls.

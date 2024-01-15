@@ -22,7 +22,7 @@ import grails.validation.Validateable
 import org.apache.commons.io.FileUtils
 import org.springframework.validation.Errors
 import org.springframework.web.multipart.MultipartFile
-import pingcrm.FileService
+import pingcrm.services.FileService
 import pingcrm.UserService
 
 /**
