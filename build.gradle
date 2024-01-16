@@ -5,9 +5,9 @@ plugins {
     id 'eclipse'
     id 'idea'
 
+    id 'application'
     id 'groovy'
     id 'war'
-    id 'application'
 
     id 'org.grails.grails-web'
     id 'org.grails.grails-gsp'
@@ -106,6 +106,9 @@ tasks.withType(Test).configureEach {
     testLogging {
         events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
     }
+
+    reports.html.required = false
+    reports.junitXml.required = false
 
     systemProperty 'geb.env', System.getProperty('geb.env')
     systemProperty 'geb.build.reportsDir', reporting.file('geb/integrationTest')
