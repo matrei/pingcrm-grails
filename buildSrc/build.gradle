@@ -17,7 +17,7 @@ dependencies {
     implementation buildsrcLibs.node.gradle.plugin
     implementation buildsrcLibs.webdriver.binaries.gradle.plugin
 
-    // Needed for schemaExport command
+    // Needed for schemaExport Grails command/Gradle task
     //implementation buildsrcLibs.grails.hibernate5
 
 }
