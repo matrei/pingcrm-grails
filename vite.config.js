@@ -18,11 +18,7 @@ export default defineConfig(({ command }) => ({
   },
 
   plugins: [
-      vue({
-        script: {
-          defineModel: true
-        },
-      }),
+      vue(),
       Components({
         dirs: ['src/main/javascript/Shared'],
       }),
