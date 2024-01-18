@@ -3,6 +3,7 @@ info:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
+        repoUrl: 'https://github.com/matrei/pingcrm-grails'
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
 grails:

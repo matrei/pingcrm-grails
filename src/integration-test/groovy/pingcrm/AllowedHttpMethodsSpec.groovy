@@ -1,14 +1,10 @@
 package pingcrm
 
 import grails.testing.mixin.integration.Integration
-import grails.testing.spock.OnceBefore
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.MediaType
-import io.micronaut.http.client.DefaultHttpClientConfiguration
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.http.cookie.Cookie
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -18,7 +14,7 @@ import spock.lang.Unroll
 import static io.micronaut.http.HttpMethod.*
 
 @Integration
-class AllowedHttpMethodsSpec extends Specification {
+class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClientSpec {
 
     @Shared
     @AutoCleanup
@@ -26,26 +22,6 @@ class AllowedHttpMethodsSpec extends Specification {
 
     @Shared
     Cookie sessionCookie
-
-    @SuppressWarnings('unused')
-    @OnceBefore
-    void init() {
-        def baseUrl = "http://localhost:$serverPort"
-        // disable redirects to catch redirect responses (e.g. redirect to login page)
-        def config = new DefaultHttpClientConfiguration()
-        config.followRedirects = false
-        httpClient = HttpClient.create(baseUrl.toURL(), config)
-        def requestBody = MultipartBody.builder()
-                .addPart('username', 'johndoe@example.com')
-                .addPart('password', 'secret')
-                .addPart('remember-me', '0')
-                .build()
-        def request = HttpRequest.POST('/login/authenticate', requestBody).contentType(MediaType.MULTIPART_FORM_DATA)
-        def response = httpClient.toBlocking().exchange(request)
-        assert response.status.code == 302
-        assert response.header('Location') == "$baseUrl/"
-        sessionCookie = response.getCookie('JSESSIONID').get()
-    }
 
     @Unroll
     void "HTTP #httpMethod is allowed for #requestPath"(String requestPath, HttpMethod httpMethod, int statusCode) {

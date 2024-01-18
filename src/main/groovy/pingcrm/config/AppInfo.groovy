@@ -33,5 +33,6 @@ class AppInfo {
     String name
     String version
     String grailsVersion
+    String repoUrl
 
 }

@@ -1,12 +1,14 @@
 [versions]
-node-gradle-plugin = '7.0.1'
+git-properties-gradle-plugin = '2.4.1'
 grails-gradle-plugin = '6.1.1'
 #grails-hibernate5 = '8.0.2'
 grails-views = '3.1.2'
+node-gradle-plugin = '7.0.1'
 spring-boot = '2.7.18'
 webdriver-binaries = '3.2'
 
 [libraries]
+git-properties-gradle-plugin = { module = 'com.gorylenko.gradle-git-properties:gradle-git-properties', version.ref = 'git-properties-gradle-plugin' }
 grails-gradle-plugin = { module = 'org.grails:grails-gradle-plugin', version.ref = 'grails-gradle-plugin' }
 # Needed for schemaExport command
 #grails-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'grails-hibernate5' }

@@ -1,5 +1,5 @@
 /*
-* Copyright 2022-2023 original authors
+* Copyright 2022-2024 original authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -20,9 +20,13 @@ export default { layout }
 </script>
 
 <script setup>
+import { useTimeAgo } from '@vueuse/core'
+
 const props = defineProps({
   info: Object,
 })
+
+const relativeCommitTime = useTimeAgo(new Date(props.info['git.commitTime']))
 </script>
 
 <template>
@@ -33,6 +37,7 @@ const props = defineProps({
       <ul>
         <li><strong>App name:</strong> {{ info['name'] }}</li>
         <li><strong>App version:</strong> {{ info['version'] }}</li>
+        <li><strong>Git commit:</strong> <a :href="info['git.commitUrl']" class="underline">{{ info['git.commitSha'] }}</a> ({{ relativeCommitTime }})</li>
         <li><strong>Grails env:</strong> {{ info['grailsEnvironment'] }}</li>
         <li><strong>Grails version:</strong> {{ info['grailsVersion'] }}</li>
         <li><strong>Groovy version:</strong> {{ info['groovyVersion'] }}</li>

@@ -22,6 +22,7 @@ import grails.util.Environment
 import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 import pingcrm.config.AppInfo
+import pingcrm.config.GitInfo
 
 /**
  * A controller that renders the about page.
@@ -38,7 +39,7 @@ class AboutController {
     private final Map info = [:]
 
     @Inject
-    AboutController(AppInfo appInfo,
+    AboutController(AppInfo appInfo, GitInfo gitInfo,
                     GrailsApplication grailsApplication,
                     GrailsPluginManager pluginManager)
     {
@@ -56,6 +57,9 @@ class AboutController {
             numServices = grailsApplication.getArtefacts('Service').size()
             numTagLibs = grailsApplication.getArtefacts('TagLib').size()
         }
+        info['git.commitSha'] = gitInfo.commit?.get('id.abbrev')
+        info['git.commitUrl'] = "${appInfo.repoUrl}/commit/${gitInfo.commit?.get('id.abbrev')}"
+        info['git.commitTime'] = gitInfo.commit?.get('time')
     }
 
     def index() {
