@@ -77,8 +77,6 @@ dependencies {
 
     compileOnly 'io.micronaut:micronaut-inject-groovy'
 
-    console 'org.grails:grails-console'
-
     runtimeOnly libs.h2database
     runtimeOnly libs.hikari
 
