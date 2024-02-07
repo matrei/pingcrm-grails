@@ -5,7 +5,6 @@ gorm-logical-delete = '2.0.0.M2'
 grails = '6.1.1'
 grails-inertia = '2.1.1'
 grails-spring-security-core = '6.1.1'
-grails-async = '5.0.2'
 grails-events = '5.0.2'
 groovy = '3.0.20'
 h2database = '2.2.224'
@@ -21,7 +20,6 @@ squiggly = '2.0.1'
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
 geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
 geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
-grails-async = { module = 'org.grails.plugins:async', version.ref = 'grails-async' }
 grails-events = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
 grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
 grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
