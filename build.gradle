@@ -63,11 +63,6 @@ dependencies {
     implementation libs.grails.inertia
     //implementation project(':grails-inertia-plugin')
 
-    implementation 'org.springframework.boot:spring-boot-autoconfigure'
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
-
     implementation libs.datafaker
     implementation libs.squiggly
     implementation libs.metadata.extractor
@@ -78,6 +73,7 @@ dependencies {
     runtimeOnly libs.h2database
     runtimeOnly libs.hikari
 
+    compileOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during GSP compile tasks
     testImplementation 'io.micronaut:micronaut-inject-groovy'
     testImplementation 'org.grails:grails-gorm-testing-support'
     testImplementation 'org.grails:grails-web-testing-support'

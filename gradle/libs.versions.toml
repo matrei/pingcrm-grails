@@ -13,6 +13,7 @@ metadata-extractor = '2.19.0'
 selenium = '4.17.0'
 spring-security = '5.8.9'
 squiggly = '2.0.1'
+slf4j = '1.7.36'
 
 [libraries]
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
@@ -36,6 +37,7 @@ selenium-http = { module = 'org.seleniumhq.selenium:selenium-http', version.ref 
 selenium-json = { module = 'org.seleniumhq.selenium:selenium-json', version.ref = 'selenium' }
 selenium-remote-driver = { module = 'org.seleniumhq.selenium:selenium-remote-driver', version.ref = 'selenium' }
 selenium-support = { module = 'org.seleniumhq.selenium:selenium-support', version.ref = 'selenium' }
+slf4j-nop = { module = 'org.slf4j:slf4j-nop', version.ref = 'slf4j' }
 spring-security-core = { module = 'org.springframework.security:spring-security-core', version.ref = 'spring-security' }
 spring-security-crypto = { module = 'org.springframework.security:spring-security-crypto', version.ref = 'spring-security' }
 spring-security-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
