@@ -35,6 +35,15 @@ grails {
     }
 }
 */
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.codehaus.groovy') {
+            details.useVersion(libs.versions.groovy.get())
+        }
+    }
+}
+
 dependencies {
 
     implementation 'org.grails:grails-core'
@@ -63,8 +72,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
-
-    implementation libs.bundles.groovy
 
     implementation libs.datafaker
     implementation libs.squiggly
