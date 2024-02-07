@@ -7,7 +7,6 @@ grails-spring-security-core = '6.1.1'
 grails-events = '5.0.2'
 groovy = '3.0.20'
 h2database = '2.2.224'
-hibernate = '5.6.15.Final'
 hikari = '5.1.0'
 imgscalr = '4.2'
 metadata-extractor = '2.19.0'
@@ -25,7 +24,6 @@ grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.re
 grails-spring-security-core = { module = 'org.grails.plugins:spring-security-core', version.ref = 'grails-spring-security-core' }
 groovy-test = { module = 'org.codehaus.groovy:groovy-test', version.ref = 'groovy' }
 h2database = { module = 'com.h2database:h2', version.ref = 'h2database' }
-hibernate-core = { module = 'org.hibernate:hibernate-core', version.ref = 'hibernate' }
 hikari = { module = 'com.zaxxer:HikariCP', version.ref = 'hikari' }
 imgscalr = { module = 'org.imgscalr:imgscalr-lib', version.ref = 'imgscalr' }
 metadata-extractor = { module = 'com.drewnoakes:metadata-extractor', version.ref = 'metadata-extractor' }

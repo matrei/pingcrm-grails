@@ -63,8 +63,6 @@ dependencies {
     implementation libs.grails.inertia
     //implementation project(':grails-inertia-plugin')
 
-    implementation libs.hibernate.core
-
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
