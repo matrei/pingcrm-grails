@@ -2,7 +2,7 @@
 datafaker = '2.1.0'
 geb = '6.0'
 gorm-logical-delete = '2.0.0.M2'
-grails-inertia = '2.1.1'
+grails-inertia = '2.1.2'
 grails-spring-security-core = '6.1.1'
 grails-events = '5.0.2'
 groovy = '3.0.20'
