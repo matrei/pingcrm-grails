@@ -15,12 +15,12 @@
  */
 package pingcrm
 
+import grails.gorm.transactions.Transactional
 import groovy.transform.CompileStatic
 import net.datafaker.Faker
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
 
-import javax.transaction.Transactional
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
