@@ -155,3 +155,8 @@ inertia:
         location: 'classpath:public/dist/.vite/manifest.json'
     ssr:
         enabled: false
+        # The default url should preferably be picked up from Inertia Plugins plugin.yml,
+        # but sadly is not working when using Micronaut ConfigurationProperties, so I'm setting it here as well.
+        # https://github.com/grails/grails-core/issues/11767
+        # https://github.com/grails/grails-core/pull/11828
+        url: 'http://localhost:13714/render'
