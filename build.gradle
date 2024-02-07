@@ -65,7 +65,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 
     implementation libs.bundles.groovy
-    implementation libs.snakeyaml
 
     implementation libs.datafaker
     implementation libs.squiggly
