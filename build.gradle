@@ -1,10 +1,6 @@
 import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
-
-    id 'eclipse'
-    id 'idea'
-
     id 'application'
     id 'groovy'
     id 'war'
