@@ -35,7 +35,8 @@ grails {
 configurations.configureEach {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         if (details.requested.group == 'org.codehaus.groovy') {
-            details.useVersion(libs.versions.groovy.get())
+            String groovyVersion = project.findProperty('groovyVersion') ?: libs.versions.groovy.get()
+            details.useVersion(groovyVersion)
         }
     }
 }
