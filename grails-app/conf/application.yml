@@ -159,4 +159,7 @@ inertia:
         # but sadly is not working when using Micronaut ConfigurationProperties, so I'm setting it here as well.
         # https://github.com/grails/grails-core/issues/11767
         # https://github.com/grails/grails-core/pull/11828
+        # ---
+        # After https://github.com/grails/grails-core/pull/11828 was merged I tried to remove the following line
+        # but, it is still not picked up from the plugin.yml file, so I'm leaving it here for now.
         url: 'http://localhost:13714/render'
