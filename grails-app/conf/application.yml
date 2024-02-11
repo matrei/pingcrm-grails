@@ -144,8 +144,8 @@ server:
                 same-site: Lax
     forward-headers-strategy: NATIVE
     tomcat:
-        max-swallow-size: 1048576
-        max-post-size: 1048576
+        max-swallow-size: 1MB
+        max-http-form-post-size: 1MB
         redirect-context-root: false
     error:
         whitelabel:
