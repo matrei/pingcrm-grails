@@ -5,15 +5,17 @@ plugins {
     id 'groovy'
     id 'war'
 
-    id 'org.grails.grails-web'
-    id 'org.grails.grails-gsp'
-
     id 'com.github.erdi.webdriver-binaries'
     id 'com.github.node-gradle.node'
     id 'com.gorylenko.gradle-git-properties'
 }
 
 group = 'io.github.matrei'
+ext.set('grailsVersion', libs.versions.grails.asProvider().get())
+
+// These plugins need to be applied after the grailsVersion property is set
+apply plugin: 'org.grails.grails-web'
+apply plugin: 'org.grails.grails-gsp'
 
 repositories {
     mavenLocal()
