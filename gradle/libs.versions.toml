@@ -5,6 +5,7 @@ gorm-hibernate5 = '8.0.3'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.1.2'
 grails-geb = '4.0.0'
+grails-gsp = '6.2.0'
 grails-events = '5.0.2'
 grails-inertia = '2.1.2'
 grails-spring-security-core = '6.1.1'
@@ -31,7 +32,7 @@ grails-core = { module = 'org.grails:grails-core', version.ref = 'grails' }
 grails-events = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
 grails-geb = { module = 'org.grails.plugins:geb', version.ref = 'grails-geb' }
 grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
-grails-gsp = { module = 'org.grails.plugins:gsp', version.ref = 'grails' }
+grails-gsp = { module = 'org.grails.plugins:gsp', version.ref = 'grails-gsp' }
 grails-i18n = { module = 'org.grails:grails-plugin-i18n', version.ref = 'grails' }
 grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
 grails-interceptors = { module = 'org.grails:grails-plugin-interceptors', version.ref = 'grails' }
