@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <link rel="icon" type="image/svg+xml" href="${request.contextPath}/static/favicon.svg">
     <%-- Inertia Polyfills --%>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=smoothscroll,NodeList.prototype.forEach,Promise,Object.values,Object.assign" defer></script>
+    <%--script src="https://polyfill.io/v3/polyfill.min.js?features=smoothscroll,NodeList.prototype.forEach,Promise,Object.values,Object.assign" defer></script--%>
     <%-- Ping CRM Polyfills --%>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.startsWith" defer></script>
+    <%--script src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.startsWith" defer></script--%>
     <g:if env="development">
         <script type="module" src="http://localhost:3000/@vite/client"></script>
         <script type="module" src="http://localhost:3000/src/main/javascript/main.js"></script>
