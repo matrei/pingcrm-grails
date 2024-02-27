@@ -11,6 +11,7 @@ plugins {
 }
 
 group = 'io.github.matrei'
+ext.set('spring.version', libs.versions.spring.asProvider().get())
 ext.set('grailsVersion', libs.versions.grails.asProvider().get())
 
 // These plugins need to be applied after the grailsVersion property is set
