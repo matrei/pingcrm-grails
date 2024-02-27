@@ -45,12 +45,12 @@ configurations.configureEach {
 
 dependencies {
 
-    implementation 'org.grails:grails-core'
-    implementation 'org.grails:grails-plugin-interceptors'
-    implementation 'org.grails:grails-web-common'
-    implementation 'org.grails:grails-web-databinding'
+    implementation libs.grails.core
+    implementation libs.grails.interceptors
+    implementation libs.grails.web.common
+    implementation libs.grails.web.databinding
 
-    implementation 'org.grails.plugins:gsp'
+    implementation libs.grails.gsp
     implementation libs.grails.events
     implementation libs.grails.spring.security.core
     implementation libs.bundles.spring.security
@@ -63,28 +63,26 @@ dependencies {
     implementation libs.metadata.extractor
     implementation libs.imgscalr
 
-    runtimeOnly 'org.grails:grails-plugin-i18n'
-    runtimeOnly 'org.grails:grails-plugin-services'
-    runtimeOnly 'org.grails:grails-plugin-url-mappings'
-    runtimeOnly 'org.grails.plugins:hibernate5'
-    runtimeOnly 'org.springframework.boot:spring-boot-autoconfigure'
-    runtimeOnly 'org.springframework.boot:spring-boot-starter-logging'
-    runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
+    runtimeOnly libs.gorm.hibernate5
+    runtimeOnly libs.grails.i18n
+    runtimeOnly libs.grails.services
+    runtimeOnly libs.grails.urlmappings
+    runtimeOnly libs.spring.boot.autoconfigure
+    runtimeOnly libs.spring.boot.starter.logging
+    runtimeOnly libs.spring.boot.starter.tomcat
     runtimeOnly libs.h2database
     runtimeOnly libs.hikari
 
-    compileOnly 'io.micronaut:micronaut-inject-groovy'
-    compileOnly 'org.grails.plugins:views-json'
+    compileOnly libs.micronaut.inject.groovy
+    compileOnly libs.grails.views.json // Used for compiling json views
     compileOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during GSP compile tasks
 
-    testImplementation 'io.micronaut:micronaut-http-client'
-    testImplementation 'io.micronaut:micronaut-inject-groovy'
-    testImplementation 'org.grails:grails-gorm-testing-support'
-    testImplementation 'org.grails:grails-web-testing-support'
-    testImplementation 'org.spockframework:spock-core'
+    testImplementation libs.micronaut.httpclient
+    testImplementation libs.micronaut.inject.groovy
+    testImplementation libs.bundles.grails.testing.support
+    testImplementation libs.spock.core
     testImplementation libs.groovy.test
 
-    integrationTestImplementation 'org.grails.plugins:geb'
     integrationTestImplementation libs.bundles.geb
 
     integrationTestRuntimeOnly libs.bundles.selenium
