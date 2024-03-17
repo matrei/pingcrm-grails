@@ -1,7 +1,7 @@
 [versions]
 datafaker = '2.1.0'
 geb = '6.0'
-gorm-hibernate5 = '8.0.3'
+gorm-hibernate5 = '8.1.0'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.1.2'
 grails-geb = '4.0.0'
