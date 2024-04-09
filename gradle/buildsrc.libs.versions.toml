@@ -1,6 +1,6 @@
 [versions]
 git-properties-gradle-plugin = '2.4.1'
-grails-gradle-plugin = '6.1.2'
+grails-gradle-plugin = '6.2.0'
 #grails-hibernate5 = '8.0.2'
 grails-views = '3.2.3'
 node-gradle-plugin = '7.0.2'
