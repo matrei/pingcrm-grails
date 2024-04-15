@@ -21,7 +21,7 @@ selenium = '4.19.1'
 spring-boot = '2.7.18'
 spring-security = '5.8.11'
 squiggly = '2.0.1'
-slf4j = '1.7.36'
+slf4j = '2.0.13'
 spock = '2.3-groovy-3.0'
 spring = '5.3.34'
 
