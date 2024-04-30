@@ -32,7 +32,9 @@ class SharedDataInterceptor {
 
     AppService appService
 
-    SharedDataInterceptor() { match controller: '*' }
+    SharedDataInterceptor() {
+        match controller: '*'
+    }
 
     boolean before() {
 

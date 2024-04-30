@@ -163,3 +163,6 @@ inertia:
         # After https://github.com/grails/grails-core/pull/11828 was merged I tried to remove the following line
         # but, it is still not picked up from the plugin.yml file, so I'm leaving it here for now.
         url: 'http://localhost:13714/render'
+csrf:
+    excluded:
+        - '/login/authAjax'

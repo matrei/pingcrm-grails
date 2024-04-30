@@ -4,6 +4,7 @@ geb = '6.0'
 gorm-hibernate5 = '8.1.0'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.2.0'
+grails-csrf = '1.0.0'
 grails-geb = '4.0.0'
 grails-gsp = '6.2.1'
 grails-events = '5.0.2'
@@ -31,6 +32,7 @@ geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
 geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
 gorm-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'gorm-hibernate5' }
 grails-core = { module = 'org.grails:grails-core', version.ref = 'grails' }
+grails-csrf = { module = 'io.github.matrei:grails-csrf', version.ref = 'grails-csrf' }
 grails-events = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
 grails-geb = { module = 'org.grails.plugins:geb', version.ref = 'grails-geb' }
 grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }

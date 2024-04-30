@@ -12,25 +12,43 @@ trait LoggedInHttpClientSpec {
 
     abstract void setHttpClient(HttpClient client)
     abstract void setSessionCookie(Cookie cookie)
+    abstract void setCsrfCookie(Cookie cookie)
 
     @OnceBefore
     @SuppressWarnings('unused')
     void init() {
+
         def baseUrl = "http://localhost:$serverPort"
         // disable redirects to catch redirect responses (e.g. redirect to login page)
         def config = new DefaultHttpClientConfiguration()
         config.followRedirects = false
         httpClient = HttpClient.create(baseUrl.toURL(), config)
+
+        // Get the csrf token
+        def request = HttpRequest.GET('/login')
+        def response = httpClient.toBlocking().exchange(request)
+        assert response.status.code == 200
+        csrfCookie = response.getCookie('XSRF-TOKEN').get()
+
+        // Login
         def requestBody = MultipartBody.builder()
                 .addPart('username', 'johndoe@example.com')
                 .addPart('password', 'secret')
                 .addPart('remember-me', '0')
                 .build()
-        def request = HttpRequest.POST('/login/authenticate', requestBody).contentType(MediaType.MULTIPART_FORM_DATA)
-        def response = httpClient.toBlocking().exchange(request)
+        request = HttpRequest.POST('/login/authenticate', requestBody)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .header('X-XSRF-TOKEN', csrfCookie.value)
+        response = httpClient.toBlocking().exchange(request)
         assert response.status.code == 302
         assert response.header('Location') == "$baseUrl/"
         sessionCookie = response.getCookie('JSESSIONID').get()
+
+        // Get the csrf token again
+        request = HttpRequest.GET('/')
+                .cookie(sessionCookie)
+        response = httpClient.toBlocking().exchange(request)
+        csrfCookie = response.getCookie('XSRF-TOKEN').get()
     }
 
 }

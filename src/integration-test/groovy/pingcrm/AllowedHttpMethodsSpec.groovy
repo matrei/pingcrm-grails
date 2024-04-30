@@ -23,14 +23,20 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     @Shared
     Cookie sessionCookie
 
+    @Shared
+    Cookie csrfCookie
+
     @Unroll
     void "HTTP #httpMethod is allowed for #requestPath"(String requestPath, HttpMethod httpMethod, int statusCode) {
 
         given: 'a request with a valid HTTP method'
-        def request = HttpRequest.create(httpMethod, requestPath).cookie(sessionCookie)
+        def request = HttpRequest
+                .create(httpMethod, requestPath)
+                .cookie(sessionCookie)
+                .header('X-XSRF-TOKEN', csrfCookie.value)
 
         when: 'accessing an url'
-        def response = httpClient.toBlocking().exchange request
+        def response = httpClient.toBlocking().exchange(request)
 
         then: 'the response is as expected'
         response.status.code == statusCode
@@ -79,7 +85,10 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     void "HTTP #httpMethod is not allowed for #requestPath"(String requestPath, HttpMethod httpMethod) {
 
         given: 'a request with a forbidden HTTP method'
-        def request = HttpRequest.create(httpMethod, requestPath).cookie(sessionCookie)
+        def request = HttpRequest
+                .create(httpMethod, requestPath)
+                .cookie(sessionCookie)
+                .header('X-XSRF-TOKEN', csrfCookie.value)
 
         when: 'accessing an url'
         def response = httpClient.toBlocking().exchange request
@@ -167,7 +176,10 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     void "HTTP GET is allowed for image controller"() {
 
         given: 'a GET request to the image controller'
-        def request = HttpRequest.create(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop').cookie(sessionCookie)
+        def request = HttpRequest
+                .create(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop')
+                .cookie(sessionCookie)
+                .header('X-XSRF-TOKEN', csrfCookie.value)
 
         when: 'making the request'
         def response = httpClient.toBlocking().exchange request

@@ -54,6 +54,7 @@ class UrlMappings {
         "/error" (view: '/error')
         "403" (controller: 'errorHandling', action: 'forbidden')
         "404" (controller: 'errorHandling', action: 'notFound')
+        "419" (controller: 'errorHandling', action: 'csrfTokenMismatch')
         "500" (controller: 'errorHandling', action: 'internalServerError')
         "503" (controller: 'errorHandling', action: 'serviceUnavailable')
     }

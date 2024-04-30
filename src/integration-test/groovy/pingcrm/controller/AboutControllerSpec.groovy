@@ -20,10 +20,16 @@ class AboutControllerSpec extends Specification implements LoggedInHttpClientSpe
     @Shared
     Cookie sessionCookie
 
+    @Shared
+    Cookie csrfCookie
+
     void "controller returns git information"() {
 
         given: 'a request with a valid HTTP method'
-        def request = HttpRequest.create(HttpMethod.GET, '/about').cookie(sessionCookie)
+        def request = HttpRequest
+                .create(HttpMethod.GET, '/about')
+                .cookie(sessionCookie)
+                .header('X-XSRF-TOKEN', csrfCookie.value)
 
         when: 'accessing an url'
         def response = httpClient.toBlocking().exchange(request, String)

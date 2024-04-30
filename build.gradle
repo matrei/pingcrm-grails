@@ -65,6 +65,7 @@ dependencies {
     implementation libs.imgscalr
 
     runtimeOnly libs.gorm.hibernate5
+    runtimeOnly libs.grails.csrf
     runtimeOnly libs.grails.i18n
     runtimeOnly libs.grails.services
     runtimeOnly libs.grails.urlmappings

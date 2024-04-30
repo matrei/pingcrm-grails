@@ -36,7 +36,9 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
     def index() { renderInertia 'Auth/Login' }
 
     @Override
-    def authAjax() { redirect controller: 'login' }
+    def authAjax() {
+        redirect(controller: 'login')
+    }
 
     @Override
     def authfail() {

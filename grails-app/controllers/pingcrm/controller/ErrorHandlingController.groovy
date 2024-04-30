@@ -42,6 +42,16 @@ class ErrorHandlingController {
         respondWith 500
     }
 
+    def csrfTokenMismatch() {
+        flash.error = 'The page expired, please try again.'
+        def referer = request.getHeader('referer')
+        if(referer) {
+            redirect(uri: referer)
+        } else {
+            redirect(uri: '/login')
+        }
+    }
+
     def serviceUnavailable() {
         render 'serviceUnavailable'
     }
