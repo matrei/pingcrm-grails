@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,12 @@ class SessionTracker implements HttpSessionListener {
 
     private static final ConcurrentMap<Serializable, HttpSession> sessions = new ConcurrentHashMap<>()
 
+    @Override
     void sessionCreated(HttpSessionEvent sessionEvent) {
         sessions.put sessionEvent.session.id, sessionEvent.session
     }
 
+    @Override
     void sessionDestroyed(HttpSessionEvent sessionEvent) {
         sessions.remove sessionEvent.session.id
     }
