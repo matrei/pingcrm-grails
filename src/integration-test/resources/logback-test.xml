@@ -30,4 +30,7 @@
     <!--<logger name="org.grails.web.mapping" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
     <!--<logger name="grails.web.mapping" level="DEBUG" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
 
+    <!-- Uncomment next line to log Micronaut HTTP client traffic -->
+    <!--<logger name="io.micronaut.http.client" level="TRACE" additivity="false"><appender-ref ref="STDOUT"/></logger>-->
+
 </configuration>
