@@ -17,7 +17,6 @@ package pingcrm
 
 import gorm.logical.delete.LogicalDelete
 import grails.compiler.GrailsCompileStatic
-import groovy.transform.CompileDynamic
 
 import java.time.LocalDateTime
 
