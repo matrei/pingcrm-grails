@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,13 +44,15 @@ class AppUserDetailsService implements GrailsUserDetailsService {
 
     @Override
     UserDetails loadUserByUsername(String username, boolean loadRoles) throws UsernameNotFoundException {
-        loadUserByUsername username
+        loadUserByUsername(username)
     }
 
     @Override @Transactional(readOnly=true, noRollbackFor=[IllegalArgumentException, UsernameNotFoundException])
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = User.createCriteria().get { ilike 'email', username?.toLowerCase(Locale.ENGLISH) } as User
+        User user = User.createCriteria().get({
+            ilike('email', username?.toLowerCase(Locale.ENGLISH))
+        }) as User
         if (!user || user.deleted) throw new NoStackUsernameNotFoundException()
 
         def roles = user.roles
@@ -58,9 +60,9 @@ class AppUserDetailsService implements GrailsUserDetailsService {
         // or if you are using role groups:
         // def roles = user.authorities.collect { it.authorities }.flatten().unique()
 
-        def authorities = roles.collect { new SimpleGrantedAuthority(it.authority) }
+        def authorities = roles.collect({ new SimpleGrantedAuthority(it.authority) })
 
-        new AppUserDetails(
+        return new AppUserDetails(
             user.email,
             user.password,
             user.enabled,

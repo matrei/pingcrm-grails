@@ -38,20 +38,22 @@ class OrganizationsController extends AppController<Organization> {
     final List<String> filterNames = ['search', 'trashed']
 
     @Inject
-    OrganizationsController(AppService appService, PublicDataMapper publicDataMapper) { super(Organization, appService, publicDataMapper) }
+    OrganizationsController(AppService appService, PublicDataMapper publicDataMapper) {
+        super(Organization, appService, publicDataMapper)
+    }
 
     @Override
     def edit(Long id) {
 
-        def organization = findOrRedirect id
+        def organization = findOrRedirect(id)
         if (!organization) return
 
-        def contacts = appService.findAllContactsInOrganization organization
+        def contacts = appService.findAllContactsInOrganization(organization)
         def contactsPublicData = publicDataMapper.map(contacts as List<PublicData>, ['id', 'name', 'city', 'phone'])
 
         def organizationPublicData = publicDataMapper.map(organization, editProperties)
         organizationPublicData += [contacts: contactsPublicData]
 
-        renderInertia editComponent, [organization: organizationPublicData]
+        renderInertia(editComponent, [organization: organizationPublicData])
     }
 }

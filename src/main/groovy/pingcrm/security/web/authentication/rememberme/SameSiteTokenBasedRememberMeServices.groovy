@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,40 +44,36 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
 
     @Override
     protected void setCookie(String[] tokens, int maxAge, HttpServletRequest request, HttpServletResponse response) {
-        String cookieValue = encodeCookie(tokens);
-
+        String cookieValue = encodeCookie(tokens)
         ResponseCookie rememberMeCookie = ResponseCookie
-        .from(cookieName, cookieValue)
-        .maxAge(maxAge)
-        .path(getCookiePath(request))
-        .domain(cookieDomain)
-        .secure(useSecureCookie ?: request.isSecure())
-        .httpOnly(true)
-        .sameSite(sameSite)
-        .build()
-
+            .from(cookieName, cookieValue)
+            .maxAge(maxAge)
+            .path(getCookiePath(request))
+            .domain(cookieDomain)
+            .secure(useSecureCookie ?: request.isSecure())
+            .httpOnly(true)
+            .sameSite(sameSite)
+            .build()
         response.addHeader(HttpHeaders.SET_COOKIE, rememberMeCookie.toString())
     }
 
     @Override
     protected void cancelCookie(HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("Cancelling cookie");
-
+        logger.debug('Cancelling cookie')
         ResponseCookie rememberMeCookie = ResponseCookie
-        .from(cookieName, null)
-        .maxAge(0)
-        .path(getCookiePath(request))
-        .domain(cookieDomain)
-        .secure(useSecureCookie ?: request.isSecure())
-        .httpOnly(true)
-        .sameSite(sameSite)
-        .build()
-
+            .from(cookieName, null)
+            .maxAge(0)
+            .path(getCookiePath(request))
+            .domain(cookieDomain)
+            .secure(useSecureCookie ?: request.isSecure())
+            .httpOnly(true)
+            .sameSite(sameSite)
+            .build()
         response.addHeader(HttpHeaders.SET_COOKIE, rememberMeCookie.toString())
     }
 
     private static String getCookiePath(HttpServletRequest request) {
-        request.contextPath ?: '/'
+        return request.contextPath ?: '/'
     }
 
     @Override
@@ -88,7 +84,7 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
 
     @Override
     void setUseSecureCookie(boolean useSecureCookie) {
-        super.setUseSecureCookie useSecureCookie
+        super.setUseSecureCookie(useSecureCookie)
         this.useSecureCookie = useSecureCookie
     }
 

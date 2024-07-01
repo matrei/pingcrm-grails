@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,21 +47,21 @@ class Organization implements LogicalDelete<Organization>, PublicData {
 
     /** An Organization hasMany Contacts */
     List<Contact> getContacts() {
-        Contact.createCriteria().list() {
-            eq 'organization', this
-            order 'firstName', 'asc'
-            order 'lastName', 'asc'
-        } as List<Contact>
+        Contact.createCriteria().list({
+            eq('organization', this)
+            order('firstName', 'asc')
+            order('lastName', 'asc')
+        }) as List<Contact>
     }
 
     static final constraints = {
-        name maxSize: 100
-        email maxSize: 50, nullable: true, email: true
-        phone maxSize: 50, nullable: true
-        address maxSize: 150, nullable: true
-        city maxSize: 50, nullable: true
-        region maxSize: 50, nullable: true
-        country minSize: 2, maxSize: 2, nullable: true
-        postalCode maxSize: 25, nullable: true
+        name(maxSize: 100)
+        email(maxSize: 50, nullable: true, email: true)
+        phone(maxSize: 50, nullable: true)
+        address(maxSize: 150, nullable: true)
+        city(maxSize: 50, nullable: true)
+        region(maxSize: 50, nullable: true)
+        country(minSize: 2, maxSize: 2, nullable: true)
+        postalCode(maxSize: 25, nullable: true)
     }
 }

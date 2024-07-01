@@ -50,11 +50,11 @@ class ImagesController {
 
     def thumbnail(ImageThumbnailCommand cmd) {
 
-        if (!cmd.validate()) { render status: UNPROCESSABLE_ENTITY; return }
+        if (!cmd.validate()) { render(status: UNPROCESSABLE_ENTITY); return }
 
         try {
 
-            def image= fileService.createImageThumbnail cmd.path, [width: cmd.w, height: cmd.h, fit: cmd.fit, quality: cmd.quality]
+            def image= fileService.createImageThumbnail(cmd.path, [width: cmd.w, height: cmd.h, fit: cmd.fit, quality: cmd.quality])
 
             def contentType = 'image/jpg'
             def formatName = 'JPG'
@@ -65,11 +65,11 @@ class ImagesController {
             }
 
             response.contentType = contentType
-            ImageIO.write image, formatName, response.outputStream
+            ImageIO.write(image, formatName, response.outputStream)
 
         }
-        catch (FileNotFoundException ignore) { render status: NOT_FOUND }
-        catch (Exception ignore) { render status: INTERNAL_SERVER_ERROR }
+        catch (FileNotFoundException ignore) { render(status: NOT_FOUND) }
+        catch (Exception ignore) { render(status: INTERNAL_SERVER_ERROR) }
     }
 }
 
@@ -81,9 +81,9 @@ class ImageThumbnailCommand implements Validateable {
 
     @SuppressWarnings('unused')
     static final constraints = {
-        w min: 20, max: 480
-        h min: 20, max: 480
-        fit nullable: true, inList: ImageProcessor.ResizingMode.validValues
-        quality nullable: true, inList: ImageProcessor.ScalingQuality.validValues
+        w(min: 20, max: 480)
+        h(min: 20, max: 480)
+        fit(nullable: true, inList: ImageProcessor.ResizingMode.validValues)
+        quality(nullable: true, inList: ImageProcessor.ScalingQuality.validValues)
     }
 }

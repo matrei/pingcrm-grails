@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,11 +41,11 @@ class BootStrap {
     void seedDatabase() {
 
         // Create user roles
-        def ownerRole = new Role(authority: 'ROLE_OWNER').save failOnError: true
-        def userRole = new Role(authority: 'ROLE_USER').save failOnError: true
+        def ownerRole = new Role(authority: 'ROLE_OWNER').save(failOnError: true)
+        def userRole = new Role(authority: 'ROLE_USER').save(failOnError: true)
 
         // Create the "owner" account
-        def account = new Account(name: 'Acme Corporation').save failOnError: true
+        def account = new Account(name: 'Acme Corporation').save(failOnError: true)
         def owner = new User(
                 account: account,
                 firstName: 'John',
@@ -54,12 +54,12 @@ class BootStrap {
                 emailVerifiedAt: LocalDateTime.now(ZoneOffset.UTC),
                 password: 'secret',
                 owner: true
-        ).save failOnError: true
-        UserRole.create owner, ownerRole
+        ).save(failOnError: true)
+        UserRole.create(owner, ownerRole)
 
         // Create all the user accounts
         Faker faker = new Faker(new Locale('en-US'))
-        5.times {
+        5.times({
             def user = new User(
                     account: account,
                     firstName: faker.name().firstName(),
@@ -68,13 +68,13 @@ class BootStrap {
                     emailVerifiedAt: LocalDateTime.now(ZoneOffset.UTC),
                     password: faker.internet().password(),
                     owner: false
-            ).save failOnError: true
-            UserRole.create user, userRole
-        }
+            ).save(failOnError: true)
+            UserRole.create(user, userRole)
+        })
 
         // Create all the organisations
         def organizations = []
-        100.times {
+        100.times({
             def organization = new Organization(
                     account: account,
                     name: faker.company().name(),
@@ -85,16 +85,16 @@ class BootStrap {
                     region: faker.address().state(),
                     country: 'US',
                     postalCode: faker.address().zipCode()
-            ).save failOnError: true
-            organizations << organization
-        }
+            ).save(failOnError: true)
+            organizations.add(organization)
+        })
 
         // Create all the contacts
-        Random random = new Random()
-        100.times {
+        Random organizationRandomizer = new Random()
+        100.times({
             new Contact(
                     account: account,
-                    organization: organizations.get(random.nextInt(100)),
+                    organization: organizations.get(organizationRandomizer.nextInt(100)),
                     firstName: faker.name().firstName(),
                     lastName: faker.name().lastName(),
                     email: faker.internet().safeEmailAddress(),
@@ -104,7 +104,7 @@ class BootStrap {
                     region: faker.address().state(),
                     country: 'US',
                     postalCode: faker.address().zipCode()
-            ).save failOnError: true
-        }
+            ).save(failOnError: true)
+        })
     }
 }

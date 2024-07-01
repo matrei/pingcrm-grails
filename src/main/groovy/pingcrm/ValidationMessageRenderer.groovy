@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,6 @@ trait ValidationMessageRenderer {
     @Inject ValidationTagLib g
 
     Map renderErrors(Errors errors) {
-        errors.fieldErrors.collectEntries {[it.field, g.message(error: it)] }
+        errors.fieldErrors.collectEntries({[it.field, g.message(error: it)] })
     }
 }

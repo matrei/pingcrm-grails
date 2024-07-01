@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ class ReportsController {
 
     static final Map allowedMethods = [index: 'GET']
 
-    def index() { renderInertia 'Reports/Index' }
-
+    def index() {
+        renderInertia('Reports/Index')
+    }
 }

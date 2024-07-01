@@ -39,21 +39,21 @@ class ContactsController extends AppController<Contact> {
     final List<String> filterNames = ['search', 'trashed']
 
     @Inject
-    ContactsController(AppService appService, PublicDataMapper publicDataMapper) { super(Contact, appService, publicDataMapper) }
+    ContactsController(AppService appService, PublicDataMapper publicDataMapper) {
+        super(Contact, appService, publicDataMapper)
+    }
 
     @Override
     def create() {
-
         def organizations = appService.currentUser.account.organizations
         def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
-
-        renderInertia createComponent, [ organizations: organizationsPublicData ]
+        renderInertia(createComponent, [organizations: organizationsPublicData])
     }
 
     @Override
     def edit(Long id) {
 
-        def contact = findOrRedirect id
+        def contact = findOrRedirect(id)
         if (!contact) return
 
         def contactPublicData = publicDataMapper.map(contact, editProperties)
@@ -61,9 +61,9 @@ class ContactsController extends AppController<Contact> {
         def organizations = appService.currentUser.account.organizations
         def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
 
-        renderInertia editComponent, [
+        renderInertia(editComponent, [
             contact: contactPublicData,
             organizations: organizationsPublicData
-        ]
+        ])
     }
 }

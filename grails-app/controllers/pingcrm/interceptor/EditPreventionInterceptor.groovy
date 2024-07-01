@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,21 +33,20 @@ class EditPreventionInterceptor {
     UserService userService
 
     EditPreventionInterceptor() {
-        match controller: 'users', action: 'updateUser'
-        match controller: 'users', action: 'delete'
+        match(controller: 'users', action: 'updateUser')
+        match(controller: 'users', action: 'delete')
     }
 
     boolean before() {
-
-        def id = params.long 'id'
-        if(userService.isDemoUser id) {
+        def id = params.long('id')
+        if (userService.isDemoUser(id)) {
             flash.error = "${actionName == 'delete' ? 'Deleting' : 'Updating'} the demo user is not allowed."
             def url = grailsLinkGenerator.link(controller: 'users', action: 'edit', id: id)
             response.status = 303
-            response.setHeader 'Location', url
-            request.setAttribute GrailsApplicationAttributes.REDIRECT_ISSUED, url
+            response.setHeader('Location', url)
+            request.setAttribute(GrailsApplicationAttributes.REDIRECT_ISSUED, url)
             return false
         }
-        true
+        return true
     }
 }

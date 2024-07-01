@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import pingcrm.auth.Role
 import pingcrm.auth.UserRole
 
 import java.time.LocalDateTime
+import java.util.regex.Pattern
 
 /**
  * A user domain class.
@@ -37,6 +38,8 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
 
     @SuppressWarnings('unused')
     private static final long serialVersionUID = 1
+
+    private static final Pattern PATTERN_BACKSLASH = Pattern.compile('\\\\')
 
     String firstName
     String lastName
@@ -58,26 +61,34 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     Account account
 
     /** A User hasMany Roles */
-    Set<Role> getRoles() { UserRole.findAllRolesForUser this }
+    Set<Role> getRoles() {
+        UserRole.findAllRolesForUser(this)
+    }
 
     static final constraints = {
-        firstName maxLength: 25
-        lastName maxLength: 25
-        email maxLength: 50, unique: true
-        emailVerifiedAt nullable: true
-        password password: true
-        photoPath maxLength: 100, nullable: true
+        firstName(maxLength: 25)
+        lastName(maxLength: 25)
+        email(maxLength: 50, unique: true)
+        emailVerifiedAt(nullable: true)
+        password(password: true)
+        photoPath(maxLength: 100, nullable: true)
     }
 
     static final mapping = {
-        table name: '`user`'
-        account lazy: false
-	    password column: '`password`'
-        sort lastName: 'asc', firstName: 'asc'
+        table(name: '`user`')
+        account(lazy: false)
+	    password(column: '`password`')
+        sort(lastName: 'asc', firstName: 'asc')
     }
 
-    String getName() { "$firstName $lastName" }
+    String getName() {
+        "$firstName $lastName"
+    }
+
     @SuppressWarnings('unused')
-    String getPhoto() { photoPath?.replaceAll '\\\\', '/' }
+    String getPhoto() {
+        photoPath?.replaceAll(PATTERN_BACKSLASH, '/')
+    }
+
     boolean isOwner() { owner.booleanValue() }
 }

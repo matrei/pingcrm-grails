@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,17 +60,16 @@ class UsersController extends AppController<User> {
     @Override
     def index(Paginator ignore) {
 
-        def filters = params.subMap filterNames
-        def users = appService.list User, null, filters
+        def filters = params.subMap(filterNames)
+        def users = appService.list(User, null, filters)
         def usersPublicData = publicDataMapper.map(users as List<PublicData>, indexProperties)
-        usersPublicData = usersPublicData.collect {userData -> addPhotoUrl userData, [w: 40, h: 40, fit: 'crop'] }
+        usersPublicData = usersPublicData.collect({ userData -> addPhotoUrl userData, [w: 40, h: 40, fit: 'crop'] })
 
-        renderInertia indexComponent, [users: usersPublicData, filters: filters]
+        renderInertia(indexComponent, [users: usersPublicData, filters: filters])
     }
 
     @Override
     def create() {
-
         addToModel([
             maxPhotoSize: uploadConfig.maxFileSize,
             testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
@@ -81,58 +80,58 @@ class UsersController extends AppController<User> {
     @Override
     def edit(Long id) {
 
-        def user = findOrRedirect id
+        def user = findOrRedirect(id)
         if (!user) return null
 
         def userPublicData = publicDataMapper.map(user, editProperties)
-        addPhotoUrl userPublicData, [w: 60, h: 60, fit: 'crop']
+        addPhotoUrl(userPublicData, [w: 60, h: 60, fit: 'crop'])
 
-        renderInertia editComponent, [
+        renderInertia(editComponent, [
             user: userPublicData,
             maxPhotoSize: uploadConfig.maxFileSize,
             testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
-        ]
+        ])
     }
 
     def storeUser(UserCommand userCmd) {
 
         // Validate the photo field first. If the max upload size was hit, no other fields will be available
-        if (!userCmd.validate(['photo'])) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate(['photo'])) { chain(action: 'create', model: [errors: renderErrors(userCmd.errors)]); return }
 
-        if (!userCmd.validate()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate()) { chain(action: 'create', model: [errors: renderErrors(userCmd.errors)]); return }
 
         def user = userService.createUser userCmd
-        if (userCmd.hasErrors()) { chain action: 'create', model: [errors: renderErrors(userCmd.errors)]; return }
+        if (userCmd.hasErrors()) { chain(action: 'create', model: [errors: renderErrors(userCmd.errors)]); return }
 
         if (!user) {
             flash.error = 'Failed to create user.'
-            seeOtherRedirect action: 'create'; return
+            seeOtherRedirect(action: 'create'); return
         }
 
-        if (user.hasErrors()) { chain action: 'create', model: [errors: renderErrors(user.errors)]; return }
+        if (user.hasErrors()) { chain(action: 'create', model: [errors: renderErrors(user.errors)]); return }
 
         flash.success = 'User created.'
-        seeOtherRedirect action: 'index'
+        seeOtherRedirect(action: 'index')
     }
 
     def updateUser(UpdateUserCommand userCmd) {
 
-        if (!userCmd.validate()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
+        if (!userCmd.validate()) { chain(action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]); return }
 
         def user = userService.updateUser userCmd
-        if (userCmd.hasErrors()) { chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]; return }
+        if (userCmd.hasErrors()) { chain(action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)]); return }
 
         if (user.hasErrors()) {
             if (user.errors.fieldErrors) {
-                chain action: 'edit', id: userCmd.id, model: [errors: renderErrors(user.errors)]; return
+                chain(action: 'edit', id: userCmd.id, model: [errors: renderErrors(user.errors)]); return
             } else {
                 flash.error = 'User not found.'
-                seeOtherRedirect action: 'index'; return
+                seeOtherRedirect(action: 'index'); return
             }
         }
 
         flash.success = 'User updated.'
-        seeOtherRedirect action: 'edit', id: userCmd.id
+        seeOtherRedirect(action: 'edit', id: userCmd.id)
     }
 
     @Override
@@ -141,33 +140,33 @@ class UsersController extends AppController<User> {
         if (isCurrentUser id) {
             if (appService.delete User, id) {
                 session.invalidate()
-                seeOtherRedirect controller: 'login'
+                seeOtherRedirect(controller: 'login')
             } else {
                 flash.error = 'Failed to delete user.'
-                seeOtherRedirect action: 'edit', id: id
+                seeOtherRedirect(action: 'edit', id: id)
             }
             return
         }
 
         if (appService.delete User, id) {
-            userService.invalidateSessionsForUserId id
+            userService.invalidateSessionsForUserId(id)
             flash.success = 'User deleted.'
-            seeOtherRedirect action: 'edit', id: id; return
+            seeOtherRedirect(action: 'edit', id: id); return
         }
         flash.error = 'Failed to delete user.'
-        seeOtherRedirect action: 'edit', id: id
+        seeOtherRedirect(action: 'edit', id: id)
     }
 
-    private boolean isCurrentUser(Long id) { userService.isCurrentUser id }
+    private boolean isCurrentUser(Long id) {
+        userService.isCurrentUser(id)
+    }
 
     private Map addPhotoUrl(Map user, Map photoParams) {
-
         if (user.photo) {
-            def photoUrl = grailsLinkGenerator.link controller: 'images', action: 'thumbnail', params: photoParams + [path: user.photo]
+            def photoUrl = grailsLinkGenerator.link(controller: 'images', action: 'thumbnail', params: photoParams + [path: user.photo])
             user.photo = photoUrl
         }
-
-        user
+        return user
     }
 
     private static boolean shouldServerMaxUploadSizeValidationBeTested(HttpServletRequest request) {

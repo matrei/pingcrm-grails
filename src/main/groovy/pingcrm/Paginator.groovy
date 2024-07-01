@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ class Paginator implements Validateable {
     Map paginate(List data, Map currentRequestParams, Map paginationData = [:]) {
 
         def pgData = new TypeConvertingMap(paginationData)
-        def params = currentRequestParams instanceof TypeConvertingMap ? currentRequestParams :new TypeConvertingMap(currentRequestParams)
+        def params = currentRequestParams instanceof TypeConvertingMap ? currentRequestParams : new TypeConvertingMap(currentRequestParams)
 
         if (pgData.total == null) { throw new IllegalArgumentException('paginationData is missing required entry [total]') }
 
@@ -106,7 +106,7 @@ class Paginator implements Validateable {
         def stepsEnabled = maxSteps > 0
         int currentStep = ((offset / maxItemsPerPage) as int) + 1
         int firstStep = 1
-        int lastStep = (total / maxItemsPerPage).setScale(0, RoundingMode.CEILING) as int
+        int lastStep = (total / maxItemsPerPage).setScale(0, RoundingMode.CEILING).intValue()
 
         def links = []
 
@@ -121,8 +121,8 @@ class Paginator implements Validateable {
         if (stepsEnabled && lastStep > firstStep) {
 
             // determine begin and end step paging variables
-            int beginStep = currentStep - (maxSteps / 2).round() as int + (maxSteps % 2)
-            int endStep = currentStep + (maxSteps / 2).round() as int
+            int beginStep = currentStep - (maxSteps / 2).round().intValue() + (maxSteps % 2)
+            int endStep = currentStep + (maxSteps / 2).round().intValue()
 
             if (beginStep < firstStep) {
                 beginStep = firstStep

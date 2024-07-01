@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,52 +39,47 @@ class ContactService extends DomainService<Contact> {
 
     @ReadOnly @Override
     List<Contact> list(Paginator paginator, Map filters) {
-
-        def criteria = criteriaWith filters
-        def pagination = paginator.queryParamsAnd sort: [lastName: 'asc', firstName: 'asc']
-        (filters.trashed ? Contact.withDeleted { criteria.list(pagination) } : criteria.list(pagination)) as List<Contact>
+        def criteria = criteriaWith(filters)
+        def pagination = paginator.queryParamsAnd(sort: [lastName: 'asc', firstName: 'asc'])
+        (filters.trashed ? Contact.withDeleted({ criteria.list(pagination) }) : criteria.list(pagination)) as List<Contact>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
-
-        def criteria = criteriaWith filters
-        (filters.trashed ? Contact.withDeleted { criteria.count() } : criteria.count()) as int
+        def criteria = criteriaWith(filters)
+        (filters.trashed ? Contact.withDeleted({ criteria.count() }) : criteria.count()) as int
     }
 
     @ReadOnly @Override
     Contact get(Serializable id, boolean includeDeleted) {
-        (includeDeleted ? Contact.withDeleted { Contact.get(id) } : Contact.get(id)) as Contact
+        (includeDeleted ? Contact.withDeleted({ Contact.get(id) }) : Contact.get(id)) as Contact
     }
 
     @Transactional @Override
     Contact create(Object bindingSource) {
-
         Contact contact = new Contact()
-        contact.setProperties bindingSource
+        contact.setProperties(bindingSource)
         contact.account = userService.currentUser.account
-        bindContactToOrganization contact, bindingSource
+        bindContactToOrganization(contact, bindingSource)
         contact.save()
-        contact
+        return contact
     }
 
     @Transactional @Override
     Contact bindAndSave(GormEntity<Contact> contact, Object bindingSource) {
-
-        DataBindingUtils.bindObjectToInstance contact, bindingSource
-        bindContactToOrganization contact as Contact, bindingSource
+        DataBindingUtils.bindObjectToInstance(contact, bindingSource)
+        bindContactToOrganization(contact as Contact, bindingSource)
         contact.save()
     }
 
     @Transactional
     private void bindContactToOrganization(Contact contact, Object bindingSource) {
-
-        if(bindingSource['organizationId']) {
+        if (bindingSource['organizationId']) {
             def organizationId = bindingSource['organizationId'] as Serializable
-            def organization = organizationService.get organizationId, true
-            if(organization) contact.organization = organization
+            def organization = organizationService.get(organizationId, true)
+            if (organization) contact.organization = organization
         } else {
-            if(contact.organization) {
+            if (contact.organization) {
                 contact.organization = null
             }
         }
@@ -92,25 +87,25 @@ class ContactService extends DomainService<Contact> {
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
-        new DetachedCriteria(Contact).build {
-            join 'organization', JoinType.LEFT
-            createAlias 'organization', 'org'
-            eq 'account', userService.currentUser.account
-            if(filters.search) {
+        return new DetachedCriteria(Contact).build({
+            join('organization', JoinType.LEFT)
+            createAlias('organization', 'org')
+            eq('account', userService.currentUser.account)
+            if (filters.search) {
                 String search = lc(filters.search)
                 or {
-                    ilike 'firstName', "%$search%"
-                    ilike 'lastName', "%$search%"
-                    ilike 'email', "%$search%"
+                    ilike('firstName', "%$search%")
+                    ilike('lastName', "%$search%")
+                    ilike('email', "%$search%")
                     and {
-                        isNotNull 'organization'
-                        ilike 'org.name', "%$search%"
+                        isNotNull('organization')
+                        ilike('org.name', "%$search%")
                     }
                 }
             }
             if(filters.trashed == 'only') {
-                eq 'deleted', true
+                eq('deleted', true)
             }
-        }
+        })
     }
 }

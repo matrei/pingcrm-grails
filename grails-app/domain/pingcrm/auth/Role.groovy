@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,12 +35,12 @@ class Role implements Serializable {
 
 	String authority
 
-	static final constraints = { authority nullable: false, blank: false, unique: true }
-	static final mapping = { cache true }
+	static final constraints = { authority(nullable: false, blank: false, unique: true) }
+	static final mapping = { cache(true) }
 
 	static Role findByAuthority(String auth) {
-		createCriteria().get {
-			eq 'authority', auth
-		} as Role
+		createCriteria().get({
+			eq('authority', auth)
+		}) as Role
 	}
 }

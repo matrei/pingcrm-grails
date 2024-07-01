@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,19 +50,21 @@ class Contact implements LogicalDelete<Contact>, PublicData {
     Organization organization
 
     static final constraints = {
-        firstName maxSize: 25
-        lastName maxSize: 25
-        email maxSize: 50, nullable: true, email: true
-        phone maxSize: 50, nullable: true
-        address maxSize: 150, nullable: true
-        city maxSize: 50, nullable: true
-        region maxSize: 50, nullable: true
-        country maxSize: 2, nullable: true
-        postalCode maxSize: 25, nullable: true
-        organization nullable: true
+        firstName(maxSize: 25)
+        lastName(maxSize: 25)
+        email(maxSize: 50, nullable: true, email: true)
+        phone(maxSize: 50, nullable: true)
+        address(maxSize: 150, nullable: true)
+        city(maxSize: 50, nullable: true)
+        region(maxSize: 50, nullable: true)
+        country(maxSize: 2, nullable: true)
+        postalCode(maxSize: 25, nullable: true)
+        organization(nullable: true)
     }
 
-    static final mapping = { sort lastName: 'asc', firstName: 'asc' }
+    static final mapping = { sort(lastName: 'asc', firstName: 'asc') }
 
-    String getName() { "$firstName $lastName" }
+    String getName() {
+        "$firstName $lastName"
+    }
 }

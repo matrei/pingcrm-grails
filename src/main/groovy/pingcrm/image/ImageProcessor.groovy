@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,12 +38,12 @@ trait ImageProcessor {
         def rotation = Rotation.NONE
 
         def metadata = ImageMetadataReader.readMetadata(file)
-        if(metadata.containsDirectoryOfType(ExifIFD0Directory)) {
+        if (metadata.containsDirectoryOfType(ExifIFD0Directory)) {
 
             def exifIFD0 = metadata.getDirectoriesOfType(ExifIFD0Directory)
-            def orientation = exifIFD0.find { it.containsTag(ExifIFD0Directory.TAG_ORIENTATION) }?.getInt(ExifIFD0Directory.TAG_ORIENTATION)
+            def orientation = exifIFD0.find({ it.containsTag(ExifIFD0Directory.TAG_ORIENTATION) })?.getInt(ExifIFD0Directory.TAG_ORIENTATION)
 
-            if(orientation) {
+            if (orientation) {
                 switch (orientation) {
                     case 6: rotation = Rotation.CW_90; break // [Exif IFD0] Orientation - Right side, top (Rotate 90 CW)
                     case 3: rotation = Rotation.CW_180; break // [Exif IFD0] Orientation - Bottom, right side (Rotate 180)
@@ -53,7 +53,7 @@ trait ImageProcessor {
             }
         }
 
-        rotation
+        return rotation
     }
 
     enum Rotation {
@@ -66,7 +66,7 @@ trait ImageProcessor {
         private final String value
 
         private Rotation(String value) { this.value = value }
-        static Rotation get(Object value) { values().find { it.value == value } ?: NONE }
+        static Rotation get(Object value) { values().find({ it.value == value }) ?: NONE }
         static List<String> getValidValues() { values()*.value }
         String getValue() { value }
         String toString() { value }
@@ -100,7 +100,7 @@ trait ImageProcessor {
         private final String value
 
         private ScalingQuality(String value) { this.value = value }
-        static ScalingQuality get(Object value) { values().find {it.value == value } ?: AUTOMATIC }
+        static ScalingQuality get(Object value) { values().find({ it.value == value }) ?: AUTOMATIC }
         static List<String> getValidValues() { values()*.value }
         String getValue() { value }
         String toString() { value }

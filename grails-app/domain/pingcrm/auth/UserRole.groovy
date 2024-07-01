@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,28 +40,28 @@ class UserRole implements Serializable {
 	Role role
 
 	static final constraints = {
-		user nullable: false
-		role nullable: false, validator: { Role r, UserRole ur ->
+		user(nullable: false)
+		role(nullable: false, validator: { Role r, UserRole ur ->
 			if (ur.user?.id) {
 				if (exists ur.user.id, r.id) {
 					return ['userRole.exists']
 				}
 			}
-		}
+		})
 	}
 
 	static final mapping = {
-		id composite: ['user', 'role']
-		version false
+		id(composite: ['user', 'role'])
+		version(false)
 	}
 
 	static Set<Role> findAllRolesForUser(User u) {
-		def userRoles = createCriteria().list { eq 'user', u } as Set<UserRole>
+		def userRoles = createCriteria().list({ eq 'user', u }) as Set<UserRole>
 		userRoles*.role as Set<Role>
 	}
 
 	static UserRole get(User user, Role role) {
-		get user.id, role.id
+		get(user.id, role.id)
 	}
 
 	static UserRole get(Serializable userId, Serializable roleId) {
@@ -73,59 +73,49 @@ class UserRole implements Serializable {
 	}
 
 	private static DetachedCriteria<UserRole> criteriaFor(Serializable userId, Serializable roleId) {
-
-		where {
+		where({
 			user == User.load(userId) &&
 			role == Role.load(roleId)
-		}
+		})
 	}
 
 	static UserRole create(User user, Role role, boolean flush = false) {
-
 		def instance = new UserRole(user: user, role: role)
-		instance.save flush: flush
-
-		instance
+		instance.save(flush: flush)
+		return instance
 	}
 
 	@SuppressWarnings('unused')
 	static boolean remove(User u, Role r) {
-
 		if (u != null && r != null) {
-			return where { user == u && role == r }.deleteAll()
+			return where({ user == u && role == r }).deleteAll()
 		}
-
-		false
+		return false
 	}
 
 	@SuppressWarnings('unused')
 	static int removeAll(User u) {
-		u == null ? 0 : where { user == u }.deleteAll() as int
+		u == null ? 0 : where({ user == u }).deleteAll() as int
 	}
 
 	@SuppressWarnings('unused')
 	static int removeAll(Role r) {
-		r == null ? 0 : where { role == r }.deleteAll() as int
+		r == null ? 0 : where({ role == r }).deleteAll() as int
 	}
 
 	@Override
 	boolean equals(other) {
-
 		if (other instanceof UserRole) {
 			return other.userId == user?.id && other.roleId == role?.id
 		}
-
-		false
+		return false
 	}
 
 	@Override
 	int hashCode() {
-
 		int hashCode = HashCodeHelper.initHash()
-
-		if (user) hashCode = HashCodeHelper.updateHash hashCode, user.id
-		if (role) hashCode = HashCodeHelper.updateHash hashCode, role.id
-
-		hashCode
+		if (user) hashCode = HashCodeHelper.updateHash(hashCode, user.id)
+		if (role) hashCode = HashCodeHelper.updateHash(hashCode, role.id)
+		return hashCode
 	}
 }

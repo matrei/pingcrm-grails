@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ abstract class DomainService<D extends LogicalDelete> {
      * Returns the domain object with the id (including or excluding soft deleted)
      */
     abstract D get(Serializable id, boolean includeDeleted)
+
     /**
      * Returns a list of domain objects (including soft deleted)
      */
@@ -46,26 +47,28 @@ abstract class DomainService<D extends LogicalDelete> {
 
     @Transactional
     D bindAndSave(GormEntity<D> entity, Object bindingSource) {
-        DataBindingUtils.bindObjectToInstance entity, bindingSource
-        entity.save() as D
+        DataBindingUtils.bindObjectToInstance(entity, bindingSource)
+        return entity.save() as D
     }
 
-    boolean delete(Serializable id) { delete(get(id, false) as D) }
-    boolean restore(Serializable id) { unDelete(get(id, true) as D) }
+    boolean delete(Serializable id) { return delete(get(id, false) as D) }
+    boolean restore(Serializable id) { return unDelete(get(id, true) as D) }
 
     @Transactional @SuppressWarnings('GrMethodMayBeStatic')
     protected boolean delete(D entity) {
-        if(!entity) return false
+        if (!entity) return false
         entity.delete(flush: true)
-        entity.deleted
+        return entity.deleted
     }
 
     @Transactional @SuppressWarnings('GrMethodMayBeStatic')
     private boolean unDelete(D entity) {
-        if(!entity) return false
+        if (!entity) return false
         entity.unDelete()
-        !entity.deleted
+        return !entity.deleted
     }
 
-    protected static String lc(Object str) { str?.toString()?.toLowerCase Locale.ENGLISH }
+    protected static String lc(Object str) {
+        return str?.toString()?.toLowerCase(Locale.ENGLISH)
+    }
 }

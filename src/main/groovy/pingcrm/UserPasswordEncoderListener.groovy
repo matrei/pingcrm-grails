@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,25 +38,25 @@ class UserPasswordEncoderListener {
     @SuppressWarnings('unused')
     @Listener(User)
     void onPreInsertEvent(PreInsertEvent event) {
-        encodePasswordForEvent event
+        encodePasswordForEvent(event)
     }
 
     @SuppressWarnings('unused')
     @Listener(User)
     void onPreUpdateEvent(PreUpdateEvent event) {
-        encodePasswordForEvent event
+        encodePasswordForEvent(event)
     }
 
     private void encodePasswordForEvent(AbstractPersistenceEvent event) {
         if (event.entityObject instanceof User) {
             User u = event.entityObject as User
             if (u.password && ((event instanceof PreInsertEvent) || (event instanceof PreUpdateEvent && u.isDirty('password')))) {
-                event.entityAccess.setProperty 'password', encodePassword(u.password)
+                event.entityAccess.setProperty('password', encodePassword(u.password))
             }
         }
     }
 
     private String encodePassword(String password) {
-        springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+        return springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
     }
 }

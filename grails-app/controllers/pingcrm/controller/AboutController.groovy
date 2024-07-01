@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,9 @@ class AboutController {
             grailsVersion = appInfo.grailsVersion
             grailsEnvironment = Environment.current.name
             groovyVersion = GroovySystem.version
-            javaVersion = System.getProperty 'java.version'
+            javaVersion = System.getProperty('java.version')
             ssrEnabled = grailsApplication.config.getProperty('inertia.ssr.enabled', Boolean, false)
-            plugins = pluginManager.allPlugins.collect {[name: it.name, version: it.version] }.sort { it.name }
+            plugins = pluginManager.allPlugins.collect({[name: it.name, version: it.version]}).sort({ it.name })
             numControllers = grailsApplication.getArtefacts('Controller').size()
             numDomains = grailsApplication.getArtefacts('Domain').size()
             numServices = grailsApplication.getArtefacts('Service').size()
@@ -63,6 +63,6 @@ class AboutController {
     }
 
     def index() {
-        renderInertia 'About/Index', [info: info]
+        renderInertia('About/Index', [info: info])
     }
 }

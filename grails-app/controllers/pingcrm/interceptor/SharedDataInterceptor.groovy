@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ class SharedDataInterceptor {
     AppService appService
 
     SharedDataInterceptor() {
-        match controller: '*'
+        match(controller: '*')
     }
 
     boolean before() {
@@ -41,7 +41,7 @@ class SharedDataInterceptor {
         def sharedData = inertiaSharedData
 
         def user = appService.currentUser
-        if(user) {
+        if (user) {
             sharedData << [
                 auth: [
                     user: [
@@ -65,6 +65,6 @@ class SharedDataInterceptor {
 
         inertiaSharedData = sharedData
 
-        true
+        return true
     }
 }

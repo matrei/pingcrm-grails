@@ -38,7 +38,7 @@ class PublicDataMapper {
     }
 
     List<Map> map(List<PublicData> objectsToMap, List<String> propertiesToShow) {
-        objectsToMap.collect { map(it, propertiesToShow) }
+        objectsToMap.collect({ map(it, propertiesToShow) })
     }
 
     Map map(PublicData objectToMap, List<String> propertiesToShow) {

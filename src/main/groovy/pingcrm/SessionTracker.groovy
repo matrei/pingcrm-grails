@@ -41,21 +41,21 @@ class SessionTracker implements HttpSessionListener {
 
     @Override
     void sessionCreated(HttpSessionEvent sessionEvent) {
-        sessions.put sessionEvent.session.id, sessionEvent.session
+        sessions.put(sessionEvent.session.id, sessionEvent.session)
     }
 
     @Override
     void sessionDestroyed(HttpSessionEvent sessionEvent) {
-        sessions.remove sessionEvent.session.id
+        sessions.remove(sessionEvent.session.id)
     }
 
     static void invalidateSessionsForUserId(Serializable id) {
-        sessions.each {sessionId, session ->
+        sessions.each({ Serializable sessionId, HttpSession session ->
             def sc = session.getAttribute(SPRING_SECURITY_CONTEXT_KEY) as SecurityContext
             def user = sc?.authentication?.principal as GrailsUser
-            if(!user || user.id == id) {
+            if (!user || user.id == id) {
                 session.invalidate()
             }
-        }
+        })
     }
 }

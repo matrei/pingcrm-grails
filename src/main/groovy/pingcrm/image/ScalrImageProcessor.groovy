@@ -70,7 +70,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                  * re-calculate a proportionally correct value based on the
                  * targetWidth.
                  */
-                targetHeight = (targetWidth * ratio).round() as int
+                targetHeight = roundedInt(targetWidth * ratio)
 
                 if (DEBUG && originalTargetHeight != targetHeight) log(1,'Auto-Corrected targetHeight [from=%d to=%d] to honor image proportions.', originalTargetHeight, targetHeight)
 
@@ -89,15 +89,15 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                     // Calculate crop x offset and new original width to use when cropping
                     int xOffset = 0
                     if (ratio < 1) {
-                        cropWidth = (currentWidth * ratio).round() as int
-                        xOffset = ((currentWidth - cropWidth) / 2).round() as int
+                        cropWidth = roundedInt(currentWidth * ratio)
+                        xOffset = roundedInt((currentWidth - cropWidth) / 2)
                     }
 
                     // Calculate crop y offset and new original height to use when cropping
                     int yOffset = 0
                     if (ratio > 1) {
-                        cropHeight = (currentHeight / ratio).round() as int
-                        yOffset = ((currentHeight - cropHeight) / 2).round() as int
+                        cropHeight = roundedInt(currentHeight / ratio)
+                        yOffset = roundedInt((currentHeight - cropHeight) / 2)
                     }
                     // Crop to fit within the target height and width
                     src = crop(src, xOffset, yOffset, cropWidth, cropHeight)
@@ -105,8 +105,8 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
 
                 // Calculate resize
                 def cropRatio = (targetWidth / cropWidth).max(targetHeight / cropHeight)
-                targetWidth  = (cropWidth * cropRatio).round() as int
-                targetHeight = (cropHeight * cropRatio).round() as int
+                targetWidth  = roundedInt(cropWidth * cropRatio)
+                targetHeight = roundedInt(cropHeight * cropRatio)
 
                 // If the calculated size is bigger than what was sent in, return what was sent in instead.
                 targetWidth = targetWidth > originalTargetWidth ? originalTargetWidth : targetWidth
@@ -124,7 +124,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                  * Portrait Orientation: Ignore the given width and re-calculate
                  * a proportionally correct value based on the targetHeight.
                  */
-                targetWidth = (targetHeight / ratio).round() as int
+                targetWidth = roundedInt(targetHeight / ratio)
 
                 if (DEBUG && originalTargetWidth != targetWidth) log(1, 'Auto-Corrected targetWidth [from=%d to=%d] to honor image proportions.', originalTargetWidth, targetWidth)
             }
@@ -197,7 +197,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     static Method getScalrMethod(ScalingQuality scalingQuality) {
 
         Method scalrMethod = Method.AUTOMATIC
-        switch(scalingQuality) {
+        switch (scalingQuality) {
             case ScalingQuality.SPEED: scalrMethod = Method.SPEED; break
             case ScalingQuality.BALANCED: scalrMethod = Method.BALANCED; break
             case ScalingQuality.QUALITY: scalrMethod = Method.QUALITY; break
@@ -210,12 +210,16 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     static Scalr.Rotation getScalrRotation(Rotation rotation) {
 
         Scalr.Rotation scalrRotation = null
-        switch(rotation) {
+        switch (rotation) {
             case Scalr.Rotation.CW_90: scalrRotation = Scalr.Rotation.CW_90; break
             case Scalr.Rotation.CW_180: scalrRotation = Scalr.Rotation.CW_180; break
             case Scalr.Rotation.CW_270: scalrRotation = Scalr.Rotation.CW_270; break
             default: break
         }
         scalrRotation
+    }
+
+    private static int roundedInt(BigDecimal value) {
+        return value.round().intValue()
     }
 }
