@@ -1,5 +1,5 @@
 [versions]
-datafaker = '2.2.2'
+datafaker = '2.3.0'
 geb = '6.0'
 gorm-hibernate5 = '8.1.0'
 gorm-logical-delete = '2.0.0.M2'
