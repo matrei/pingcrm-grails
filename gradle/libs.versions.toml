@@ -23,7 +23,7 @@ slf4j = '1.7.36'
 spock = '2.3-groovy-3.0'
 spring = '5.3.37'
 spring-boot = '2.7.18'
-spring-security = '5.8.13'
+spring-security = '6.3.2'
 squiggly = '2.0.1'
 
 [libraries]
