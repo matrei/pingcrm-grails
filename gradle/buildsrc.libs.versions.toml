@@ -3,7 +3,7 @@ git-properties-gradle-plugin = '2.4.2'
 grails-gradle-plugin = '6.2.1'
 #grails-hibernate5 = '8.0.2'
 grails-views = '3.2.3'
-node-gradle-plugin = '7.0.2'
+node-gradle-plugin = '7.1.0'
 spring-boot = '2.7.18'
 webdriver-binaries = '3.2'
 
