@@ -4,7 +4,7 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.grails.org/grails/core' }
+    maven { url = 'https://repo.grails.org/grails/core' }
 }
 
 dependencies {

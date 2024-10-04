@@ -4,7 +4,6 @@ plugins {
     id 'application'
     id 'groovy'
     id 'war'
-
     id 'com.github.erdi.webdriver-binaries'
     id 'com.github.node-gradle.node'
     id 'com.gorylenko.gradle-git-properties'
