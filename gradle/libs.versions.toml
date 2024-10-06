@@ -18,6 +18,7 @@ hikari = '5.1.0'
 imgscalr = '4.2'
 metadata-extractor = '2.19.0'
 micronaut = '3.10.4'
+netty = '4.1.114.Final'
 selenium = '4.25.0'
 slf4j = '1.7.36'
 spock = '2.3-groovy-3.0'
@@ -25,6 +26,7 @@ spring = '5.3.39'
 spring-boot = '2.7.18'
 spring-security = '5.8.14'
 squiggly = '2.0.1'
+tomcat = '9.0.95'
 
 [libraries]
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
@@ -74,9 +76,11 @@ spring-security-web = { module = 'org.springframework.security:spring-security-w
 spock-core = { module = 'org.spockframework:spock-core', version.ref = 'spock' }
 squiggly = { module = 'dev.nicklasw:squiggly-filter-jackson', version.ref = 'squiggly' }
 
-# This is a transitive dependency, added here for dependency update robots
-# as the 'spring.version' Gradle property is set in build.gradle to override older versions
+# These are transitive dependencies, added here for dependency update robots
+# as the BOM versions are overridden in build.gradle
+netty-codec-http = { module = 'io.netty:netty-codec-http', version.ref = 'netty' }
 spring-core = { module = 'org.springframework:spring-core', version.ref = 'spring' }
+tomcat-embed-core = { module = 'org.apache.tomcat.embed:tomcat-embed-core', version.ref = 'tomcat' }
 
 [bundles]
 geb = ['grails-geb', 'geb-core', 'geb-spock']
