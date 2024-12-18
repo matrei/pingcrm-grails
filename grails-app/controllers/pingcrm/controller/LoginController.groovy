@@ -38,11 +38,6 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
     }
 
     @Override
-    def authAjax() {
-        redirect(controller: 'login')
-    }
-
-    @Override
     def authfail() {
 
         def errors = [:]
@@ -65,10 +60,5 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
     @Override
     def denied() {
         renderInertia('Error/Index', [status: 403])
-    }
-
-    @Override
-    def ajaxDenied() {
-        denied()
     }
 }
