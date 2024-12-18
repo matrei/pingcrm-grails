@@ -34,56 +34,56 @@ geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
 geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
 gorm-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'gorm-hibernate5' }
 grails-core = { module = 'org.grails:grails-core', version.ref = 'grails' }
-grails-csrf = { module = 'io.github.matrei:grails-csrf', version.ref = 'grails-csrf' }
-grails-events = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
-grails-geb = { module = 'org.grails.plugins:geb', version.ref = 'grails-geb' }
-grails-gorm-logical-delete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
-grails-gsp = { module = 'org.grails.plugins:gsp', version.ref = 'grails-gsp' }
 grails-i18n = { module = 'org.grails:grails-plugin-i18n', version.ref = 'grails' }
-grails-inertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
 grails-interceptors = { module = 'org.grails:grails-plugin-interceptors', version.ref = 'grails' }
 grails-services = { module = 'org.grails:grails-plugin-services', version.ref = 'grails' }
-grails-spring-security-core = { module = 'org.grails.plugins:spring-security-core', version.ref = 'grails-spring-security-core' }
-grails-testing-support-gorm = { module = 'org.grails:grails-gorm-testing-support', version.ref = 'grails-testing-support' }
-grails-testing-support-web = { module = 'org.grails:grails-web-testing-support', version.ref = 'grails-testing-support' }
 grails-urlmappings = { module = 'org.grails:grails-plugin-url-mappings', version.ref = 'grails' }
-grails-views-json = { module = 'org.grails.plugins:views-json', version.ref = 'grails-views' }
-grails-web-common = { module = 'org.grails:grails-web-common', version.ref = 'grails' }
-grails-web-databinding = { module = 'org.grails:grails-web-databinding', version.ref = 'grails' }
+grails-webCommon = { module = 'org.grails:grails-web-common', version.ref = 'grails' }
+grails-webDatabinding = { module = 'org.grails:grails-web-databinding', version.ref = 'grails' }
+grailsCsrf = { module = 'io.github.matrei:grails-csrf', version.ref = 'grails-csrf' }
+grailsEvents = { module = 'org.grails.plugins:events', version.ref = 'grails-events' }
+grailsGeb = { module = 'org.grails.plugins:geb', version.ref = 'grails-geb' }
+grailsGormLogicalDelete = { module = 'org.grails.plugins:gorm-logical-delete', version.ref = 'gorm-logical-delete' }
+grailsGsp = { module = 'org.grails.plugins:gsp', version.ref = 'grails-gsp' }
+grailsInertia = { module = 'io.github.matrei:grails-inertia-plugin', version.ref = 'grails-inertia' }
+grailsSpringSecurity-core = { module = 'org.grails.plugins:spring-security-core', version.ref = 'grails-spring-security-core' }
+grailsTestingSupport-gorm = { module = 'org.grails:grails-gorm-testing-support', version.ref = 'grails-testing-support' }
+grailsTestingSupport-web = { module = 'org.grails:grails-web-testing-support', version.ref = 'grails-testing-support' }
+grailsViews-json = { module = 'org.grails.plugins:views-json', version.ref = 'grails-views' }
 groovy-test = { module = 'org.codehaus.groovy:groovy-test', version.ref = 'groovy' }
 h2database = { module = 'com.h2database:h2', version.ref = 'h2database' }
 hikari = { module = 'com.zaxxer:HikariCP', version.ref = 'hikari' }
 imgscalr = { module = 'org.imgscalr:imgscalr-lib', version.ref = 'imgscalr' }
-metadata-extractor = { module = 'com.drewnoakes:metadata-extractor', version.ref = 'metadata-extractor' }
-micronaut-httpclient = { module = 'io.micronaut:micronaut-http-client', version.ref = 'micronaut' }
-micronaut-inject-groovy = { module = 'io.micronaut:micronaut-inject-groovy', version.ref = 'micronaut' }
+metadataExtractor = { module = 'com.drewnoakes:metadata-extractor', version.ref = 'metadata-extractor' }
+micronaut-httpClient = { module = 'io.micronaut:micronaut-http-client', version.ref = 'micronaut' }
+micronaut-injectGroovy = { module = 'io.micronaut:micronaut-inject-groovy', version.ref = 'micronaut' }
 selenium-api = { module = 'org.seleniumhq.selenium:selenium-api', version.ref = 'selenium' }
-selenium-chrome-driver = { module = 'org.seleniumhq.selenium:selenium-chrome-driver', version.ref = 'selenium' }
-selenium-chromium-driver = { module = 'org.seleniumhq.selenium:selenium-chromium-driver', version.ref = 'selenium' }
-selenium-devtools-v85 = { module = 'org.seleniumhq.selenium:selenium-devtools-v85', version.ref = 'selenium' }
-selenium-firefox-driver = { module = 'org.seleniumhq.selenium:selenium-firefox-driver', version.ref = 'selenium' }
+selenium-chromeDriver = { module = 'org.seleniumhq.selenium:selenium-chrome-driver', version.ref = 'selenium' }
+selenium-chromiumDriver = { module = 'org.seleniumhq.selenium:selenium-chromium-driver', version.ref = 'selenium' }
+selenium-devtoolsV85 = { module = 'org.seleniumhq.selenium:selenium-devtools-v85', version.ref = 'selenium' }
+selenium-firefoxDriver = { module = 'org.seleniumhq.selenium:selenium-firefox-driver', version.ref = 'selenium' }
 selenium-http = { module = 'org.seleniumhq.selenium:selenium-http', version.ref = 'selenium' }
 selenium-json = { module = 'org.seleniumhq.selenium:selenium-json', version.ref = 'selenium' }
-selenium-remote-driver = { module = 'org.seleniumhq.selenium:selenium-remote-driver', version.ref = 'selenium' }
+selenium-remoteDriver = { module = 'org.seleniumhq.selenium:selenium-remote-driver', version.ref = 'selenium' }
 selenium-support = { module = 'org.seleniumhq.selenium:selenium-support', version.ref = 'selenium' }
 slf4j-nop = { module = 'org.slf4j:slf4j-nop', version.ref = 'slf4j' }
-spring-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'spring-boot' }
-spring-boot-starter-logging = { module = 'org.springframework.boot:spring-boot-starter-logging', version.ref = 'spring-boot' }
-spring-boot-starter-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'spring-boot' }
-spring-security-core = { module = 'org.springframework.security:spring-security-core', version.ref = 'spring-security' }
-spring-security-crypto = { module = 'org.springframework.security:spring-security-crypto', version.ref = 'spring-security' }
-spring-security-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
+springBoot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'spring-boot' }
+springBoot-starterLogging = { module = 'org.springframework.boot:spring-boot-starter-logging', version.ref = 'spring-boot' }
+springBoot-starterTomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'spring-boot' }
+springSecurity-core = { module = 'org.springframework.security:spring-security-core', version.ref = 'spring-security' }
+springSecurity-crypto = { module = 'org.springframework.security:spring-security-crypto', version.ref = 'spring-security' }
+springSecurity-web = { module = 'org.springframework.security:spring-security-web', version.ref = 'spring-security' }
 spock-core = { module = 'org.spockframework:spock-core', version.ref = 'spock' }
 squiggly = { module = 'dev.nicklasw:squiggly-filter-jackson', version.ref = 'squiggly' }
 
 # These are transitive dependencies, added here for dependency update robots
 # as the BOM versions are overridden in build.gradle
-netty-codec-http = { module = 'io.netty:netty-codec-http', version.ref = 'netty' }
+netty-codecHttp = { module = 'io.netty:netty-codec-http', version.ref = 'netty' }
 spring-core = { module = 'org.springframework:spring-core', version.ref = 'spring' }
-tomcat-embed-core = { module = 'org.apache.tomcat.embed:tomcat-embed-core', version.ref = 'tomcat' }
+tomcat-embedCore = { module = 'org.apache.tomcat.embed:tomcat-embed-core', version.ref = 'tomcat' }
 
 [bundles]
-geb = ['grails-geb', 'geb-core', 'geb-spock']
-grails-testing-support = ['grails-testing-support-gorm', 'grails-testing-support-web']
-selenium = ['selenium-api', 'selenium-chrome-driver', 'selenium-chromium-driver', 'selenium-devtools-v85', 'selenium-firefox-driver', 'selenium-http', 'selenium-json', 'selenium-remote-driver', 'selenium-support']
-spring-security = ['spring-security-core', 'spring-security-crypto', 'spring-security-web']
+geb = ['grailsGeb', 'geb-core', 'geb-spock']
+grailsTestingSupport = ['grailsTestingSupport-gorm', 'grailsTestingSupport-web']
+selenium = ['selenium-api', 'selenium-chromeDriver', 'selenium-chromiumDriver', 'selenium-devtoolsV85', 'selenium-firefoxDriver', 'selenium-http', 'selenium-json', 'selenium-remoteDriver', 'selenium-support']
+springSecurity = ['springSecurity-core', 'springSecurity-crypto', 'springSecurity-web']

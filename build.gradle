@@ -50,40 +50,40 @@ dependencies {
 
     implementation libs.grails.core
     implementation libs.grails.interceptors
-    implementation libs.grails.web.common
-    implementation libs.grails.web.databinding
+    implementation libs.grails.webCommon
+    implementation libs.grails.webDatabinding
 
-    implementation libs.grails.gsp
-    implementation libs.grails.events
-    implementation libs.grails.spring.security.core
-    implementation libs.bundles.spring.security
-    implementation libs.grails.gorm.logical.delete
-    implementation libs.grails.inertia
+    implementation libs.grailsEvents
+    implementation libs.grailsGsp
+    implementation libs.grailsGormLogicalDelete
+    implementation libs.grailsInertia
+    implementation libs.grailsSpringSecurity.core
     //implementation project(':grails-inertia-plugin')
 
+    implementation libs.bundles.springSecurity
     implementation libs.datafaker
-    implementation libs.squiggly
-    implementation libs.metadata.extractor
     implementation libs.imgscalr
+    implementation libs.metadataExtractor
+    implementation libs.squiggly
 
-    runtimeOnly libs.gorm.hibernate5
-    runtimeOnly libs.grails.csrf
     runtimeOnly libs.grails.i18n
     runtimeOnly libs.grails.services
     runtimeOnly libs.grails.urlmappings
-    runtimeOnly libs.spring.boot.autoconfigure
-    runtimeOnly libs.spring.boot.starter.logging
-    runtimeOnly libs.spring.boot.starter.tomcat
+    runtimeOnly libs.gorm.hibernate5
+    runtimeOnly libs.grailsCsrf
+    runtimeOnly libs.springBoot.autoconfigure
+    runtimeOnly libs.springBoot.starterLogging
+    runtimeOnly libs.springBoot.starterTomcat
     runtimeOnly libs.h2database
     runtimeOnly libs.hikari
 
-    compileOnly libs.micronaut.inject.groovy
-    compileOnly libs.grails.views.json // Used for compiling json views
+    compileOnly libs.micronaut.injectGroovy
+    compileOnly libs.grailsViews.json // Used for compiling json views
     compileOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during GSP compile tasks
 
-    testImplementation libs.micronaut.httpclient
-    testImplementation libs.micronaut.inject.groovy
-    testImplementation libs.bundles.grails.testing.support
+    testImplementation libs.micronaut.httpClient
+    testImplementation libs.micronaut.injectGroovy
+    testImplementation libs.bundles.grailsTestingSupport
     testImplementation libs.spock.core
     testImplementation libs.groovy.test
 

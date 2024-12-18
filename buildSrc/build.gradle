@@ -9,16 +9,16 @@ repositories {
 
 dependencies {
 
-    implementation buildsrcLibs.spring.boot.gradle.plugin
+    implementation buildsrcLibs.springBoot.gradlePlugin
 
-    implementation buildsrcLibs.grails.gradle.plugin
-    implementation buildsrcLibs.grails.views.gradle.plugin
+    implementation buildsrcLibs.grails.gradlePlugin
+    implementation buildsrcLibs.grailsViews.gradlePlugin
 
-    implementation buildsrcLibs.git.properties.gradle.plugin
-    implementation buildsrcLibs.node.gradle.plugin
-    implementation buildsrcLibs.webdriver.binaries.gradle.plugin
+    implementation buildsrcLibs.gitProperties.gradlePlugin
+    implementation buildsrcLibs.node.gradlePlugin
+    implementation buildsrcLibs.webdriverBinaries.gradlePlugin
 
     // Needed for schemaExport Grails command/Gradle task
-    //implementation buildsrcLibs.grails.hibernate5
+    //implementation buildsrcLibs.grailsHibernate5
 
 }
