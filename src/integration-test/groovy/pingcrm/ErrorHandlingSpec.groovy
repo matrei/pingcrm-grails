@@ -1,16 +1,12 @@
 package pingcrm
 
-import geb.spock.GebSpec
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
-import pingcrm.pages.DashboardPage
-import pingcrm.pages.Error403Page
-import pingcrm.pages.Error404Page
-import pingcrm.pages.Error500Page
-import pingcrm.pages.LoginPage
+import pingcrm.pages.*
 import spock.lang.Unroll
 
 @Integration
-class ErrorHandlingSpec extends GebSpec {
+class ErrorHandlingSpec extends ContainerGebSpec {
 
     @Unroll
     void 'it renders the #status error page'(page) {

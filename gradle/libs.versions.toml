@@ -1,15 +1,14 @@
 [versions]
 datafaker = '2.3.1'
-geb = '6.0'
 gorm-hibernate5 = '8.1.1'
 gorm-logical-delete = '2.0.0.M2'
 grails = '6.2.2'
-grails-csrf = '1.0.0'
-grails-geb = '4.0.0'
+grails-csrf = '1.0.1'
+grails-geb = '4.1.1'
 grails-gsp = '6.2.4'
 grails-events = '5.0.2'
 grails-inertia = '2.1.3'
-grails-spring-security-core = '6.1.1'
+grails-spring-security-core = '6.1.2'
 grails-testing-support = '3.2.2'
 grails-views = '3.2.3'
 groovy = '3.0.23'
@@ -19,7 +18,6 @@ imgscalr = '4.2'
 metadata-extractor = '2.19.0'
 micronaut = '3.10.4'
 netty = '4.1.116.Final'
-selenium = '4.27.0'
 slf4j = '1.7.36'
 spock = '2.3-groovy-3.0'
 spring = '5.3.39'
@@ -30,8 +28,6 @@ tomcat = '9.0.98'
 
 [libraries]
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
-geb-core = { module = 'org.gebish:geb-core', version.ref = 'geb' }
-geb-spock = { module = 'org.gebish:geb-spock', version.ref = 'geb' }
 gorm-hibernate5 = { module = 'org.grails.plugins:hibernate5', version.ref = 'gorm-hibernate5' }
 grails-core = { module = 'org.grails:grails-core', version.ref = 'grails' }
 grails-i18n = { module = 'org.grails:grails-plugin-i18n', version.ref = 'grails' }
@@ -57,15 +53,6 @@ imgscalr = { module = 'org.imgscalr:imgscalr-lib', version.ref = 'imgscalr' }
 metadataExtractor = { module = 'com.drewnoakes:metadata-extractor', version.ref = 'metadata-extractor' }
 micronaut-httpClient = { module = 'io.micronaut:micronaut-http-client', version.ref = 'micronaut' }
 micronaut-injectGroovy = { module = 'io.micronaut:micronaut-inject-groovy', version.ref = 'micronaut' }
-selenium-api = { module = 'org.seleniumhq.selenium:selenium-api', version.ref = 'selenium' }
-selenium-chromeDriver = { module = 'org.seleniumhq.selenium:selenium-chrome-driver', version.ref = 'selenium' }
-selenium-chromiumDriver = { module = 'org.seleniumhq.selenium:selenium-chromium-driver', version.ref = 'selenium' }
-selenium-devtoolsV85 = { module = 'org.seleniumhq.selenium:selenium-devtools-v85', version.ref = 'selenium' }
-selenium-firefoxDriver = { module = 'org.seleniumhq.selenium:selenium-firefox-driver', version.ref = 'selenium' }
-selenium-http = { module = 'org.seleniumhq.selenium:selenium-http', version.ref = 'selenium' }
-selenium-json = { module = 'org.seleniumhq.selenium:selenium-json', version.ref = 'selenium' }
-selenium-remoteDriver = { module = 'org.seleniumhq.selenium:selenium-remote-driver', version.ref = 'selenium' }
-selenium-support = { module = 'org.seleniumhq.selenium:selenium-support', version.ref = 'selenium' }
 slf4j-nop = { module = 'org.slf4j:slf4j-nop', version.ref = 'slf4j' }
 springBoot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'spring-boot' }
 springBoot-starterLogging = { module = 'org.springframework.boot:spring-boot-starter-logging', version.ref = 'spring-boot' }
@@ -83,7 +70,5 @@ spring-core = { module = 'org.springframework:spring-core', version.ref = 'sprin
 tomcat-embedCore = { module = 'org.apache.tomcat.embed:tomcat-embed-core', version.ref = 'tomcat' }
 
 [bundles]
-geb = ['grailsGeb', 'geb-core', 'geb-spock']
 grailsTestingSupport = ['grailsTestingSupport-gorm', 'grailsTestingSupport-web']
-selenium = ['selenium-api', 'selenium-chromeDriver', 'selenium-chromiumDriver', 'selenium-devtoolsV85', 'selenium-firefoxDriver', 'selenium-http', 'selenium-json', 'selenium-remoteDriver', 'selenium-support']
 springSecurity = ['springSecurity-core', 'springSecurity-crypto', 'springSecurity-web']

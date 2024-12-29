@@ -1,12 +1,12 @@
 package pingcrm
 
-import geb.spock.GebSpec
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 import pingcrm.pages.*
 import spock.lang.Unroll
 
 @Integration
-class MainMenuSpec extends GebSpec {
+class MainMenuSpec extends ContainerGebSpec {
 
     @Unroll
     void 'being on a page highlights the corresponding menu item'(testPage) {

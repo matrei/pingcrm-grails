@@ -1,16 +1,12 @@
 package pingcrm
 
-
-import geb.spock.GebSpec
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
-import pingcrm.pages.DashboardPage
-import pingcrm.pages.LoginPage
-import pingcrm.pages.UserCreatePage
-import pingcrm.pages.UserEditPage
-import pingcrm.pages.UserListPage
+import org.testcontainers.images.builder.Transferable
+import pingcrm.pages.*
 
 @Integration
-class UserCrudSpec extends GebSpec {
+class UserCrudSpec extends ContainerGebSpec {
 
     void 'the demo user can log in'() {
 
@@ -124,16 +120,21 @@ class UserCrudSpec extends GebSpec {
 
     void 'users can be created with valid input'() {
 
-        given: 'a logged in demo user'
+        setup: 'transfer an avatar image to the container'
+        File avatarImage = transferFileToContainer(
+                'src/integration-test/resources/assets/avatar.jpg',
+                '/tmp/avatar.jpg'
+        )
+
+        when: 'a demo user is logged in'
         loginDemoUser()
 
-        when: 'going to the create user page'
+        and: 'is on the create user page'
         def userCreatePage = new UserCreatePage()
         to userCreatePage
 
-        and: 'submitting valid user details'
-        def file = 'src/integration-test/resources/assets/avatar.jpg' as File
-        userCreatePage.createUser 'Han', 'Solo', 'han@solo.com', 'secret', file
+        and: 'submits valid user details'
+        userCreatePage.createUser('Han', 'Solo', 'han@solo.com', 'secret', avatarImage)
 
         then: 'the user is redirected to the user list page'
         def userListPage = at UserListPage
@@ -146,22 +147,27 @@ class UserCrudSpec extends GebSpec {
         js.exec(userListPage.firstAvatarImage, 'return arguments[0].naturalHeight') > 0
 
         cleanup: 'remove the generated avatar image'
-        def avatarFile = "src/main/webapp/users/${userListPage.firstAvatarImageFilename}" as File
-        avatarFile.delete()
+        def generatedImage = "src/main/webapp/users/${userListPage.firstAvatarImageFilename}" as File
+        generatedImage.delete()
     }
 
     void 'users cannot be created with a too large photo file size (server-side validation: #testServerMaxUploadSizeValidation)'(boolean testServerMaxUploadSizeValidation) {
 
-        given: 'a logged in demo user'
+        setup: 'transfer an avatar image to the container'
+        File largeAvatarImage = transferFileToContainer(
+                'src/integration-test/resources/assets/avatar-filesize-to-large.jpg',
+                '/tmp/avatar-filesize-to-large.jpg'
+        )
+
+        when: 'a demo user is logged in'
         loginDemoUser()
 
-        when: 'going to the create user page'
+        and: 'is on the create user page'
         def userCreatePage = new UserCreatePage()
         to userCreatePage
 
         and: 'submitting the form with a photo that has a too large file size'
-        def file = 'src/integration-test/resources/assets/avatar-filesize-too-large.jpg' as File
-        userCreatePage.createUser 'Josh', 'Doe', 'josh@doe.com', 'secret', file
+        userCreatePage.createUser('Josh', 'Doe', 'josh@doe.com', 'secret', largeAvatarImage)
 
         then: 'an error message is shown'
         waitFor { userCreatePage.flashError == 'There is one form error.' }
@@ -173,15 +179,21 @@ class UserCrudSpec extends GebSpec {
 
     void 'the user can upload an avatar image'()  {
 
-        given: 'a logged in demo user'
+        setup: 'transfer an avatar image to the container'
+        File avatarImage = transferFileToContainer(
+                'src/integration-test/resources/assets/avatar.jpg',
+                '/tmp/avatar.jpg'
+        )
+
+        when: 'a demo user is logged in'
         loginDemoUser()
 
-        when: 'going to the edit user page for a user that is not the demo user'
+        and: 'is on the edit user page for a user that is not the demo user'
         def userEditPage = new UserEditPage(2)
         to userEditPage
 
         and: 'trying to upload an avatar image'
-        userEditPage.photoField.file = 'src/integration-test/resources/assets/avatar.jpg' as File
+        userEditPage.photoField.file = avatarImage
         userEditPage.save()
 
         then: 'a success message is shown'
@@ -192,22 +204,28 @@ class UserCrudSpec extends GebSpec {
         js.exec(userEditPage.avatarImage, 'return arguments[0].naturalHeight') > 0
 
         cleanup: 'remove the generated avatar image'
-        def avatarFile = "src/main/webapp/users/${userEditPage.avatarImageFilename}" as File
-        avatarFile.delete()
+        def generatedImage = "src/main/webapp/users/${userEditPage.avatarImageFilename}" as File
+        generatedImage.delete()
     }
 
     void 'the user cannot upload files larger than allowed (server-side validation: #testServerMaxUploadSizeValidation)'(boolean testServerMaxUploadSizeValidation) {
 
-        given: 'a logged in demo user'
+        setup: 'transfer an avatar image to the container'
+        File largeAvatarImage = transferFileToContainer(
+                'src/integration-test/resources/assets/avatar-filesize-to-large.jpg',
+                '/tmp/avatar-filesize-to-large.jpg'
+        )
+
+        when: 'a demo user is logged in'
         loginDemoUser()
 
-        when: 'going to the edit user page for a user that is not the demo user'
+        and: 'is on the edit user page for a user that is not the demo user'
         def userEditPage = new UserEditPage(3)
         userEditPage.testServerMaxUploadSizeValidation = testServerMaxUploadSizeValidation
         to userEditPage
 
         and: 'trying to upload an image file that is to big'
-        userEditPage.photoField.file = 'src/integration-test/resources/assets/avatar-filesize-too-large.jpg' as File
+        userEditPage.photoField.file = largeAvatarImage
         userEditPage.save()
 
         then: 'an error message is shown'
@@ -222,5 +240,15 @@ class UserCrudSpec extends GebSpec {
         def loginPage = to LoginPage
         loginPage.loginDemoUser()
         loginPage
+    }
+
+    File transferFileToContainer(String localPath, String remotePath) {
+        container.copyFileToContainer(Transferable.of(new File(localPath).bytes), remotePath)
+        File file = new File(remotePath) {
+            // This is necessary to make it work when the host is a Windows machine
+            @Override
+            String getAbsolutePath() { path.replaceAll('\\\\', '/') }
+        }
+        return file
     }
 }

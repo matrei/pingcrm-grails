@@ -1,16 +1,11 @@
 package pingcrm
 
-
-import geb.spock.GebSpec
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
-import pingcrm.pages.DashboardPage
-import pingcrm.pages.LoginPage
-import pingcrm.pages.UserCreatePage
-import pingcrm.pages.UserEditPage
-import pingcrm.pages.UserListPage
+import pingcrm.pages.*
 
 @Integration
-class LoginSpec extends GebSpec {
+class LoginSpec extends ContainerGebSpec {
 
     void 'accessing the application without logging in is not allowed'() {
 

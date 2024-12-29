@@ -8,3 +8,8 @@ inertia:
   ssr:
     enabled: true
     url: 'http://localhost:13714/render'
+---
+csrf:
+  cookie:
+    domain: 'host.testcontainers.internal'
+    secure: false
