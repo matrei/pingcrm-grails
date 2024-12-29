@@ -87,9 +87,7 @@ dependencies {
     testImplementation libs.spock.core
     testImplementation libs.groovy.test
 
-    integrationTestImplementation libs.bundles.geb
-
-    integrationTestRuntimeOnly libs.bundles.selenium
+    integrationTestImplementation testFixtures(libs.grailsGeb)
 }
 
 application {
@@ -110,18 +108,6 @@ tasks.withType(Test).configureEach {
 
     reports.html.required = false
     reports.junitXml.required = false
-
-    systemProperty 'geb.env', System.getProperty('geb.env')
-    systemProperty 'geb.build.reportsDir', reporting.file('geb/integrationTest')
-}
-
-webdriverBinaries {
-    chromedriver {
-        version = '110.0.5481.77'
-        fallbackTo32Bit = true
-    }
-    geckodriver = '0.32.2'
-    edgedriver = '110.0.1587.57'
 }
 
 node {

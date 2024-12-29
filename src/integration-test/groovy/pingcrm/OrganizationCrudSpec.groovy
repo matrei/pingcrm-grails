@@ -1,20 +1,16 @@
 package pingcrm
 
-import pingcrm.auth.Role
-import pingcrm.auth.UserRole
-import geb.spock.GebSpec
 import grails.gorm.transactions.Transactional
+import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
-import pingcrm.pages.DashboardPage
-import pingcrm.pages.LoginPage
-import pingcrm.pages.OrganizationListPage
-import pingcrm.pages.UserCreatePage
-import pingcrm.pages.UserListPage
+import pingcrm.auth.Role
+import pingcrm.auth.UserRole
+import pingcrm.pages.*
 import spock.lang.Shared
 
 @Integration
-class OrganizationCrudSpec extends GebSpec {
+class OrganizationCrudSpec extends ContainerGebSpec {
 
     @Shared ownerUserDetails = [email: 'johndoe@example.com', password: 'secret']
     @Shared nonOwnerUserDetails = [firstName: 'Dolly', lastName: 'Dimple', email: 'abc@123.org', password: 'secret']
