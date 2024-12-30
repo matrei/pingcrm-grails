@@ -5,7 +5,6 @@ grails-gradle-plugin = '6.2.3'
 grails-views = '3.2.3'
 node-gradle-plugin = '7.1.0'
 spring-boot = '2.7.18'
-webdriver-binaries = '3.2'
 
 [libraries]
 gitProperties-gradlePlugin = { module = 'com.gorylenko.gradle-git-properties:gradle-git-properties', version.ref = 'git-properties-gradle-plugin' }
@@ -15,4 +14,3 @@ grails-gradlePlugin = { module = 'org.grails:grails-gradle-plugin', version.ref 
 grailsViews-gradlePlugin = { module = 'org.grails.plugins:views-gradle', version.ref = 'grails-views' }
 node-gradlePlugin = { module = 'com.github.node-gradle:gradle-node-plugin', version.ref = 'node-gradle-plugin' }
 springBoot-gradlePlugin = { module = 'org.springframework.boot:spring-boot-gradle-plugin', version.ref = 'spring-boot' }
-webdriverBinaries-gradlePlugin = { module = 'com.github.erdi:webdriver-binaries-gradle-plugin', version.ref = 'webdriver-binaries' }
