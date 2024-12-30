@@ -2,17 +2,21 @@
   "extends": [
     "config:recommended"
   ],
-  "labels": ["type: dependency upgrade"],
+  "labels": [
+    "type: dependency upgrade"
+  ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["*"],
-      "allowedVersions": "!/SNAPSHOT$/"
+      "allowedVersions": "!/SNAPSHOT$/",
+      "matchPackageNames": [
+        "*"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^org\\.codehaus\\.groovy"
-      ],
-      "groupName": "groovy monorepo"
+      "groupName": "groovy monorepo",
+      "matchPackageNames": [
+        "/^org\\.codehaus\\.groovy/"
+      ]
     },
     {
       "matchPackageNames": [
