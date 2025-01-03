@@ -2,7 +2,7 @@
 datafaker = '2.4.2'
 gorm-hibernate5 = '8.1.1'
 gorm-logical-delete = '2.0.0.M2'
-grails = '6.2.2'
+grails = '6.2.3'
 grails-csrf = '1.0.1'
 grails-geb = '4.1.1'
 grails-gsp = '6.2.4'
