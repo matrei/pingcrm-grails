@@ -24,7 +24,7 @@ spring = '5.3.39'
 spring-boot = '2.7.18'
 spring-security = '5.8.16'
 squiggly = '2.0.1'
-tomcat = '9.0.98'
+tomcat = '11.0.5'
 
 [libraries]
 datafaker = { module = 'net.datafaker:datafaker', version.ref = 'datafaker' }
