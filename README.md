@@ -85,5 +85,6 @@ The default location of the SSR bundle is `src/main/resources/ssr/ssr.mjs`.
 You can change it by setting/adding the `inertia.ssr.bundle` config property.
 
 ## 🙏 Credits
-* Port to Grails by Mattias Reichel (@mattias_reichel)
+
 * Original work by Jonathan Reinink (@reinink) and contributors
+* Port to Grails by Mattias Reichel (@mattias_reichel)
