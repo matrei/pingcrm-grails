@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,18 @@
  */
 package pingcrm
 
-import pingcrm.services.DomainService
+import groovy.transform.CompileStatic
+
+import jakarta.inject.Inject
+import jakarta.persistence.criteria.JoinType
+
 import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import grails.web.databinding.DataBindingUtils
-import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.GormEntity
 
-import javax.persistence.criteria.JoinType
+import pingcrm.services.DomainService
 
 /**
  * A service for CRUD operations on {@link pingcrm.Contact} domain objects.
@@ -41,18 +44,18 @@ class ContactService extends DomainService<Contact> {
     List<Contact> list(Paginator paginator, Map filters) {
         def criteria = criteriaWith(filters)
         def pagination = paginator.queryParamsAnd(sort: [lastName: 'asc', firstName: 'asc'])
-        (filters.trashed ? Contact.withDeleted({ criteria.list(pagination) }) : criteria.list(pagination)) as List<Contact>
+        (filters.trashed ? Contact.withDeleted { criteria.list(pagination) } : criteria.list(pagination)) as List<Contact>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
         def criteria = criteriaWith(filters)
-        (filters.trashed ? Contact.withDeleted({ criteria.count() }) : criteria.count()) as int
+        (filters.trashed ? Contact.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
     @ReadOnly @Override
     Contact get(Serializable id, boolean includeDeleted) {
-        (includeDeleted ? Contact.withDeleted({ Contact.get(id) }) : Contact.get(id)) as Contact
+        (includeDeleted ? Contact.withDeleted { Contact.get(id) } : Contact.get(id)) as Contact
     }
 
     @Transactional @Override
@@ -87,7 +90,7 @@ class ContactService extends DomainService<Contact> {
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
-        return new DetachedCriteria(Contact).build({
+        new DetachedCriteria(Contact).build {
             join('organization', JoinType.LEFT)
             createAlias('organization', 'org')
             eq('account', userService.currentUser.account)
@@ -106,6 +109,6 @@ class ContactService extends DomainService<Contact> {
             if(filters.trashed == 'only') {
                 eq('deleted', true)
             }
-        })
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,15 @@
  */
 package pingcrm.image
 
-import groovy.transform.CompileStatic
-import jakarta.inject.Singleton
+import java.awt.image.BufferedImage
 
 import javax.imageio.ImageIO
-import java.awt.image.BufferedImage
+
+import groovy.transform.CompileStatic
+
+import jakarta.inject.Inject
+
+import org.springframework.stereotype.Service
 
 /**
  * A service for handling images in the application.
@@ -27,7 +31,7 @@ import java.awt.image.BufferedImage
  * @author Mattias Reichel
  * @since 1.0.0
  */
-@Singleton
+@Service
 @CompileStatic
 class ImageService {
 
@@ -48,9 +52,16 @@ class ImageService {
 
         def inputImage = ImageIO.read(file)
 
-        if (rotation != rotation.NONE) inputImage = imageProcessor.rotate(inputImage, rotation)
-        def outputImage = imageProcessor.resize(inputImage, width, height, resizingMode, scalingQuality)
+        if (rotation != rotation.NONE) {
+            inputImage = imageProcessor.rotate(inputImage, rotation)
+        }
 
-        return outputImage
+        imageProcessor.resize(
+                inputImage,
+                width,
+                height,
+                resizingMode,
+                scalingQuality
+        )
     }
 }

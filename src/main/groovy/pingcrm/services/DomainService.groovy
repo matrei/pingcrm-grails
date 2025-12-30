@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,15 @@
  */
 package pingcrm.services
 
-import pingcrm.Paginator
-import gorm.logical.delete.LogicalDelete
+import groovy.transform.CompileStatic
+
 import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.Transactional
+import grails.logical.delete.LogicalDelete
 import grails.web.databinding.DataBindingUtils
-import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.GormEntity
+
+import pingcrm.Paginator
 
 /**
  * A base service for CRUD.
@@ -48,27 +50,36 @@ abstract class DomainService<D extends LogicalDelete> {
     @Transactional
     D bindAndSave(GormEntity<D> entity, Object bindingSource) {
         DataBindingUtils.bindObjectToInstance(entity, bindingSource)
-        return entity.save() as D
+        entity.save() as D
     }
 
-    boolean delete(Serializable id) { return delete(get(id, false) as D) }
-    boolean restore(Serializable id) { return unDelete(get(id, true) as D) }
+    boolean delete(Serializable id) {
+        delete(
+                get(id, false) as D
+        )
+    }
+
+    boolean restore(Serializable id) {
+        undelete(
+                get(id, true) as D
+        )
+    }
 
     @Transactional @SuppressWarnings('GrMethodMayBeStatic')
     protected boolean delete(D entity) {
         if (!entity) return false
         entity.delete(flush: true)
-        return entity.deleted
+        entity.deleted
     }
 
     @Transactional @SuppressWarnings('GrMethodMayBeStatic')
-    private boolean unDelete(D entity) {
+    private boolean undelete(D entity) {
         if (!entity) return false
-        entity.unDelete()
-        return !entity.deleted
+        entity.undelete()
+        !entity.deleted
     }
 
     protected static String lc(Object str) {
-        return str?.toString()?.toLowerCase(Locale.ENGLISH)
+        str?.toString()?.toLowerCase(Locale.ENGLISH)
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
 //file:noinspection GrUnnecessaryPublicModifier
 package pingcrm
 
-import pingcrm.services.DomainService
-import gorm.logical.delete.LogicalDelete
 import groovy.transform.CompileStatic
+
+import grails.logical.delete.LogicalDelete
 import org.grails.datastore.gorm.GormEntity
+
+import pingcrm.services.DomainService
 
 /**
  * The main application service.
@@ -35,7 +37,6 @@ class AppService {
     OrganizationService organizationService
 
     private <D extends LogicalDelete<D>> DomainService<D> getDomainService(Class domainClass) {
-
         switch(domainClass) {
             case User: return userService as DomainService<D>; break
             case Contact: return contactService as DomainService<D>; break

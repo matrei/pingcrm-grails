@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,24 @@
  */
 package pingcrm
 
-import gorm.logical.delete.LogicalDelete
-import grails.compiler.GrailsCompileStatic
-import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
-import pingcrm.auth.Role
-import pingcrm.auth.UserRole
-
 import java.time.LocalDateTime
 import java.util.regex.Pattern
+
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+
+import jakarta.persistence.FetchType
+
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.hibernate.annotation.ManagedEntity
+import grails.gorm.hibernate.mapping.MappingBuilder
+import grails.logical.delete.LogicalDelete
+import org.grails.datastore.mapping.config.MappingDefinition
+import org.grails.orm.hibernate.cfg.Mapping
+import org.grails.orm.hibernate.cfg.PropertyConfig
+
+import pingcrm.auth.Role
+import pingcrm.auth.UserRole
 
 /**
  * A user domain class.
@@ -31,9 +40,10 @@ import java.util.regex.Pattern
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
-@EqualsAndHashCode(includes='email')
-@ToString(includes='name', includeNames=true, includePackage=false)
+@EqualsAndHashCode(includes = 'email')
+@ToString(includes = 'name', includeNames = true, includePackage = false)
 class User implements LogicalDelete<User>, PublicData, Serializable {
 
     @SuppressWarnings('unused')
@@ -54,8 +64,10 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
 
     /* timestamps in UTC set by hibernate.jdbc.time_zone */
     LocalDateTime emailVerifiedAt
-    @SuppressWarnings('unused') LocalDateTime dateCreated
-    @SuppressWarnings('unused') LocalDateTime lastUpdated
+    @SuppressWarnings('unused')
+    LocalDateTime dateCreated
+    @SuppressWarnings('unused')
+    LocalDateTime lastUpdated
 
     /** A User belongsTo an Account */
     Account account
@@ -74,11 +86,20 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
         photoPath(maxLength: 100, nullable: true)
     }
 
-    static final mapping = {
-        table(name: '`user`')
-        account(lazy: false)
-	    password(column: '`password`')
-        sort(lastName: 'asc', firstName: 'asc')
+    static final MappingDefinition<Mapping, PropertyConfig> mapping = MappingBuilder.orm {
+        table {
+            name('`user`')
+        }
+        property('account') {
+            fetchStrategy(FetchType.EAGER)
+        }
+        property('password') {
+            column('`password`')
+        }
+        sort([
+            lastName: 'asc',
+            firstName: 'asc'
+        ])
     }
 
     String getName() {
@@ -89,6 +110,4 @@ class User implements LogicalDelete<User>, PublicData, Serializable {
     String getPhoto() {
         photoPath?.replaceAll(PATTERN_BACKSLASH, '/')
     }
-
-    boolean isOwner() { owner.booleanValue() }
 }

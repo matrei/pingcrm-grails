@@ -8,23 +8,71 @@ import geb.module.TextInput
 
 class UserCreatePage extends Page {
 
+    private static final Map<String, String> selectors = [
+            'flashError': 'div.bg-red-400',
+    ]
+
     static url = '/users/create'
     static btnText = 'Create User'
-    static at = { waitFor {
-        btnText == js.exec('return document.querySelector("[type=submit]").textContent')
+
+    static at = {
+        btnText == js.exec(
+                'return document.querySelector("[type=submit]").textContent'
+        )
         firstNameField.displayed // Without this I have gotten StaleElementReferenceException
-    } }
+    }
 
     static content = {
-        firstNameField { $('form').find('input', 0).module(TextInput) }
-        lastNameField { $('form').find('input', 1).module(TextInput) }
-        emailField { $('form').find('input', 2).module(TextInput) }
-        passwordField { $('form').find('input', 3).module(PasswordInput) }
-        ownerSelect { $('form').find('select').module(Select) }
-        photoField { $('form').find('input', type: 'file').module(FileInput) }
-        photoFieldBorder { photoField.parent() }
-        submitBtn { $(type: 'submit') }
-        flashError(required: false) { $('div.bg-red-400').text() }
+        firstNameField {
+            $('form')
+                    .find('input', 0)
+                    .module(TextInput)
+        }
+
+        lastNameField {
+            $('form')
+                    .find('input', 1)
+                    .module(TextInput)
+        }
+
+        emailField {
+            $('form')
+                    .find('input', 2)
+                    .module(TextInput)
+        }
+
+        passwordField {
+            $('form')
+                    .find('input', 3)
+                    .module(PasswordInput)
+        }
+
+        ownerSelect {
+            $('form')
+                    .find('select')
+                    .module(Select)
+        }
+
+        photoField {
+            $('form')
+                    .find('input', type: 'file')
+                    .module(FileInput)
+        }
+
+        photoFieldBorder {
+            photoField.parent()
+        }
+
+        submitBtn {
+            $(type: 'submit')
+        }
+
+        flashError(required: false) {
+            waitFor {
+                $(selectors.flashError).displayed
+            }
+            $(selectors.flashError).text()
+        }
     }
 
     @SuppressWarnings('GrMethodMayBeStatic')
@@ -33,7 +81,7 @@ class UserCreatePage extends Page {
         lastNameField.text = lastname
         emailField.text = email
         passwordField.text = password
-        if(photo) photoField.file = photo
+        if (photo) photoField.file = photo
         submitBtn.click()
     }
 }

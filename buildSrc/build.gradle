@@ -2,22 +2,44 @@ plugins {
     id 'groovy-gradle-plugin'
 }
 
+def versions = new Properties()
+file('../gradle.properties').withInputStream {
+    versions.load(it)
+}
+
 repositories {
     mavenCentral()
-    maven { url = 'https://repo.grails.org/grails/core' }
+    maven { url = 'https://repo.grails.org/grails/restricted' }
+    maven {
+        url = 'https://repository.apache.org/content/repositories/staging'
+        content {
+            includeGroupAndSubgroups('org.apache.grails')
+            includeGroupAndSubgroups('org.apache.groovy')
+        }
+        mavenContent {
+            releasesOnly()
+        }
+    }
+    maven {
+        url = 'https://repository.apache.org/content/repositories/snapshots'
+        content {
+            includeGroupAndSubgroups('org.apache.grails')
+            includeGroupAndSubgroups('org.apache.groovy')
+        }
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 dependencies {
 
-    implementation buildsrcLibs.springBoot.gradlePlugin
+    implementation platform("org.apache.grails:grails-bom:${versions['grailsVersion']}")
 
-    implementation buildsrcLibs.grails.gradlePlugin
-    implementation buildsrcLibs.grailsViews.gradlePlugin
-
-    implementation buildsrcLibs.gitProperties.gradlePlugin
-    implementation buildsrcLibs.node.gradlePlugin
-
-    // Needed for schemaExport Grails command/Gradle task
-    //implementation buildsrcLibs.grailsHibernate5
+    //implementation buildsrcLibs.springBoot.gradlePlugin
+    implementation 'org.apache.grails:grails-gradle-plugins'
+    runtimeOnly 'org.apache.grails.web:grails-web-url-mappings'
+    implementation "com.gorylenko.gradle-git-properties:gradle-git-properties:${versions['gradleGitPropertiesVersion']}"
+    implementation "com.github.node-gradle:gradle-node-plugin:${versions['gradleNodeVersion']}"
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  */
 package pingcrm.image
 
-import com.drew.imaging.ImageMetadataReader
-import com.drew.metadata.exif.ExifIFD0Directory
+import java.awt.image.BufferedImage
+
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 
-import java.awt.image.BufferedImage
+import com.drew.imaging.ImageMetadataReader
+import com.drew.metadata.exif.ExifIFD0Directory
 
 /**
  * A trait for image processing classes.
@@ -30,7 +32,14 @@ import java.awt.image.BufferedImage
 @CompileStatic
 trait ImageProcessor {
 
-    abstract BufferedImage resize(BufferedImage src, int targetWidth, int targetHeight, ResizingMode resizeMode, ScalingQuality scalingQuality)
+    abstract BufferedImage resize(
+            BufferedImage src,
+            int targetWidth,
+            int targetHeight,
+            ResizingMode resizeMode,
+            ScalingQuality scalingQuality
+    )
+
     abstract BufferedImage rotate(BufferedImage src, Rotation rotation)
 
     Rotation getImageRotation(File file) {
@@ -41,7 +50,9 @@ trait ImageProcessor {
         if (metadata.containsDirectoryOfType(ExifIFD0Directory)) {
 
             def exifIFD0 = metadata.getDirectoriesOfType(ExifIFD0Directory)
-            def orientation = exifIFD0.find({ it.containsTag(ExifIFD0Directory.TAG_ORIENTATION) })?.getInt(ExifIFD0Directory.TAG_ORIENTATION)
+            def orientation = exifIFD0.find {
+                it.containsTag(ExifIFD0Directory.TAG_ORIENTATION)
+            }?.getInt(ExifIFD0Directory.TAG_ORIENTATION)
 
             if (orientation) {
                 switch (orientation) {
@@ -53,9 +64,10 @@ trait ImageProcessor {
             }
         }
 
-        return rotation
+        rotation
     }
 
+    @CompileStatic
     enum Rotation {
 
         NONE('0'),
@@ -65,13 +77,26 @@ trait ImageProcessor {
 
         private final String value
 
-        private Rotation(String value) { this.value = value }
-        static Rotation get(Object value) { values().find({ it.value == value }) ?: NONE }
-        static List<String> getValidValues() { values()*.value }
+        private Rotation(String value) {
+            this.value = value
+        }
+
+        static Rotation get(Object value) {
+            values().find {
+                it.value == value
+            } ?: NONE
+        }
+
+        @CompileDynamic
+        static List<String> getValidValues() {
+            values()*.value
+        }
+
         String getValue() { value }
         String toString() { value }
     }
 
+    @CompileStatic
     enum ResizingMode {
 
         AUTOMATIC('auto'),
@@ -82,13 +107,26 @@ trait ImageProcessor {
 
         private final String value
 
-        private ResizingMode(String value) { this.value = value }
-        static ResizingMode get(Object value) { values().find { it.value == value } ?: AUTOMATIC }
-        static List<String> getValidValues() { values()*.value }
+        private ResizingMode(String value) {
+            this.value = value
+        }
+
+        static ResizingMode get(Object value) {
+            values().find {
+                it.value == value
+            } ?: AUTOMATIC
+        }
+
+        @CompileDynamic
+        static List<String> getValidValues() {
+            values()*.value
+        }
+
         String getValue() { value }
         String toString() { value }
     }
 
+    @CompileStatic
     enum ScalingQuality {
 
         AUTOMATIC('auto'),
@@ -99,9 +137,21 @@ trait ImageProcessor {
 
         private final String value
 
-        private ScalingQuality(String value) { this.value = value }
-        static ScalingQuality get(Object value) { values().find({ it.value == value }) ?: AUTOMATIC }
-        static List<String> getValidValues() { values()*.value }
+        private ScalingQuality(String value) {
+            this.value = value
+        }
+
+        static ScalingQuality get(Object value) {
+            values().find {
+                it.value == value
+            } ?: AUTOMATIC
+        }
+
+        @CompileDynamic
+        static List<String> getValidValues() {
+            values()*.value
+        }
+
         String getValue() { value }
         String toString() { value }
     }

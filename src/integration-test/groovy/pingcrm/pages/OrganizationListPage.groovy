@@ -9,7 +9,15 @@ class OrganizationListPage extends BasePage {
     static url = '/organizations'
 
     static content = {
-        table { $('table.w-full.whitespace-nowrap').module(TableModule) }
-        pagination { $('div', class: 'mt-6').last().module(PaginationModule) }
+        table {
+            $('table.w-full.whitespace-nowrap')
+                    .module(TableModule)
+        }
+
+        pagination {
+            $('div', class: 'mt-6')
+                    .last()
+                    .module(PaginationModule)
+        }
     }
 }

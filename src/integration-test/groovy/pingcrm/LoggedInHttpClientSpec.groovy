@@ -1,12 +1,13 @@
 package pingcrm
 
-import grails.testing.spock.OnceBefore
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.MediaType
 import io.micronaut.http.client.DefaultHttpClientConfiguration
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.http.cookie.Cookie
+
+import grails.testing.spock.OnceBefore
 
 trait LoggedInHttpClientSpec {
 
@@ -17,12 +18,14 @@ trait LoggedInHttpClientSpec {
     @OnceBefore
     @SuppressWarnings('unused')
     void init() {
-
         def baseUrl = "http://localhost:$serverPort"
-        // disable redirects to catch redirect responses (e.g. redirect to login page)
-        def config = new DefaultHttpClientConfiguration()
-        config.followRedirects = false
-        httpClient = HttpClient.create(baseUrl.toURL(), config)
+        httpClient = HttpClient.create(
+                baseUrl.toURL(),
+                new DefaultHttpClientConfiguration().tap {
+                    // disable redirects to catch redirect responses (e.g. redirect to login page)
+                    it.followRedirects = false
+                }
+        )
 
         // Get the csrf token
         def request = HttpRequest.GET('/login')
@@ -45,8 +48,7 @@ trait LoggedInHttpClientSpec {
         sessionCookie = response.getCookie('JSESSIONID').get()
 
         // Get the csrf token again
-        request = HttpRequest.GET('/')
-                .cookie(sessionCookie)
+        request = HttpRequest.GET('/').cookie(sessionCookie)
         response = httpClient.toBlocking().exchange(request)
         csrfCookie = response.getCookie('XSRF-TOKEN').get()
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,18 @@
  */
 package pingcrm.auth
 
-import pingcrm.User
-import grails.gorm.DetachedCriteria
 import groovy.transform.ToString
-
 import org.codehaus.groovy.util.HashCodeHelper
+
 import grails.compiler.GrailsCompileStatic
+import grails.gorm.DetachedCriteria
+import grails.gorm.hibernate.annotation.ManagedEntity
+import grails.gorm.hibernate.mapping.MappingBuilder
+import org.grails.datastore.mapping.config.MappingDefinition
+import org.grails.orm.hibernate.cfg.Mapping
+import org.grails.orm.hibernate.cfg.PropertyConfig
+
+import pingcrm.User
 
 /**
  *  A UserRole is a Many-To-Many mapping between Users and Roles.
@@ -29,6 +35,7 @@ import grails.compiler.GrailsCompileStatic
  *  @author Mattias Reichel
  *  @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
 @ToString(cache=true, includeNames=true, includePackage=false)
 class UserRole implements Serializable {
@@ -50,13 +57,17 @@ class UserRole implements Serializable {
 		})
 	}
 
-	static final mapping = {
-		id(composite: ['user', 'role'])
+	static final MappingDefinition<Mapping, PropertyConfig> mapping = MappingBuilder.orm {
+		property('id') {
+			composite('user', 'role')
+		}
 		version(false)
 	}
 
 	static Set<Role> findAllRolesForUser(User u) {
-		def userRoles = createCriteria().list({ eq 'user', u }) as Set<UserRole>
+		def userRoles = createCriteria().list {
+			eq('user', u)
+		} as Set<UserRole>
 		userRoles*.role as Set<Role>
 	}
 
@@ -82,25 +93,30 @@ class UserRole implements Serializable {
 	static UserRole create(User user, Role role, boolean flush = false) {
 		def instance = new UserRole(user: user, role: role)
 		instance.save(flush: flush)
-		return instance
 	}
 
 	@SuppressWarnings('unused')
 	static boolean remove(User u, Role r) {
 		if (u != null && r != null) {
-			return where({ user == u && role == r }).deleteAll()
+			return where {
+				user == u && role == r
+			}.deleteAll()
 		}
-		return false
+		false
 	}
 
 	@SuppressWarnings('unused')
 	static int removeAll(User u) {
-		u == null ? 0 : where({ user == u }).deleteAll() as int
+		u == null ?
+				0 :
+				where { user == u }.deleteAll() as int
 	}
 
 	@SuppressWarnings('unused')
 	static int removeAll(Role r) {
-		r == null ? 0 : where({ role == r }).deleteAll() as int
+		r == null ?
+				0 :
+				where { role == r }.deleteAll() as int
 	}
 
 	@Override
@@ -108,7 +124,7 @@ class UserRole implements Serializable {
 		if (other instanceof UserRole) {
 			return other.userId == user?.id && other.roleId == role?.id
 		}
-		return false
+		false
 	}
 
 	@Override
@@ -116,6 +132,6 @@ class UserRole implements Serializable {
 		int hashCode = HashCodeHelper.initHash()
 		if (user) hashCode = HashCodeHelper.updateHash(hashCode, user.id)
 		if (role) hashCode = HashCodeHelper.updateHash(hashCode, role.id)
-		return hashCode
+		hashCode
 	}
 }

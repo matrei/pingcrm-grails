@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,29 +23,39 @@ package pingcrm
  */
 class UrlMappings {
 
+    static final Closure idConstraints = {
+        id(matches: /\d+/)
+    }
+
     static final Closure mappings = {
+
+        "/$controller/$action?/$id?" { constraints(idConstraints) }
+
+        '/login' (controller: 'login', action: [GET: 'index', POST: 'auth'])
+        '/login/denied' (controller: 'login', action: [GET: 'denied'])
+        '/login/authfail' (controller: 'login', action: [GET: 'authfail'])
 
         "/" (controller: 'dashboard', action: [GET: 'index'])
         "/about" (controller: 'about', action: [GET: 'index'])
-        "/reports" (controller: 'report', action: [GET: 'index'])
+        "/reports" (controller: 'reports', action: [GET: 'index'])
 
         "/organizations"             (controller: 'organizations', action: [GET: 'index', POST: 'store'])
         "/organizations/create"      (controller: 'organizations', action: [GET: 'create'])
-        "/organizations/$id/edit"    (controller: 'organizations', action: [GET: 'edit'])
-        "/organizations/$id"         (controller: 'organizations', action: [PUT: 'update', POST: 'update', DELETE: 'delete'])
-        "/organizations/$id/restore" (controller: 'organizations', action: 'restore')
+        "/organizations/$id/edit"    (controller: 'organizations', action: [GET: 'edit']) { constraints(idConstraints) }
+        "/organizations/$id"         (controller: 'organizations', action: [PUT: 'update', POST: 'update', DELETE: 'delete']) { constraints(idConstraints) }
+        "/organizations/$id/restore" (controller: 'organizations', action: 'restore') { constraints(idConstraints) }
 
         "/contacts"             (controller: 'contacts', action: [GET: 'index', POST: 'store'])
         "/contacts/create"      (controller: 'contacts', action: [GET: 'create'])
-        "/contacts/$id/edit"    (controller: 'contacts', action: [GET: 'edit'])
-        "/contacts/$id"         (controller: 'contacts', action: [PUT: 'update', POST: 'update', DELETE: 'delete'])
-        "/contacts/$id/restore" (controller: 'contacts', action: 'restore')
+        "/contacts/$id/edit"    (controller: 'contacts', action: [GET: 'edit']) { constraints(idConstraints) }
+        "/contacts/$id"         (controller: 'contacts', action: [PUT: 'update', POST: 'update', DELETE: 'delete']) { constraints(idConstraints) }
+        "/contacts/$id/restore" (controller: 'contacts', action: 'restore') { constraints(idConstraints) }
 
         "/users"             (controller: 'users', action: [GET: 'index', POST: 'storeUser'])
         "/users/create"      (controller: 'users', action: [GET: 'create'])
-        "/users/$id/edit"    (controller: 'users', action: [GET: 'edit'])
-        "/users/$id"         (controller: 'users', action: [PUT: 'updateUser', POST: 'updateUser', DELETE: 'delete'])
-        "/users/$id/restore" (controller: 'users', action: 'restore')
+        "/users/$id/edit"    (controller: 'users', action: [GET: 'edit']) { constraints(idConstraints) }
+        "/users/$id"         (controller: 'users', action: [PUT: 'updateUser', POST: 'updateUser', DELETE: 'delete']) { constraints(idConstraints) }
+        "/users/$id/restore" (controller: 'users', action: 'restore') { constraints(idConstraints) }
 
         "/img/$path**" (controller: 'images', action: 'thumbnail')
 

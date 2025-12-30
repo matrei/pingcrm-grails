@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,18 @@
 package pingcrm.controller
 
 import groovy.util.logging.Slf4j
-import pingcrm.User
-import grails.compiler.GrailsCompileStatic
-import grails.validation.Validateable
+
 import org.apache.commons.io.FileUtils
+
 import org.springframework.validation.Errors
 import org.springframework.web.multipart.MultipartFile
-import pingcrm.services.FileService
+
+import grails.compiler.GrailsCompileStatic
+import grails.validation.Validateable
+
+import pingcrm.User
 import pingcrm.UserService
+import pingcrm.services.FileService
 
 /**
  * A command object for creating and updating a user.
@@ -36,7 +40,7 @@ import pingcrm.UserService
 class UserCommand implements Validateable {
 
     // TODO: fetch photo storage path from config
-    private final String photoStorage = "ping-crm-users"
+    private final String photoStorage = 'ping-crm-users'
 
     Long id
     String firstName
@@ -49,14 +53,24 @@ class UserCommand implements Validateable {
     Long serverSaysPhotoTooLarge
 
     private String photoFilename
-    String createPhotoPath() { photoFilename ? "$photoStorage${File.separator}$photoFilename" : null }
+    String createPhotoPath() {
+        photoFilename ?
+                "$photoStorage${File.separator}$photoFilename" :
+                null
+    }
 
     @SuppressWarnings('unused')
-    static final constraints = {
+    static final Closure constraints = {
         id(nullable: true)
+        firstName(maxSize: 25)
         email(email: true, validator: { String email, UserCommand cmd, Errors errors ->
             if (!UserService.isEmailUniqueIgnoreId(email, cmd.id)) {
-                errors.rejectValue('email','user.email.not.unique', ['email', email] as Object[], 'The email has already been taken.')
+                errors.rejectValue(
+                        'email',
+                        'user.email.not.unique',
+                        ['email', email] as Object[],
+                        'The email has already been taken.'
+                )
                 return true
             }
             return false
@@ -64,11 +78,21 @@ class UserCommand implements Validateable {
         photo(nullable: true, validator: { MultipartFile file, UserCommand cmd, Errors errors ->
             if (cmd.clientSaysPhotoTooLarge || cmd.serverSaysPhotoTooLarge) {
                 long limit = cmd.clientSaysPhotoTooLarge ?: cmd.serverSaysPhotoTooLarge
-                errors.rejectValue('photo','user.photo.max.size.exceeded', [FileUtils.byteCountToDisplaySize(limit)] as Object[], 'The maximum file size of {0} was exceeded.')
+                errors.rejectValue(
+                        'photo',
+                        'user.photo.max.size.exceeded',
+                        [FileUtils.byteCountToDisplaySize(limit)] as Object[],
+                        'The maximum file size of {0} was exceeded.'
+                )
                 return true
             }
             if (file && !FileService.getSupportedFileExtension(file.contentType)) {
-                errors.rejectValue('photo','user.photo.invalid.type', [file.contentType] as Object[], 'Invalid file type.')
+                errors.rejectValue(
+                        'photo',
+                        'user.photo.invalid.type',
+                        [file.contentType] as Object[],
+                        'Invalid file type.'
+                )
                 return true
             }
             return false
@@ -89,10 +113,14 @@ class UserCommand implements Validateable {
     boolean storePhoto() {
         if (photo) {
             try {
-                photoFilename = FileService.uploadFile(photo, "user-$id-", "${System.getProperty('java.io.tmpdir')}${File.separator}$photoStorage")
+                photoFilename = FileService.uploadFile(
+                        photo,
+                        "user-$id-",
+                        "${System.getProperty('java.io.tmpdir')}${File.separator}$photoStorage"
+                )
                 return true
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 log.info('Could not store photo', e)
                 return false
             }
@@ -100,7 +128,9 @@ class UserCommand implements Validateable {
         return false
     }
 
-    boolean isOwner() { owner?.booleanValue() }
+    boolean isOwner() {
+        owner?.booleanValue()
+    }
 
     // Used to ignore any tries to set non-existing properties when binding data
     def propertyMissing(String name, Object value) {}

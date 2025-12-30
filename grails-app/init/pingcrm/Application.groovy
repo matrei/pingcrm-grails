@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,17 @@
  */
 package pingcrm
 
+import groovy.transform.CompileStatic
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.context.annotation.ComponentScan
+
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
-
-import groovy.transform.CompileStatic
 
 /**
  * The main application class.
@@ -27,6 +34,13 @@ import groovy.transform.CompileStatic
  * @since 1.0.0
  */
 @CompileStatic
+@ComponentScan('pingcrm')
+@ConfigurationPropertiesScan('pingcrm.config')
+@EnableAutoConfiguration(exclude = [
+        SecurityAutoConfiguration,
+        SecurityFilterAutoConfiguration,
+        UserDetailsServiceAutoConfiguration
+])
 class Application extends GrailsAutoConfiguration {
     static void main(String[] args) {
         GrailsApp.run(Application, args)

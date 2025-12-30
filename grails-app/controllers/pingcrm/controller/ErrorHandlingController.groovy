@@ -1,5 +1,5 @@
 /*
-* Copyright 2023-2024 original authors
+* Copyright 2023-present original authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
 */
 package pingcrm.controller
 
+import groovy.transform.CompileStatic
+
+import org.springframework.web.servlet.ModelAndView
+
 import grails.plugin.inertia.Inertia
 import grails.plugin.springsecurity.annotation.Secured
 import grails.util.Environment
-import groovy.transform.CompileStatic
-import org.springframework.web.servlet.ModelAndView
 
 /**
  * A controller for handling errors.
@@ -71,7 +73,7 @@ class ErrorHandlingController {
          * If we're in production mode, we render the error page using Inertia.
          * This will display the error page as a normal page, which is more user-friendly.
          */
-        def desc = description ?: request.getAttribute('javax.servlet.error.message')
+        def desc = description ?: request.getAttribute('jakarta.servlet.error.message')
         renderInertia('Error/Index', [status: status, description: desc])
     }
 

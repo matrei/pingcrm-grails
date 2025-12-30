@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 original authors
+ * Copyright 2023-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,8 @@
 package pingcrm.config
 
 import groovy.transform.CompileStatic
-import io.micronaut.context.annotation.ConfigurationProperties
+
+import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
  * A configuration class for file upload settings.
@@ -25,10 +26,8 @@ import io.micronaut.context.annotation.ConfigurationProperties
  * @since 2.0.5
  */
 @CompileStatic
-@ConfigurationProperties(PREFIX)
+@ConfigurationProperties('grails.controllers.upload')
 class UploadConfig {
-
-    private static final String PREFIX = 'grails.controllers.upload'
 
     long maxFileSize
     //long maxRequestSize

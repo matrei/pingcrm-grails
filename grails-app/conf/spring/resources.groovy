@@ -1,11 +1,13 @@
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
+
+import grails.plugin.springsecurity.SpringSecurityUtils
+
 import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
 import pingcrm.UserPasswordEncoderListener
 import pingcrm.controller.MaxFileUploadSizeResolver
 import pingcrm.controller.ResourceCachingConfig
 import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
-import grails.plugin.springsecurity.SpringSecurityUtils
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
 
 beans = {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,24 @@
  */
 package pingcrm.controller
 
+import java.awt.image.BufferedImage
+
+import javax.imageio.ImageIO
+
+import groovy.transform.CompileStatic
+
+import jakarta.inject.Inject
+
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.Validateable
-import groovy.transform.CompileStatic
-import jakarta.inject.Inject
-import pingcrm.services.FileService
+
 import pingcrm.image.ImageProcessor
+import pingcrm.services.FileService
 
-import static org.springframework.http.HttpStatus.*
-
-import javax.imageio.ImageIO
-import java.awt.image.BufferedImage
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
 /**
  * A controller that renders user profile images.

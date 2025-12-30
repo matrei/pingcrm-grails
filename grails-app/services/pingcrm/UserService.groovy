@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,22 @@
  */
 package pingcrm
 
-import pingcrm.controller.UserCommand
-import pingcrm.services.DomainService
+import groovy.transform.CompileStatic
+
+import org.apache.commons.io.FilenameUtils
+
+import org.springframework.transaction.TransactionDefinition
+import org.springframework.transaction.interceptor.TransactionAspectSupport
+
 import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
-import groovy.transform.CompileStatic
-import org.apache.commons.io.FilenameUtils
-import org.springframework.transaction.TransactionDefinition
-import org.springframework.transaction.interceptor.TransactionAspectSupport
+
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
+import pingcrm.controller.UserCommand
+import pingcrm.services.DomainService
 import pingcrm.services.FileService
 
 /**
@@ -45,18 +49,18 @@ class UserService extends DomainService<User> {
         def criteria = criteriaWith(filters)
         def sorting = [sort: [lastName: 'asc', firstName: 'asc']]
         def queryParams = paginator ? paginator.queryParamsAnd(sorting) : sorting
-        (filters.trashed ? Organization.withDeleted({ criteria.list(queryParams) }) : criteria.list(queryParams)) as List<User>
+        (filters.trashed ? Organization.withDeleted { criteria.list(queryParams) } : criteria.list(queryParams)) as List<User>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
         def criteria = criteriaWith(filters)
-        (filters.trashed ? User.withDeleted({ criteria.count() }) : criteria.count()) as int
+        (filters.trashed ? User.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
     @ReadOnly @Override
     User get(Serializable id, boolean includeDeleted) {
-        (includeDeleted ? User.withDeleted({ User.get(id) }) : User.get(id)) as User
+        (includeDeleted ? User.withDeleted { User.get(id) } : User.get(id)) as User
     }
 
     // Got error on compilation when annotating this method with @ReadOnly (because static?)
@@ -65,10 +69,10 @@ class UserService extends DomainService<User> {
             propagationBehavior: TransactionDefinition.PROPAGATION_REQUIRED,
             isolationLevel: TransactionDefinition.ISOLATION_READ_COMMITTED
         ]) {
-            !User.createCriteria().get({
+            !User.createCriteria().get {
                 ilike('email', lc(email))
                 if (id) not({ idEq(id) })
-            })
+            }
         }
     }
 
@@ -96,19 +100,27 @@ class UserService extends DomainService<User> {
             }
             else {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly()
-                userCmd.errors.rejectValue('photo', 'user.photo.problem', 'Problem saving photo.')
+                userCmd.errors.rejectValue(
+                        'photo',
+                        'user.photo.problem',
+                        'Problem saving photo.'
+                )
                 return null
             }
         }
 
-        return user.save()
+        user.save()
     }
 
     @Transactional
     User updateUser(UserCommand userCmd) {
         def user = get(userCmd.id, true)
         if (!user) {
-            userCmd.errors.reject('user.not.found', [userCmd.id] as Object[], 'User not found.')
+            userCmd.errors.reject(
+                    'user.not.found',
+                    [userCmd.id] as Object[],
+                    'User not found.'
+            )
             return null
         }
 
@@ -117,7 +129,11 @@ class UserService extends DomainService<User> {
             if (userCmd.storePhoto()) {
                 oldPhotoPath = user.photoPath
             } else {
-                userCmd.errors.rejectValue('photo', 'user.photo.problem', 'Problem saving photo.')
+                userCmd.errors.rejectValue(
+                        'photo',
+                        'user.photo.problem',
+                        'Problem saving photo.'
+                )
                 return null
             }
         }
@@ -138,14 +154,17 @@ class UserService extends DomainService<User> {
     }
 
     private static deletePhoto(String photoPath) {
-        FileService.deleteFile(FilenameUtils.getName(photoPath), FilenameUtils.getPathNoEndSeparator(photoPath))
+        FileService.deleteFile(
+                FilenameUtils.getName(photoPath),
+                FilenameUtils.getPathNoEndSeparator(photoPath)
+        )
     }
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
-        return new DetachedCriteria(User).build({
+        new DetachedCriteria(User).build {
             if (filters.search) {
-                String search = lc(filters.search)
+                def search = lc(filters.search)
                 or {
                     ilike('firstName', "%$search%")
                     ilike('lastName', "%$search%")
@@ -158,7 +177,7 @@ class UserService extends DomainService<User> {
             if (filters.role) {
                 eq('owner', filters.role == 'owner')
             }
-        })
+        }
     }
 
     @ReadOnly

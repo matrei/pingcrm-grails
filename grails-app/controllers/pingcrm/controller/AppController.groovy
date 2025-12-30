@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,17 @@
  */
 package pingcrm.controller
 
-import gorm.logical.delete.LogicalDelete
-import grails.gorm.PagedResultList
 import groovy.transform.CompileStatic
+
+import grails.gorm.PagedResultList
+import grails.logical.delete.LogicalDelete
 import org.grails.web.util.GrailsApplicationAttributes
-import pingcrm.*
+
+import pingcrm.AppService
+import pingcrm.Paginator
+import pingcrm.PublicData
+import pingcrm.PublicDataMapper
+import pingcrm.ValidationMessageRenderer
 
 /**
  * Base class for CRUD controllers.
@@ -71,14 +77,18 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     abstract List getFilterNames()
 
     def index(Paginator paginator) {
-
         def filters = params.subMap(filterNames)
         def list = appService.list(domainClass, paginator, filters)
         def totalCount = getTotalCount(list, filters)
         def publicData = publicDataMapper.map(list as List<PublicData>, indexProperties)
 
         renderInertia(indexComponent, currentModel + [
-            (collectionName): paginator.paginate(publicData, params, [total: totalCount, locale: request.locale]),
+            (collectionName): paginator.paginate(
+                    publicData, params, [
+                        total: totalCount,
+                        locale: request.locale
+                    ]
+            ),
             filters: filters
         ])
     }
@@ -88,8 +98,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def edit(Long id) {
-
-        D entity = findOrRedirect(id)
+        def entity = findOrRedirect(id)
         if (!entity) return null
 
         renderInertia(editComponent, currentModel + [
@@ -98,26 +107,29 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def store() {
-
-        D entity = appService.create(domainClass, request.JSON)
+        def entity = appService.create(domainClass, request.JSON)
         if (!entity) {
             flash.error = "Failed to create $entityNameLC"
-            seeOtherRedirect(action: 'create'); return
+            seeOtherRedirect(action: 'create')
+            return
         }
 
-        if (entity.hasErrors()) { chain(action: 'create', model: [errors: renderErrors(entity.errors)]); return }
+        if (entity.hasErrors()) {
+            chain(action: 'create', model: [errors: renderErrors(entity.errors)])
+            return
+        }
 
         flash.success = "$entityName created."
         seeOtherRedirect(action: 'index')
     }
 
     def update(Long id) {
-
-        D entity = findOrRedirect(id)
+        def entity = findOrRedirect(id)
         if (!entity) return
 
         if (!appService.bindAndSave(domainClass, entity, request.JSON)) {
-            chain(action: 'edit', id: id, model: [errors: renderErrors(entity.errors)]); return
+            chain(action: 'edit', id: id, model: [errors: renderErrors(entity.errors)])
+            return
         }
 
         flash.success = "$entityName updated."
@@ -125,7 +137,6 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def delete(Long id) {
-
         def deleted = appService.delete(domainClass, id)
         if (deleted) flash.success = "$entityName deleted."
         else flash.error = "Failed to delete $entityNameLC."
@@ -134,7 +145,6 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def restore(Long id) {
-
         def restored = appService.restore(domainClass, id)
         if (restored) flash.success = "$entityName restored."
         else flash.error = "Failed to restore $entityNameLC."
@@ -143,7 +153,6 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     private int getTotalCount(List list, Map filters) {
-
         if (list instanceof PagedResultList) {
             return (list as PagedResultList).totalCount
         }
@@ -151,18 +160,16 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     protected D findOrRedirect(Serializable id) {
-
-        D entity = errors.hasErrors() ? null : appService.find(domainClass, id)
+        def entity = errors.hasErrors() ? null : appService.find(domainClass, id)
         if (!entity) {
             flash.error = "$entityName not found."
-            seeOtherRedirect(action: 'index'); return null
+            seeOtherRedirect(action: 'index')
+            return null
         }
-
         return entity
     }
 
     protected final void addToModel(Map model) {
-
         def modelMap = currentModel
         modelMap.putAll(model)
         request.setAttribute(ATTRIBUTE_KEY_MODEL, modelMap)

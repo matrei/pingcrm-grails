@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
 package pingcrm
 
 import groovy.transform.CompileStatic
-import org.grails.plugins.web.taglib.ValidationTagLib
+
+import jakarta.inject.Inject
+
 import org.springframework.validation.Errors
 
-import javax.inject.Inject
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * A validation message renderer that uses the Grails validation tag library.
@@ -30,9 +32,12 @@ import javax.inject.Inject
 @CompileStatic
 trait ValidationMessageRenderer {
 
-    @Inject ValidationTagLib g
+    @Inject
+    ValidationTagLib g
 
     Map renderErrors(Errors errors) {
-        errors.fieldErrors.collectEntries({[it.field, g.message(error: it)] })
+        errors.fieldErrors.collectEntries {
+            [it.field, g.message(error: it)]
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,24 @@
 package pingcrm.controller
 
 import groovy.transform.CompileStatic
-import jakarta.inject.Inject
+
+import jakarta.servlet.http.HttpServletRequest
+
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
 import org.springframework.web.multipart.support.StandardServletMultipartResolver
+
 import pingcrm.User
 import pingcrm.UserService
 import pingcrm.config.UploadConfig
 
-import javax.servlet.http.HttpServletRequest
-
 /**
- * A custom MultipartResolver that enabled to show controlled error messages when the max upload file limit is reached.
+ * A custom MultipartResolver that enabled to show controlled error
+ * messages when the max upload file limit is reached.
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -41,8 +44,11 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
     private final UserService userService
     private final UploadConfig uploadConfig
 
-    @Inject
-    MaxFileUploadSizeResolver(UserService userService, UploadConfig uploadConfig) {
+    @Autowired
+    MaxFileUploadSizeResolver(
+            UserService userService,
+            UploadConfig uploadConfig
+    ) {
         this.userService = userService
         this.uploadConfig = uploadConfig
     }
@@ -70,7 +76,7 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
                 def id = url.substring(url.lastIndexOf('/') + 1) as Long
 
                 // Load the data from the db
-                User user = userService.get id, true
+                def user = userService.get(id, true)
 
                 // Set the params from the loaded user
                 multipartParams.id = [id]
@@ -82,7 +88,13 @@ class MaxFileUploadSizeResolver extends StandardServletMultipartResolver {
             } else {
                 throw e
             }
-            return new DefaultMultipartHttpServletRequest(request, new LinkedMultiValueMap<String, MultipartFile>(), multipartParams, new LinkedHashMap<String, String>())
+
+            new DefaultMultipartHttpServletRequest(
+                    request,
+                    new LinkedMultiValueMap<String, MultipartFile>(),
+                    multipartParams,
+                    new LinkedHashMap<String, String>()
+            )
         }
     }
 }

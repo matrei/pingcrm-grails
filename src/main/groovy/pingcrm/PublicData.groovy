@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,14 @@ package pingcrm
 import groovy.transform.CompileStatic
 
 /**
- * Used to shield developers from accidentally sending secret or unnecessary data to the client side with the
- * Inertia JSON responses. The default behaviour is to not select any properties at all.
- *
- * Implementing classes may override the getPublicProperties() method to specify which properties to select.
- * It is also possible to specify which properties to select when calling the publicData methods on a case by case basis.
+ * Used to shield developers from accidentally sending secret
+ * or unnecessary data to the client side with the Inertia JSON responses.
+ * <p>
+ * The default behaviour is to not select any properties at all.
+ * <p>
+ * Implementing classes may override the getPublicProperties() method
+ * to specify which properties to select. It is also possible to specify which
+ * properties to select when calling the publicData methods on a case by case basis.
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -34,5 +37,7 @@ interface PublicData {
      * The default properties to select when calling the publicData methods.
      * @return a list of property names
      */
-    default List<String> getPublicProperties() { Collections.emptyList() }
+    default List<String> getPublicProperties() {
+        Collections.emptyList()
+    }
 }

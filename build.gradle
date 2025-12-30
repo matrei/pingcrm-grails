@@ -1,29 +1,15 @@
 import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
-    id 'application'
-    id 'groovy'
-    id 'war'
+    id 'org.apache.grails.gradle.grails-web'
+    id 'org.apache.grails.gradle.grails-gsp'
     id 'com.github.node-gradle.node'
     id 'com.gorylenko.gradle-git-properties'
+    id 'war'
 }
-
-// Override versions in BOMs of transitive dependencies
-ext.set('netty.version', libs.versions.netty.get())
-ext.set('spring.version', libs.versions.spring.asProvider().get())
-ext.set('tomcat.version', libs.versions.tomcat.get())
 
 group = 'io.github.matrei'
-ext.set('grailsVersion', libs.versions.grails.asProvider().get())
-
-// These plugins need to be applied after the grailsVersion property is set
-apply plugin: 'org.grails.grails-web'
-apply plugin: 'org.grails.grails-gsp'
-
-repositories {
-    mavenCentral()
-    maven { url = 'https://repo.grails.org/grails/core' }
-}
+version = projectVersion
 
 // This is used for testing with local copy of the Grails Inertia Plugin
 // (comment out the dependency in the dependencies block)
@@ -31,82 +17,112 @@ repositories {
 /*
 grails {
     plugins {
-        implementation project(':grails-inertia-plugin')
+        implementation project(':grails-inertia')
     }
 }
 */
 
-configurations.configureEach {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        if (details.requested.group == 'org.codehaus.groovy') {
-            String groovyVersion = findProperty('groovyVersion') ?: libs.versions.groovy.get()
-            details.useVersion(groovyVersion)
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.grails.org/grails/restricted' }
+    maven {
+        url = 'https://repository.apache.org/content/repositories/staging'
+        content {
+            includeGroupAndSubgroups('org.apache.grails')
+            includeGroupAndSubgroups('org.apache.groovy')
+        }
+        mavenContent {
+            releasesOnly()
+        }
+    }
+    maven {
+        url = 'https://repository.apache.org/content/repositories/snapshots'
+        content {
+            includeGroupAndSubgroups('org.apache.grails')
+            includeGroupAndSubgroups('org.apache.groovy')
+        }
+        mavenContent {
+            snapshotsOnly()
         }
     }
 }
 
 dependencies {
 
-    implementation libs.grails.core
-    implementation libs.grails.interceptors
-    implementation libs.grails.webCommon
-    implementation libs.grails.webDatabinding
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
 
-    implementation libs.grailsEvents
-    implementation libs.grailsGsp
-    implementation libs.grailsGormLogicalDelete
-    implementation libs.grailsInertia
-    implementation libs.grailsSpringSecurity.core
-    //implementation project(':grails-inertia-plugin')
+    // Grails Core Modules
+    implementation 'org.apache.grails:grails-core'
+    implementation 'org.apache.grails:grails-controllers'
+    implementation 'org.apache.grails:grails-data-hibernate5'
+    implementation 'org.apache.grails:grails-events'
+    implementation 'org.apache.grails:grails-gsp'
+    implementation 'org.apache.grails:grails-layout'
+    implementation 'org.apache.grails:grails-interceptors'
+    implementation 'org.apache.grails:grails-views-gson'
+    implementation 'org.apache.grails.web:grails-web-common'
+    implementation 'org.apache.grails.web:grails-web-databinding'
 
-    implementation libs.bundles.springSecurity
-    implementation libs.datafaker
-    implementation libs.imgscalr
-    implementation libs.metadataExtractor
-    implementation libs.squiggly
+    // Grails Plugins
+    implementation "org.apache.grails:grails-spring-security:$grailsSpringSecurityVersion"
+    implementation "org.grails.plugins:grails-logical-delete:$grailsLogicalDeleteVersion"
+    implementation "io.github.matrei:grails-inertia:$grailsInertiaVersion"
 
-    runtimeOnly libs.grails.i18n
-    runtimeOnly libs.grails.services
-    runtimeOnly libs.grails.urlmappings
-    runtimeOnly libs.gorm.hibernate5
-    runtimeOnly libs.grailsCsrf
-    runtimeOnly libs.springBoot.autoconfigure
-    runtimeOnly libs.springBoot.starterLogging
-    runtimeOnly libs.springBoot.starterTomcat
-    runtimeOnly libs.h2database
-    runtimeOnly libs.hikari
+    //implementation libs.grailsEvents
+    //implementation project(':grails-inertia')
 
-    compileOnly libs.micronaut.injectGroovy
-    compileOnly libs.grailsViews.json // Used for compiling json views
-    compileOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during GSP compile tasks
+    //implementation libs.bundles.springSecurity
 
-    testImplementation libs.micronaut.httpClient
-    testImplementation libs.micronaut.injectGroovy
-    testImplementation libs.bundles.grailsTestingSupport
-    testImplementation libs.spock.core
-    testImplementation libs.groovy.test
+    implementation "commons-io:commons-io:$commonsIoVersion"
+    implementation "net.datafaker:datafaker:$datafakerVersion"
+    implementation "org.imgscalr:imgscalr-lib:$imgscalrVersion"
+    implementation "com.drewnoakes:metadata-extractor:$metadataExtractorVersion"
+    implementation "dev.nicklasw:squiggly-filter-jackson:$squigglyFilterVersion"
 
-    integrationTestImplementation testFixtures(libs.grailsGeb)
+    runtimeOnly 'org.apache.grails:grails-services'
+    runtimeOnly 'org.apache.grails:grails-url-mappings'
+
+    runtimeOnly "io.github.matrei:grails-csrf:$grailsCsrfVersion"
+    runtimeOnly 'org.fusesource.jansi:jansi'
+    runtimeOnly 'org.springframework.boot:spring-boot-autoconfigure'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-logging'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.zaxxer:HikariCP'
+
+    compileOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during GSP compile tasks
+
+    testImplementation 'org.apache.grails:grails-testing-support-datamapping'
+    testImplementation 'org.apache.grails:grails-testing-support-web'
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'org.apache.groovy:groovy-test'
+
+    integrationTestImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    integrationTestImplementation "io.micronaut:micronaut-jackson-databind:$micronautVersion"
+    integrationTestImplementation 'org.seleniumhq.selenium:selenium-firefox-driver'
+    integrationTestImplementation testFixtures('org.apache.grails:grails-geb')
+
+    console 'org.apache.grails:grails-console'
 }
 
-application {
-    mainClass = 'pingcrm.Application'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
+compileJava.options.release = javaVersion.toInteger()
 
 tasks.withType(Test).configureEach {
-
     useJUnitPlatform()
-
     testLogging {
-        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        events('passed', 'skipped', 'failed', 'standardOut', 'standardError')
     }
-
     reports.html.required = false
     reports.junitXml.required = false
+
+    systemProperty('grails.geb.atCheckWaiting.enabled', true)
+    systemProperty('grails.geb.recording.mode', 'RECORD_FAILING')
+/*
+    jvmArgs += [
+            '-Xmx2g', '-Xdebug', '-Xnoagent', '-Djava.compiler=NONE',
+            '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
+    ]
+*/
 }
 
 node {
@@ -125,19 +141,28 @@ tasks.register('viteBuild', NpmTask) {
 
     it.args = ['run', 'build']
 
-    dependsOn 'npmInstall'
+    dependsOn('npmInstall')
 }
 
 tasks.register('copyNodeModulesForSsr', Copy) {
     group = 'build'
     description = 'Copy node_modules for SSR'
 
-    from layout.projectDirectory.dir('node_modules')
-    into layout.buildDirectory.dir('resources/main/node_modules')
+    from(layout.projectDirectory.dir('node_modules'))
+    into(layout.buildDirectory.dir('resources/main/node_modules'))
 
-    dependsOn 'npmInstall'
+    dependsOn('npmInstall')
 }
 
 tasks.named('processResources') {
-    dependsOn 'viteBuild', 'copyNodeModulesForSsr'
+    dependsOn('viteBuild', 'copyNodeModulesForSsr')
 }
+
+/*
+tasks.named('bootRun', JavaExec) {
+    jvmArgs += [
+            '-Xmx2g', '-Xdebug', '-Xnoagent', '-Djava.compiler=NONE',
+            '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
+    ]
+}
+*/

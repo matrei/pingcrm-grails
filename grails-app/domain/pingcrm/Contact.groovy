@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  */
 package pingcrm
 
-import gorm.logical.delete.LogicalDelete
-import grails.compiler.GrailsCompileStatic
-
 import java.time.LocalDateTime
+
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.hibernate.annotation.ManagedEntity
+import grails.gorm.hibernate.mapping.MappingBuilder
+import grails.logical.delete.LogicalDelete
+import org.grails.datastore.mapping.config.MappingDefinition
+import org.grails.orm.hibernate.cfg.Mapping
+import org.grails.orm.hibernate.cfg.PropertyConfig
 
 /**
  * A contact domain class.
@@ -26,6 +31,7 @@ import java.time.LocalDateTime
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
 class Contact implements LogicalDelete<Contact>, PublicData {
 
@@ -40,8 +46,10 @@ class Contact implements LogicalDelete<Contact>, PublicData {
     String postalCode
 
     /* timestamps in UTC set by hibernate.jdbc.time_zone */
-    @SuppressWarnings('unused') LocalDateTime lastUpdated
-    @SuppressWarnings('unused') LocalDateTime dateCreated
+    @SuppressWarnings('unused')
+    LocalDateTime lastUpdated
+    @SuppressWarnings('unused')
+    LocalDateTime dateCreated
 
     /** A Contact belongsTo an Account */
     Account account
@@ -62,7 +70,12 @@ class Contact implements LogicalDelete<Contact>, PublicData {
         organization(nullable: true)
     }
 
-    static final mapping = { sort(lastName: 'asc', firstName: 'asc') }
+    static final MappingDefinition<Mapping, PropertyConfig> mapping = MappingBuilder.orm {
+        sort([
+            lastName: 'asc',
+            firstName: 'asc'
+        ])
+    }
 
     String getName() {
         "$firstName $lastName"

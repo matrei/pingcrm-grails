@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,15 @@
  */
 package pingcrm
 
+import groovy.transform.CompileStatic
+
+import org.springframework.beans.factory.annotation.Autowired
+
+import grails.events.annotation.gorm.Listener
 import grails.plugin.springsecurity.SpringSecurityService
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.mapping.engine.event.PreInsertEvent
 import org.grails.datastore.mapping.engine.event.PreUpdateEvent
-import org.springframework.beans.factory.annotation.Autowired
-import grails.events.annotation.gorm.Listener
-import groovy.transform.CompileStatic
 
 /**
  * A listener that encodes the password of a user before it is persisted.
@@ -35,14 +37,14 @@ class UserPasswordEncoderListener {
     @Autowired
     SpringSecurityService springSecurityService
 
-    @SuppressWarnings('unused')
     @Listener(User)
+    @SuppressWarnings('unused')
     void onPreInsertEvent(PreInsertEvent event) {
         encodePasswordForEvent(event)
     }
 
-    @SuppressWarnings('unused')
     @Listener(User)
+    @SuppressWarnings('unused')
     void onPreUpdateEvent(PreUpdateEvent event) {
         encodePasswordForEvent(event)
     }
@@ -57,6 +59,6 @@ class UserPasswordEncoderListener {
     }
 
     private String encodePassword(String password) {
-        return springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+        springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
     }
 }

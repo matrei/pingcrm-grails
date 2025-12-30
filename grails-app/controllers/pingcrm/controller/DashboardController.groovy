@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package pingcrm.controller
 
-import grails.plugin.springsecurity.annotation.Secured
 import groovy.transform.CompileStatic
+
+import grails.plugin.springsecurity.annotation.Secured
 
 /**
  * A controller that renders the dashboard page.

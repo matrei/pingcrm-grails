@@ -1,5 +1,5 @@
 /*
-* Copyright 2024 original authors
+* Copyright 2024-present original authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,37 +15,42 @@
 */
 package pingcrm
 
+import groovy.transform.CompileStatic
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.nicklasw.squiggly.context.provider.SquigglyFilterHolder
 import dev.nicklasw.squiggly.util.SquigglyUtils
-import groovy.transform.CompileStatic
-import io.micronaut.context.annotation.Bean
-import jakarta.inject.Named
+
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Component
 
 /**
  * A mapper for mapping domain objects to public data objects.
+ *
  * @author Mattias Reichel
  * @since 3.2.2
  */
-@Bean
+@Component
 @CompileStatic
 class PublicDataMapper {
 
     private final ObjectMapper objectMapper
 
-    PublicDataMapper(@Named('publicDataMapper') ObjectMapper objectMapper) {
+    PublicDataMapper(@Qualifier('publicDataMapper') ObjectMapper objectMapper) {
         this.objectMapper = objectMapper
     }
 
     List<Map> map(List<PublicData> objectsToMap, List<String> propertiesToShow) {
-        objectsToMap.collect({ map(it, propertiesToShow) })
+        objectsToMap.collect {
+            map(it, propertiesToShow)
+        }
     }
 
     Map map(PublicData objectToMap, List<String> propertiesToShow) {
         // TODO: Remove squiggly dependency
         // Using Squiggly here because it can resolve "deep" properties of Object (eg. contact['organization.name'])
         // Squiggly is setup to use a ThreadLocal to set/get the filter with this object mapper
-        SquigglyFilterHolder.filter = propertiesToShow.join ','
+        SquigglyFilterHolder.filter = propertiesToShow.join(',')
         SquigglyUtils.objectify(objectMapper, objectToMap, Map)
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
  */
 package pingcrm
 
-import gorm.logical.delete.LogicalDelete
-import grails.compiler.GrailsCompileStatic
-
 import java.time.LocalDateTime
+
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.hibernate.annotation.ManagedEntity
+import grails.logical.delete.LogicalDelete
 
 /**
  * An organization domain class.
@@ -26,6 +27,7 @@ import java.time.LocalDateTime
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
 class Organization implements LogicalDelete<Organization>, PublicData {
 
@@ -47,11 +49,11 @@ class Organization implements LogicalDelete<Organization>, PublicData {
 
     /** An Organization hasMany Contacts */
     List<Contact> getContacts() {
-        Contact.createCriteria().list({
+        Contact.createCriteria().list {
             eq('organization', this)
             order('firstName', 'asc')
             order('lastName', 'asc')
-        }) as List<Contact>
+        } as List<Contact>
     }
 
     static final constraints = {

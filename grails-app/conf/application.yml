@@ -8,7 +8,6 @@ info:
 # spring.h2.console.enabled: true
 grails:
     controllers:
-        defaultScope: singleton
         upload:
             maxFileSize: 524288
             maxRequestSize: 1048576
@@ -107,7 +106,7 @@ dataSource:
     driverClassName: org.h2.Driver
     username: sa
     password: ''
-    # Uncomment the next two lines to log sql queries (also look in logback.xml)
+    # Uncomment the next two lines to log SQL queries (also look in logback.xml)
     #logSql: true
     #formatSql: true
     properties: # https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby

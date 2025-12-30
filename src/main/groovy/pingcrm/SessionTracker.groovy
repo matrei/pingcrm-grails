@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,18 @@
  */
 package pingcrm
 
-import grails.plugin.springsecurity.userdetails.GrailsUser
-import groovy.transform.CompileStatic
-import org.springframework.security.core.context.SecurityContext
-
-import javax.servlet.http.HttpSession
-import javax.servlet.http.HttpSessionEvent
-import javax.servlet.http.HttpSessionListener
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+
+import groovy.transform.CompileStatic
+
+import jakarta.servlet.http.HttpSession
+import jakarta.servlet.http.HttpSessionEvent
+import jakarta.servlet.http.HttpSessionListener
+
+import org.springframework.security.core.context.SecurityContext
+
+import grails.plugin.springsecurity.userdetails.GrailsUser
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY
 
@@ -50,12 +53,12 @@ class SessionTracker implements HttpSessionListener {
     }
 
     static void invalidateSessionsForUserId(Serializable id) {
-        sessions.each({ Serializable sessionId, HttpSession session ->
+        sessions.each { Serializable sessionId, HttpSession session ->
             def sc = session.getAttribute(SPRING_SECURITY_CONTEXT_KEY) as SecurityContext
             def user = sc?.authentication?.principal as GrailsUser
             if (!user || user.id == id) {
                 session.invalidate()
             }
-        })
+        }
     }
 }

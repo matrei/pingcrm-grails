@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,17 @@
  */
 package pingcrm
 
-import grails.gorm.transactions.Transactional
-import grails.plugin.springsecurity.SpringSecurityUtils
-import grails.plugin.springsecurity.userdetails.GrailsUserDetailsService
-import grails.plugin.springsecurity.userdetails.NoStackUsernameNotFoundException
 import groovy.transform.CompileStatic
+
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+
+import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.plugin.springsecurity.userdetails.GrailsUserDetailsService
+import grails.plugin.springsecurity.userdetails.NoStackUsernameNotFoundException
 
 /**
  * A custom implementation of {@link GrailsUserDetailsService} that loads user
@@ -47,12 +49,16 @@ class AppUserDetailsService implements GrailsUserDetailsService {
         loadUserByUsername(username)
     }
 
-    @Override @Transactional(readOnly=true, noRollbackFor=[IllegalArgumentException, UsernameNotFoundException])
+    @Override
+    @Transactional(
+            readOnly = true,
+            noRollbackFor = [IllegalArgumentException, UsernameNotFoundException]
+    )
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = User.createCriteria().get({
+        User user = User.createCriteria().get {
             ilike('email', username?.toLowerCase(Locale.ENGLISH))
-        }) as User
+        } as User
         if (!user || user.deleted) throw new NoStackUsernameNotFoundException()
 
         def roles = user.roles
@@ -60,9 +66,11 @@ class AppUserDetailsService implements GrailsUserDetailsService {
         // or if you are using role groups:
         // def roles = user.authorities.collect { it.authorities }.flatten().unique()
 
-        def authorities = roles.collect({ new SimpleGrantedAuthority(it.authority) })
+        def authorities = roles.collect {
+            new SimpleGrantedAuthority(it.authority)
+        }
 
-        return new AppUserDetails(
+        new AppUserDetails(
             user.email,
             user.password,
             user.enabled,

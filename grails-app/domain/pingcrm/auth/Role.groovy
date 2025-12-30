@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,13 @@ package pingcrm.auth
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+
 import grails.compiler.GrailsCompileStatic
+import grails.gorm.hibernate.annotation.ManagedEntity
+import grails.gorm.hibernate.mapping.MappingBuilder
+import org.grails.datastore.mapping.config.MappingDefinition
+import org.grails.orm.hibernate.cfg.Mapping
+import org.grails.orm.hibernate.cfg.PropertyConfig
 
 /**
  * A role domain class (that can be assigned to a user).
@@ -25,6 +31,7 @@ import grails.compiler.GrailsCompileStatic
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='authority')
 @ToString(includes='authority', includeNames=true, includePackage=false)
@@ -35,8 +42,15 @@ class Role implements Serializable {
 
 	String authority
 
-	static final constraints = { authority(nullable: false, blank: false, unique: true) }
-	static final mapping = { cache(true) }
+	static final constraints = {
+		authority(nullable: false, blank: false, unique: true)
+	}
+
+	static final MappingDefinition<Mapping, PropertyConfig> mapping = MappingBuilder.orm {
+		cache {
+			enabled(true)
+		}
+	}
 
 	static Role findByAuthority(String auth) {
 		createCriteria().get({

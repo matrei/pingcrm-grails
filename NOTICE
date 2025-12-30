@@ -1,1 +1,5 @@
-2022-2024, Mattias Reichel
+Grails Ping CRM Demo Application
+Copyright 2022 Mattias Reichel
+
+The UI part of this application is based on the original Ping CRM Demo Application created by Jonathan Reinink
+and is licensed under the MIT License (see src/main/resources/LICENSE-MIT file for details).

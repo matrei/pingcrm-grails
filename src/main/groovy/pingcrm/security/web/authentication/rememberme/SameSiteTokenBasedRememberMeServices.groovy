@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,15 @@
 package pingcrm.security.web.authentication.rememberme
 
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseCookie
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices
-
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * This class provides the ability to set the same-site attribute on the remember-me cookie.
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletResponse
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@Slf4j
 @CompileStatic
 class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices {
 
@@ -59,7 +62,7 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
 
     @Override
     protected void cancelCookie(HttpServletRequest request, HttpServletResponse response) {
-        logger.debug('Cancelling cookie')
+        log.debug('Cancelling cookie')
         ResponseCookie rememberMeCookie = ResponseCookie
             .from(cookieName, null)
             .maxAge(0)
@@ -73,7 +76,7 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
     }
 
     private static String getCookiePath(HttpServletRequest request) {
-        return request.contextPath ?: '/'
+        request.contextPath ?: '/'
     }
 
     @Override

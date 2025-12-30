@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,17 @@
  */
 package pingcrm.services
 
+import java.awt.image.BufferedImage
+
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import jakarta.inject.Singleton
-import org.springframework.web.multipart.MultipartFile
-import pingcrm.image.ImageService
 
-import java.awt.image.BufferedImage
+import jakarta.inject.Inject
+
+import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+
+import pingcrm.image.ImageService
 
 /**
  * A service for handling files in the application.
@@ -30,7 +34,7 @@ import java.awt.image.BufferedImage
  * @since 1.0.0
  */
 @Slf4j
-@Singleton
+@Service
 @CompileStatic
 class FileService {
 
@@ -46,12 +50,12 @@ class FileService {
         if (!file) throw new FileNotFoundException(path)
 
         def image
-        try { image = imageService.resizeImage file, options }
-        catch(Exception e) {
+        try { image = imageService.resizeImage(file, options) }
+        catch (Exception e) {
             log.info('Image handling exception: {}', e.message)
             throw e
         }
-        return image
+        image
     }
 
     static String uploadFile(MultipartFile uploadedFile, String namePrefix, String storagePath) {
@@ -73,10 +77,10 @@ class FileService {
                 uploadedFile.transferTo(f)
                 return f.name
             }
-            catch(Exception fileTransferException) {
+            catch (Exception fileTransferException) {
                 log.error("Failed to save uploaded file as $f.absolutePath", fileTransferException)
             }
-        } catch(IOException tmpFileException) {
+        } catch (IOException tmpFileException) {
             log.error("Failed to create tmp file in $storage.absolutePath", tmpFileException)
         }
         return null
@@ -85,7 +89,7 @@ class FileService {
     static boolean deleteFile(String filename, String storagePath) {
         def storage = getFileStorage(storagePath)
         def f = new File(storage, filename)
-        return f.delete()
+        f.delete()
     }
 
     static File getFileStorage(String storagePath, boolean create = false) {
@@ -97,7 +101,7 @@ class FileService {
                 return null
             }
         }
-        return storage
+        storage
     }
 
     static String getSupportedFileExtension(String contentType) {
@@ -108,6 +112,6 @@ class FileService {
             case 'image/jpg': ext = '.jpg'; break
             case 'image/jpeg': ext = '.jpg'; break
         }
-        return ext
+        ext
     }
 }

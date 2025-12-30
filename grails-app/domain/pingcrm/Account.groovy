@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
  */
 package pingcrm
 
-import grails.compiler.GrailsCompileStatic
-
 import java.time.LocalDateTime
+
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.hibernate.annotation.ManagedEntity
 
 /**
  * An account domain class.
@@ -25,31 +26,34 @@ import java.time.LocalDateTime
  * @author Mattias Reichel
  * @since 1.0.0
  */
+@ManagedEntity
 @GrailsCompileStatic
 class Account {
 
     String name
 
     /** timestamps in UTC set by hibernate.jdbc.time_zone */
-    @SuppressWarnings('unused') LocalDateTime dateCreated
-    @SuppressWarnings('unused') LocalDateTime lastUpdated
+    @SuppressWarnings('unused')
+    LocalDateTime dateCreated
+    @SuppressWarnings('unused')
+    LocalDateTime lastUpdated
 
     /** An Account hasMany Organizations */
     List<Organization> getOrganizations() {
-        Organization.createCriteria().list({
+        Organization.createCriteria().list {
             eq('account', this)
             order('name', 'asc')
-        }) as List<Organization>
+        } as List<Organization>
     }
 
     /** An Account hasMany Contacts */
     List<Contact> getContacts() {
-        Contact.createCriteria().list({
+        Contact.createCriteria().list {
             eq('account', this)
-        }) as List<Contact>
+        } as List<Contact>
     }
 
-    static constraints = {
+    static final constraints = {
         name(maxSize: 50)
     }
 }

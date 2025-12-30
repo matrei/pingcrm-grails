@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,14 @@
  */
 package pingcrm
 
+import groovy.transform.CompileStatic
+
+import jakarta.inject.Inject
+
 import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
-import groovy.transform.CompileStatic
+
 import pingcrm.services.DomainService
 
 /**
@@ -36,19 +40,19 @@ class OrganizationService extends DomainService<Organization> {
     List<Organization> list(Paginator paginator, Map filters) {
         def criteria = criteriaWith(filters)
         def pagination = paginator.queryParamsAnd(sort: 'name')
-        (filters.trashed ? Organization.withDeleted({ criteria.list(pagination) }) : criteria.list(pagination)) as List<Organization>
+        (filters.trashed ? Organization.withDeleted { criteria.list(pagination) } : criteria.list(pagination)) as List<Organization>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
         def criteria = criteriaWith(filters)
-        (filters.trashed ? Organization.withDeleted({ criteria.count() }) : criteria.count()) as int
+        (filters.trashed ? Organization.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
 
     @ReadOnly @Override
     Organization get(Serializable id, boolean includeDeleted) {
-        (includeDeleted ? Organization.withDeleted({ Organization.get(id) }) : Organization.get(id)) as Organization
+        (includeDeleted ? Organization.withDeleted { Organization.get(id) } : Organization.get(id)) as Organization
     }
 
     @Transactional @Override
@@ -67,7 +71,7 @@ class OrganizationService extends DomainService<Organization> {
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
-        return new DetachedCriteria(Organization).build({
+        new DetachedCriteria(Organization).build {
             eq('account', userService.currentUser.account)
             if (filters.search) {
                 ilike('name', "%${lc(filters.search)}%")
@@ -75,6 +79,6 @@ class OrganizationService extends DomainService<Organization> {
             if (filters.trashed == 'only') {
                 eq('deleted', true)
             }
-        })
+        }
     }
 }

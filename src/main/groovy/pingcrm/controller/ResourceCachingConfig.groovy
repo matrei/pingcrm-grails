@@ -1,5 +1,5 @@
 /*
-* Copyright 2023 original authors
+* Copyright 2023-present original authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@
 
 package pingcrm.controller
 
+import java.util.concurrent.TimeUnit
+
 import groovy.transform.CompileStatic
+
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.CacheControl
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-
-import java.util.concurrent.TimeUnit
 
 /**
  * Configures caching headers for static resources.

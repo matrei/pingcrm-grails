@@ -1,12 +1,13 @@
 package pingcrm
 
-import grails.testing.mixin.integration.Integration
-import grails.testing.spock.OnceBefore
 import io.micronaut.http.client.DefaultHttpClientConfiguration
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import spock.lang.Shared
 import spock.lang.Specification
+
+import grails.testing.mixin.integration.Integration
+import grails.testing.spock.OnceBefore
 
 @Integration
 class AssetSecuritySpec extends Specification {
@@ -24,26 +25,26 @@ class AssetSecuritySpec extends Specification {
         this.httpClient = HttpClient.create(baseUrl.toURL(), config)
     }
 
-    void "no login is required to access assets"() {
+    void 'no login is required to access assets'() {
 
         when: 'accessing an asset'
-        def response = httpClient.toBlocking().exchange assetPath
+            def response = httpClient.toBlocking().exchange(assetPath)
 
         then: 'the response is as expected'
-        response.status.code == statusCode
+            response.status.code == statusCode
 
         where:
-        assetPath             | statusCode
-        '/static/favicon.svg' | 200
+            assetPath             | statusCode
+            '/static/favicon.svg' | 200
     }
 
-    void "no login is required to access favicon.ico"() {
+    void 'no login is required to access favicon.ico'() {
 
         when: 'accessing (non-existing) favicon.ico'
-        httpClient.toBlocking().exchange '/favicon.ico'
+            httpClient.toBlocking().exchange('/favicon.ico')
 
         then: 'the response status is 404 Not Found'
-        def ex = thrown HttpClientResponseException
-        ex.status.code == 404
+            def ex = thrown(HttpClientResponseException)
+            ex.status.code == 404
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,14 @@
  */
 package pingcrm.image
 
+import java.awt.RenderingHints
+import java.awt.image.BufferedImage
+
 import groovy.transform.CompileStatic
-import jakarta.inject.Singleton
+
 import org.imgscalr.Scalr
 
-import java.awt.*
-import java.awt.image.BufferedImage
+import org.springframework.stereotype.Service
 
 /**
  * Implementation of ImageProcessor that uses Scalr
@@ -29,14 +31,18 @@ import java.awt.image.BufferedImage
  * @author Mattias Reichel
  * @since 1.0.0
  */
-@Singleton
+@Service
 @CompileStatic
 class ScalrImageProcessor extends Scalr implements ImageProcessor {
 
     @Override
-    BufferedImage resize(BufferedImage src, int targetWidth, int targetHeight,
-                         ResizingMode resizingMode = ResizingMode.AUTOMATIC,
-                         ScalingQuality scalingQuality = ScalingQuality.AUTOMATIC) {
+    BufferedImage resize(
+            BufferedImage src,
+            int targetWidth,
+            int targetHeight,
+            ResizingMode resizingMode = ResizingMode.AUTOMATIC,
+            ScalingQuality scalingQuality = ScalingQuality.AUTOMATIC
+    ) {
 
         long t = System.currentTimeMillis()
 
@@ -54,7 +60,19 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
         // <= 1 is a square or landscape-oriented image, > 1 is a portrait.
         def ratio = currentHeight / currentWidth
 
-        if (DEBUG) log(0,'Resizing Image [size=%dx%d, resizingMode=%s, orientation=%s, ratio(H/W)=%f] to [targetSize=%dx%d]', currentWidth, currentHeight, resizingMode, (ratio <= 1 ? 'Landscape/Square' : 'Portrait'), ratio, targetWidth, targetHeight)
+        if (DEBUG) {
+            log(
+                    0,
+                    'Resizing Image [size=%dx%d, resizingMode=%s, orientation=%s, ratio(H/W)=%f] to [targetSize=%dx%d]',
+                    currentWidth,
+                    currentHeight,
+                    resizingMode,
+                    (ratio <= 1 ? 'Landscape/Square' : 'Portrait'),
+                    ratio,
+                    targetWidth,
+                    targetHeight
+            )
+        }
 
         if (resizingMode != ResizingMode.FIT_EXACT) {
 
@@ -72,7 +90,14 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                  */
                 targetHeight = roundedInt(targetWidth * ratio)
 
-                if (DEBUG && originalTargetHeight != targetHeight) log(1,'Auto-Corrected targetHeight [from=%d to=%d] to honor image proportions.', originalTargetHeight, targetHeight)
+                if (DEBUG && originalTargetHeight != targetHeight) {
+                    log(
+                            1,
+                            'Auto-Corrected targetHeight [from=%d to=%d] to honor image proportions.',
+                            originalTargetHeight,
+                            targetHeight
+                    )
+                }
 
             } else if (resizingMode == ResizingMode.CROP) { // CROP
 
@@ -126,10 +151,19 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                  */
                 targetWidth = roundedInt(targetHeight / ratio)
 
-                if (DEBUG && originalTargetWidth != targetWidth) log(1, 'Auto-Corrected targetWidth [from=%d to=%d] to honor image proportions.', originalTargetWidth, targetWidth)
+                if (DEBUG && originalTargetWidth != targetWidth) {
+                    log(
+                            1,
+                            'Auto-Corrected targetWidth [from=%d to=%d] to honor image proportions.',
+                            originalTargetWidth,
+                            targetWidth
+                    )
+                }
             }
         } else {
-            if (DEBUG) log(1,'Resize Mode FIT_EXACT used, no width/height checking or re-calculation will be done.')
+            if (DEBUG) {
+                log(1,'Resize Mode FIT_EXACT used, no width/height checking or re-calculation will be done.')
+            }
         }
 
         // If AUTOMATIC was specified, determine the real scaling method.
@@ -179,11 +213,23 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                  * scale of their original image. Instead BICUBIC was chosen to
                  * honor the contract of a QUALITY scale of the original image.
                  */
-                result = scaleImageIncrementally(src, targetWidth, targetHeight, scalrScalingMethod, RenderingHints.VALUE_INTERPOLATION_BICUBIC)
+                result = scaleImageIncrementally(
+                        src,
+                        targetWidth,
+                        targetHeight,
+                        scalrScalingMethod,
+                        RenderingHints.VALUE_INTERPOLATION_BICUBIC
+                )
             }
         }
 
-        if (DEBUG) log(0, 'Resized Image in %d ms', System.currentTimeMillis() - t)
+        if (DEBUG) {
+            log(
+                    0,
+                    'Resized Image in %d ms',
+                    System.currentTimeMillis() - t
+            )
+        }
 
         result
     }
@@ -195,8 +241,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     }
 
     static Method getScalrMethod(ScalingQuality scalingQuality) {
-
-        Method scalrMethod = Method.AUTOMATIC
+        def scalrMethod = Method.AUTOMATIC
         switch (scalingQuality) {
             case ScalingQuality.SPEED: scalrMethod = Method.SPEED; break
             case ScalingQuality.BALANCED: scalrMethod = Method.BALANCED; break
@@ -208,7 +253,6 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     }
 
     static Scalr.Rotation getScalrRotation(Rotation rotation) {
-
         Scalr.Rotation scalrRotation = null
         switch (rotation) {
             case Scalr.Rotation.CW_90: scalrRotation = Scalr.Rotation.CW_90; break

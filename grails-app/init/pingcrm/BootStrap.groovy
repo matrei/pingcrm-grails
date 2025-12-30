@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,17 @@
  */
 package pingcrm
 
-import grails.gorm.transactions.Transactional
-import groovy.transform.CompileStatic
-import net.datafaker.Faker
-import pingcrm.auth.Role
-import pingcrm.auth.UserRole
-
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+
+import groovy.transform.CompileStatic
+
+import net.datafaker.Faker
+
+import grails.gorm.transactions.Transactional
+
+import pingcrm.auth.Role
+import pingcrm.auth.UserRole
 
 /**
  * A class that bootstraps the application with some initial data.
@@ -33,7 +36,7 @@ import java.time.ZoneOffset
 @CompileStatic
 class BootStrap {
 
-    def init = { servletContext ->
+    def init = {
         seedDatabase()
     }
 
@@ -59,7 +62,7 @@ class BootStrap {
 
         // Create all the user accounts
         Faker faker = new Faker(new Locale('en-US'))
-        5.times({
+        5.times {
             def user = new User(
                     account: account,
                     firstName: faker.name().firstName(),
@@ -70,11 +73,11 @@ class BootStrap {
                     owner: false
             ).save(failOnError: true)
             UserRole.create(user, userRole)
-        })
+        }
 
         // Create all the organisations
         def organizations = []
-        100.times({
+        100.times {
             def organization = new Organization(
                     account: account,
                     name: faker.company().name(),
@@ -87,11 +90,11 @@ class BootStrap {
                     postalCode: faker.address().zipCode()
             ).save(failOnError: true)
             organizations.add(organization)
-        })
+        }
 
         // Create all the contacts
         Random organizationRandomizer = new Random()
-        100.times({
+        100.times {
             new Contact(
                     account: account,
                     organization: organizations.get(organizationRandomizer.nextInt(100)),
@@ -105,6 +108,6 @@ class BootStrap {
                     country: 'US',
                     postalCode: faker.address().zipCode()
             ).save(failOnError: true)
-        })
+        }
     }
 }

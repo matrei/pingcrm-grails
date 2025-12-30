@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 original authors
+ * Copyright 2022-present original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
  */
 package pingcrm.controller
 
+import groovy.transform.CompileStatic
+
+import jakarta.inject.Inject
+
 import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.GrailsPluginManager
 import grails.util.Environment
-import groovy.transform.CompileStatic
-import jakarta.inject.Inject
+
 import pingcrm.config.AppInfo
 import pingcrm.config.GitInfo
 
@@ -39,7 +42,8 @@ class AboutController {
     private final Map info = [:]
 
     @Inject
-    AboutController(AppInfo appInfo, GitInfo gitInfo,
+    AboutController(AppInfo appInfo,
+                    GitInfo gitInfo,
                     GrailsApplication grailsApplication,
                     GrailsPluginManager pluginManager)
     {
@@ -50,15 +54,21 @@ class AboutController {
             grailsEnvironment = Environment.current.name
             groovyVersion = GroovySystem.version
             javaVersion = System.getProperty('java.version')
-            ssrEnabled = grailsApplication.config.getProperty('inertia.ssr.enabled', Boolean, false)
-            plugins = pluginManager.allPlugins.collect({[name: it.name, version: it.version]}).sort({ it.name })
+            ssrEnabled = grailsApplication.config.getProperty(
+                    'inertia.ssr.enabled',
+                    Boolean,
+                    false
+            )
+            plugins = pluginManager.allPlugins
+                    .collect {[name: it.name, version: it.version]}
+                    .sort { it.name }
             numControllers = grailsApplication.getArtefacts('Controller').size()
             numDomains = grailsApplication.getArtefacts('Domain').size()
             numServices = grailsApplication.getArtefacts('Service').size()
             numTagLibs = grailsApplication.getArtefacts('TagLib').size()
         }
         info['git.commitSha'] = gitInfo.commit?.get('id.abbrev')
-        info['git.commitUrl'] = "${appInfo.repoUrl}/commit/${gitInfo.commit?.get('id.abbrev')}"
+        info['git.commitUrl'] = "$appInfo.repoUrl/commit/${gitInfo.commit?.get('id.abbrev')}"
         info['git.commitTime'] = gitInfo.commit?.get('time')
     }
 
