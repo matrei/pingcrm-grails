@@ -26,8 +26,7 @@ import { formatFileSizeBinary } from '@/Use/use-files.js'
 
 const props = defineProps({
   user: Object,
-  maxPhotoSize: Number,
-  testServerMaxUploadSizeValidation: Boolean
+  maxPhotoSize: Number
 })
 
 const form = useForm({
@@ -37,15 +36,6 @@ const form = useForm({
   password: null,
   owner: props.user.owner,
   photo: null
-})
-
-form.transform(data => {
-  if(!props.testServerMaxUploadSizeValidation) {
-    if(data.photo && data.photo.size > props.maxPhotoSize) {
-      return { ...data, photo: null, clientSaysPhotoTooLarge: props.maxPhotoSize }
-    }
-  }
-  return data
 })
 
 const update = () => {
@@ -71,7 +61,7 @@ const photoErrors = computed(() => form.errors.photo ? [form.errors.photo] : [])
 
 watch(() => form.photo, val => {
   if(val && val['size'] > props.maxPhotoSize) {
-    form.errors.photo = `Photo file to large, max ${formatFileSizeBinary(props.maxPhotoSize, 0)}.`
+    form.errors.photo = `Photo file too large, max ${formatFileSizeBinary(props.maxPhotoSize, 0)}.`
   } else {
     form.errors.photo = null
   }

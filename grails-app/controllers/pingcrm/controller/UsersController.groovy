@@ -18,7 +18,6 @@ package pingcrm.controller
 import groovy.transform.CompileStatic
 
 import jakarta.inject.Inject
-import jakarta.servlet.http.HttpServletRequest
 
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -29,6 +28,7 @@ import pingcrm.PublicDataMapper
 import pingcrm.User
 import pingcrm.UserService
 import pingcrm.config.UploadConfig
+import pingcrm.services.PhotoUploadValidator
 
 /**
  * A CRUD controller for users.
@@ -42,6 +42,7 @@ class UsersController extends AppController<User> {
 
     private final UserService userService
     private final UploadConfig uploadConfig
+    private final PhotoUploadValidator photoUploadValidator
 
     final List<String> indexProperties = ['id', 'name', 'email', 'owner', 'photo', 'deleted']
     final List<String> editProperties = ['id', 'firstName', 'lastName', 'email', 'owner', 'photo', 'deleted']
@@ -62,11 +63,13 @@ class UsersController extends AppController<User> {
             AppService appService,
             UserService userService,
             PublicDataMapper publicDataMapper,
-            UploadConfig uploadConfig
+            UploadConfig uploadConfig,
+            PhotoUploadValidator photoUploadValidator
     ) {
         super(User, appService, publicDataMapper)
         this.userService = userService
         this.uploadConfig = uploadConfig
+        this.photoUploadValidator = photoUploadValidator
     }
 
     @Override
@@ -91,8 +94,7 @@ class UsersController extends AppController<User> {
     @Override
     def create() {
         addToModel([
-            maxPhotoSize: uploadConfig.maxFileSize,
-            testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
+            maxPhotoSize: uploadConfig.maxFileSize
         ])
         super.create()
     }
@@ -111,16 +113,13 @@ class UsersController extends AppController<User> {
 
         renderInertia(editComponent, [
             user: userPublicData,
-            maxPhotoSize: uploadConfig.maxFileSize,
-            testServerMaxUploadSizeValidation: shouldServerMaxUploadSizeValidationBeTested(request)
+            maxPhotoSize: uploadConfig.maxFileSize
         ])
     }
 
     def storeUser(UserCommand userCmd) {
 
-        // Validate the photo field first.
-        // If the max upload size was hit, no other fields will be available.
-        if (!userCmd.validate(['photo'])) {
+        if (!userCmd.validate()) {
             chain(
                     action: 'create',
                     model: [errors: renderErrors(userCmd.errors)]
@@ -128,11 +127,8 @@ class UsersController extends AppController<User> {
             return
         }
 
-        if (!userCmd.validate()) {
-            chain(
-                    action: 'create',
-                    model: [errors: renderErrors(userCmd.errors)]
-            )
+        if (!photoUploadValidator.validate(userCmd.photo, userCmd.errors)) {
+            chain(action: 'create', model: [errors: renderErrors(userCmd.errors)])
             return
         }
 
@@ -175,6 +171,11 @@ class UsersController extends AppController<User> {
                     id: userCmd.id,
                     model: [errors: renderErrors(userCmd.errors)]
             )
+            return
+        }
+
+        if (!photoUploadValidator.validate(userCmd.photo, userCmd.errors)) {
+            chain(action: 'edit', id: userCmd.id, model: [errors: renderErrors(userCmd.errors)])
             return
         }
 
@@ -262,7 +263,4 @@ class UsersController extends AppController<User> {
         user
     }
 
-    private static boolean shouldServerMaxUploadSizeValidationBeTested(HttpServletRequest request) {
-        request.getParameter('testServerMaxUploadSizeValidation') != null
-    }
 }

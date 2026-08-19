@@ -6,7 +6,6 @@ import geb.module.FileInput
 class UserEditPage extends Page {
 
     Long userId
-    boolean testServerMaxUploadSizeValidation = false
 
     private static final Map<String, String> selectors = [
             'avatarImage': 'img.w-8.h-8.rounded-full',
@@ -23,7 +22,7 @@ class UserEditPage extends Page {
     static url = '/users'
 
     String convertToPath(Object[] args) {
-        "/$userId/edit${testServerMaxUploadSizeValidation ? '?testServerMaxUploadSizeValidation' : ''}"
+        "/$userId/edit"
     }
 
     static btnText = 'Update User'

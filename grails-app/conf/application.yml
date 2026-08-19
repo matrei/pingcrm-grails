@@ -9,8 +9,10 @@ info:
 grails:
     controllers:
         upload:
-            maxFileSize: 524288
-            maxRequestSize: 1048576
+            # Servlet safety limits; the 512 KiB business limit is configured below.
+            maxFileSize: 104857600
+            maxRequestSize: 104857600
+            fileSizeThreshold: 0
     mime:
         disable:
             accept:
@@ -143,8 +145,7 @@ server:
                 same-site: Lax
     forward-headers-strategy: NATIVE
     tomcat:
-        max-swallow-size: 1MB
-        max-http-form-post-size: 1MB
+        max-swallow-size: 110MB
         redirect-context-root: false
 inertia:
     manifest:
@@ -153,7 +154,15 @@ csrf:
     excluded:
         - '/login/authAjax'
 spring:
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            file-size-threshold: 0
     web:
         error:
             whitelabel:
                 enabled: false
+pingcrm:
+    upload:
+        maxFileSize: 524288

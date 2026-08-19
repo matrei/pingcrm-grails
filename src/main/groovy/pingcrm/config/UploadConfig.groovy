@@ -26,9 +26,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * @since 2.0.5
  */
 @CompileStatic
-@ConfigurationProperties('grails.controllers.upload')
+@ConfigurationProperties('pingcrm.upload')
 class UploadConfig {
 
     long maxFileSize
-    //long maxRequestSize
 }

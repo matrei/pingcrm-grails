@@ -17,8 +17,6 @@ package pingcrm.controller
 
 import groovy.util.logging.Slf4j
 
-import org.apache.commons.io.FileUtils
-
 import org.springframework.validation.Errors
 import org.springframework.web.multipart.MultipartFile
 
@@ -49,9 +47,6 @@ class UserCommand implements Validateable {
     String password
     Boolean owner
     MultipartFile photo
-    Long clientSaysPhotoTooLarge
-    Long serverSaysPhotoTooLarge
-
     private String photoFilename
     String createPhotoPath() {
         photoFilename ?
@@ -75,30 +70,7 @@ class UserCommand implements Validateable {
             }
             return false
         })
-        photo(nullable: true, validator: { MultipartFile file, UserCommand cmd, Errors errors ->
-            if (cmd.clientSaysPhotoTooLarge || cmd.serverSaysPhotoTooLarge) {
-                long limit = cmd.clientSaysPhotoTooLarge ?: cmd.serverSaysPhotoTooLarge
-                errors.rejectValue(
-                        'photo',
-                        'user.photo.max.size.exceeded',
-                        [FileUtils.byteCountToDisplaySize(limit)] as Object[],
-                        'The maximum file size of {0} was exceeded.'
-                )
-                return true
-            }
-            if (file && !FileService.getSupportedFileExtension(file.contentType)) {
-                errors.rejectValue(
-                        'photo',
-                        'user.photo.invalid.type',
-                        [file.contentType] as Object[],
-                        'Invalid file type.'
-                )
-                return true
-            }
-            return false
-        })
-        serverSaysPhotoTooLarge(nullable: true)
-        clientSaysPhotoTooLarge(nullable: true)
+        photo(nullable: true)
     }
 
     void transferValuesTo(User user) {

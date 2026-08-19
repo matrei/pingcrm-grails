@@ -16,6 +16,7 @@ import pingcrm.config.UploadConfig
 import pingcrm.image.ImageService
 import pingcrm.image.ScalrImageProcessor
 import pingcrm.services.FileService
+import pingcrm.services.PhotoUploadValidator
 
 class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMappings> {
 
@@ -31,6 +32,7 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
             imageService(ImageService)
             fileService(FileService)
             uploadConfig(UploadConfig)
+            photoUploadValidator(PhotoUploadValidator)
         }
     }
 

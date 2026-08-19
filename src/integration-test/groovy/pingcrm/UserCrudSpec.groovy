@@ -161,7 +161,7 @@ class UserCrudSpec extends ContainerGebSpec {
             generatedImage.delete()
     }
 
-    void 'users cannot be created with a too large photo file size (server-side validation: #testServerMaxUploadSizeValidation)'() {
+    void 'users cannot be created with a too large photo file size'() {
         when: 'a demo user is logged in'
             loginDemoUser()
 
@@ -182,8 +182,6 @@ class UserCrudSpec extends ContainerGebSpec {
             userCreatePage.flashError == 'There is one form error.'
             userCreatePage.photoFieldBorder.hasClass('error')
 
-        where:
-            testServerMaxUploadSizeValidation << [false, true]
     }
 
     void 'a user can upload an avatar image'()  {
@@ -219,13 +217,12 @@ class UserCrudSpec extends ContainerGebSpec {
             generatedImage.delete()
     }
 
-    void 'the user cannot upload files larger than allowed (server-side validation: #testServerMaxUploadSizeValidation)'(boolean testServerMaxUploadSizeValidation) {
+    void 'the user cannot upload files larger than allowed'() {
         when: 'a demo user is logged in'
             loginDemoUser()
 
         and: 'is on the edit user page for a user that is not the demo user'
             def userEditPage = new UserEditPage(3)
-            userEditPage.testServerMaxUploadSizeValidation = testServerMaxUploadSizeValidation
             to(userEditPage)
 
         and: 'trying to upload an image file that is to big'
@@ -236,8 +233,6 @@ class UserCrudSpec extends ContainerGebSpec {
             userEditPage.flashError == 'There is one form error.'
             userEditPage.photoFieldBorder.hasClass('error')
 
-        where:
-            testServerMaxUploadSizeValidation << [false, true]
     }
 
     LoginPage loginDemoUser() {

@@ -1,8 +1,20 @@
 grails:
   controllers:
     upload:
-      maxFileSize: 524288
-      maxRequestSize: 1048576
+      maxFileSize: 104857600
+      maxRequestSize: 104857600
+      fileSizeThreshold: 0
+---
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 0
+---
+pingcrm:
+  upload:
+    maxFileSize: 524288
 ---
 inertia:
   ssr:

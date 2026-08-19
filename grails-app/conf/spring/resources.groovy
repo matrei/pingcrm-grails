@@ -5,7 +5,6 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
 import pingcrm.UserPasswordEncoderListener
-import pingcrm.controller.MaxFileUploadSizeResolver
 import pingcrm.controller.ResourceCachingConfig
 import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
 
@@ -14,7 +13,6 @@ beans = {
     userPasswordEncoderListener(UserPasswordEncoderListener)
     userDetailsService(AppUserDetailsService)
     sessionTracker(SessionTracker)
-    multipartResolver(MaxFileUploadSizeResolver)
 
     /*
         This is needed because we don't want Spring Security to treat our Inertia requests as Ajax calls.
