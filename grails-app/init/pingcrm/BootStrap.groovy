@@ -61,7 +61,7 @@ class BootStrap {
         UserRole.create(owner, ownerRole)
 
         // Create all the user accounts
-        Faker faker = new Faker(new Locale('en-US'))
+        def faker = new Faker(Locale.of('en', 'US'))
         5.times {
             def user = new User(
                     account: account,
@@ -93,7 +93,7 @@ class BootStrap {
         }
 
         // Create all the contacts
-        Random organizationRandomizer = new Random()
+        def organizationRandomizer = new Random()
         100.times {
             new Contact(
                     account: account,

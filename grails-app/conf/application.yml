@@ -146,14 +146,14 @@ server:
         max-swallow-size: 1MB
         max-http-form-post-size: 1MB
         redirect-context-root: false
-    error:
-        whitelabel:
-          enabled: false
 inertia:
     manifest:
         location: 'classpath:public/dist/.vite/manifest.json'
-    ssr:
-        enabled: false
 csrf:
     excluded:
         - '/login/authAjax'
+spring:
+    web:
+        error:
+            whitelabel:
+                enabled: false

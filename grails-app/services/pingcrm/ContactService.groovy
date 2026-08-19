@@ -17,7 +17,6 @@ package pingcrm
 
 import groovy.transform.CompileStatic
 
-import jakarta.inject.Inject
 import jakarta.persistence.criteria.JoinType
 
 import grails.gorm.DetachedCriteria

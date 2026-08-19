@@ -62,9 +62,9 @@ class UrlMappings {
         "/test-500-error" (controller: 'errorTest', action: 'generateInternalServerError')
 
         "/error" (view: '/error')
+        "400" (controller: 'errorHandling', action: 'csrfTokenMismatch')
         "403" (controller: 'errorHandling', action: 'forbidden')
         "404" (controller: 'errorHandling', action: 'notFound')
-        "419" (controller: 'errorHandling', action: 'csrfTokenMismatch')
         "500" (controller: 'errorHandling', action: 'internalServerError')
         "503" (controller: 'errorHandling', action: 'serviceUnavailable')
     }

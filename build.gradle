@@ -23,6 +23,7 @@ grails {
 */
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url = 'https://repo.grails.org/grails/restricted' }
     maven {
@@ -83,7 +84,6 @@ dependencies {
     runtimeOnly 'org.apache.grails:grails-url-mappings'
 
     runtimeOnly "io.github.matrei:grails-csrf:$grailsCsrfVersion"
-    runtimeOnly 'org.fusesource.jansi:jansi'
     runtimeOnly 'org.springframework.boot:spring-boot-autoconfigure'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-logging'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -91,6 +91,8 @@ dependencies {
     runtimeOnly 'com.zaxxer:HikariCP'
 
     compileOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during GSP compile tasks
+    testCompileOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during GSP compile tasks
+    integrationTestCompileOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during GSP compile tasks
 
     testImplementation 'org.apache.grails:grails-testing-support-datamapping'
     testImplementation 'org.apache.grails:grails-testing-support-web'

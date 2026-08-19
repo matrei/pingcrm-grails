@@ -57,13 +57,13 @@ class Organization implements LogicalDelete<Organization>, PublicData {
     }
 
     static final constraints = {
-        name(maxSize: 100)
-        email(maxSize: 50, nullable: true, email: true)
-        phone(maxSize: 50, nullable: true)
-        address(maxSize: 150, nullable: true)
-        city(maxSize: 50, nullable: true)
-        region(maxSize: 50, nullable: true)
-        country(minSize: 2, maxSize: 2, nullable: true)
-        postalCode(maxSize: 25, nullable: true)
+        name(maxSize: 100, nullable: false)
+        email(maxSize: 50, email: true)
+        phone(maxSize: 50)
+        address(maxSize: 150)
+        city(maxSize: 50)
+        region(maxSize: 50)
+        country(minSize: 2, maxSize: 2)
+        postalCode(maxSize: 25)
     }
 }

@@ -58,16 +58,15 @@ class Contact implements LogicalDelete<Contact>, PublicData {
     Organization organization
 
     static final constraints = {
-        firstName(maxSize: 25)
-        lastName(maxSize: 25)
-        email(maxSize: 50, nullable: true, email: true)
-        phone(maxSize: 50, nullable: true)
-        address(maxSize: 150, nullable: true)
-        city(maxSize: 50, nullable: true)
-        region(maxSize: 50, nullable: true)
-        country(maxSize: 2, nullable: true)
-        postalCode(maxSize: 25, nullable: true)
-        organization(nullable: true)
+        firstName(maxSize: 25, nullable: false)
+        lastName(maxSize: 25, nullable: false)
+        email(maxSize: 50, email: true)
+        phone(maxSize: 50)
+        address(maxSize: 150)
+        city(maxSize: 50)
+        region(maxSize: 50)
+        country(maxSize: 2)
+        postalCode(maxSize: 25)
     }
 
     static final MappingDefinition<Mapping, PropertyConfig> mapping = MappingBuilder.orm {
