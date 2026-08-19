@@ -87,37 +87,41 @@ const restore = () => {
     <h2 class="mt-12 font-bold text-2xl">Contacts</h2>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
-        <tr class="text-left font-bold">
-          <th class="px-6 pt-6 pb-4">Name</th>
-          <th class="px-6 pt-6 pb-4">City</th>
-          <th class="px-6 pt-6 pb-4" colspan="2">Phone</th>
-        </tr>
-        <tr v-for="contact in organization.contacts" :key="contact.id" class="hover:bg-slate-100 focus-within:bg-slate-100">
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="`/contacts/${contact.id}/edit`">
-              {{ contact.name }}
-              <icon v-if="contact.deleted" name="trash" class="shrink-0 w-3 h-3 fill-slate-400 ml-2" />
-            </inertia-link>
-          </td>
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
-              {{ contact.city }}
-            </inertia-link>
-          </td>
-          <td class="border-t">
-            <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
-              {{ contact.phone }}
-            </inertia-link>
-          </td>
-          <td class="border-t w-px">
-            <inertia-link class="px-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
-              <icon name="cheveron-right" class="block w-6 h-6 fill-slate-400" />
-            </inertia-link>
-          </td>
-        </tr>
-        <tr v-if="organization.contacts.length === 0">
-          <td class="border-t px-6 py-4" colspan="4">No contacts found.</td>
-        </tr>
+        <thead>
+          <tr class="text-left font-bold">
+            <th class="px-6 pt-6 pb-4">Name</th>
+            <th class="px-6 pt-6 pb-4">City</th>
+            <th class="px-6 pt-6 pb-4" colspan="2">Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="contact in organization.contacts" :key="contact.id" class="hover:bg-slate-100 focus-within:bg-slate-100">
+            <td class="border-t">
+              <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="`/contacts/${contact.id}/edit`">
+                {{ contact.name }}
+                <icon v-if="contact.deleted" name="trash" class="shrink-0 w-3 h-3 fill-slate-400 ml-2" />
+              </inertia-link>
+            </td>
+            <td class="border-t">
+              <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+                {{ contact.city }}
+              </inertia-link>
+            </td>
+            <td class="border-t">
+              <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+                {{ contact.phone }}
+              </inertia-link>
+            </td>
+            <td class="border-t w-px">
+              <inertia-link class="px-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+                <icon name="cheveron-right" class="block w-6 h-6 fill-slate-400" />
+              </inertia-link>
+            </td>
+          </tr>
+          <tr v-if="organization.contacts.length === 0">
+            <td class="border-t px-6 py-4" colspan="4">No contacts found.</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
