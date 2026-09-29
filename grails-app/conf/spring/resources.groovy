@@ -6,6 +6,7 @@ import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
 import pingcrm.UserPasswordEncoderListener
 import pingcrm.controller.ResourceCachingConfig
+import pingcrm.i18n.SupportedLocaleResolver
 import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
 
 beans = {
@@ -38,4 +39,13 @@ beans = {
     }
 
     resourceCachingConfig(ResourceCachingConfig)
+
+    /*
+        Resolve the locale from the Accept-Language header (or ?lang= for the session),
+        but only to the locales the UI is translated into.
+    */
+    def uiLocales = application.config.getProperty('pingcrm.i18n.locales', List, ['en']).collect {
+        Locale.forLanguageTag(it as String)
+    }
+    localeResolver(SupportedLocaleResolver, uiLocales, uiLocales.first())
 }

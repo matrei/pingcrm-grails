@@ -19,6 +19,8 @@ import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 import createServer from '@inertiajs/vue3/server'
 import { renderToString } from '@vue/server-renderer'
 
+import { i18n } from '@/Use/use-i18n'
+
 const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
 
 createServer(page =>
@@ -35,6 +37,7 @@ createServer(page =>
                 render: () => h(App, props)
             })
             .use(plugin)
+            .use(i18n)
             .component('inertia-link', Link)
             .component('inertia-head', Head)
         }

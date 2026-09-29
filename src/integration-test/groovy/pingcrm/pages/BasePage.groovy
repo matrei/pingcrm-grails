@@ -1,10 +1,11 @@
 package pingcrm.pages
 
 import geb.Page
+import geb.url.UrlFragment
 
-abstract class BasePage extends Page {
+abstract class BasePage extends Page implements LocalizedPage {
 
-    // To be overridden by subclasses
+    // To be overridden by subclasses (see LocalizedPage)
     static heading = null
 
     static at = {
@@ -12,7 +13,7 @@ abstract class BasePage extends Page {
         // delegate here is the original page _instance_ (i.e. the subclass)
         def h1 = delegate.class.heading
         if (h1 == null) throw new IllegalStateException("No heading defined for page ${delegate.class.name}")
-        h1 == js.exec('return document.querySelector("h1").textContent')
+        delegate.expectedHeading == js.exec('return document.querySelector("h1").textContent')
         menuItemIsSelected // Without this I have gotten StaleElementReferenceException
     }
 
@@ -20,6 +21,10 @@ abstract class BasePage extends Page {
         navbarName {
             $('button[type=button].mt-1', 0)
                     .text()
+        }
+
+        menuItem { String href ->
+            $("a[href='$href'].flex.items-center.group.py-3")
         }
 
         menuItemIsSelected {
@@ -37,5 +42,10 @@ abstract class BasePage extends Page {
             $('div.bg-green-500')
                     .text()
         }
+    }
+
+    @Override
+    void to(Map params, UrlFragment fragment, Object[] args) {
+        super.to(withLangParam(params), fragment, args)
     }
 }

@@ -20,6 +20,7 @@ export default { layout }
 
 <script setup>
 
+import { regionName, t } from '@/Use/use-i18n'
 import { router, useForm } from '@inertiajs/vue3'
 
 const props = defineProps({ organization: Object })
@@ -38,13 +39,13 @@ const form = useForm({
 const update = () => form.put(`/organizations/${props.organization.id}`)
 
 const destroy = () => {
-  if (confirm('Are you sure you want to delete this organization?')) {
+  if (confirm(t('ui.organizations.confirmDelete'))) {
     router.delete(`/organizations/${props.organization.id}`)
   }
 }
 
 const restore = () => {
-  if (confirm('Are you sure you want to restore this organization?')) {
+  if (confirm(t('ui.organizations.confirmRestore'))) {
     router.put(`/organizations/${props.organization.id}/restore`)
   }
 }
@@ -55,43 +56,43 @@ const restore = () => {
   <inertia-head :title="form.name" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/organizations">Organizations</inertia-link>
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/organizations">{{ $t('ui.organizations.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="organization.deleted" class="mb-6" @restore="restore">
-      This organization has been deleted.
+      {{ $t('ui.organizations.trashed') }}
     </trashed-message>
     <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
       <form @submit.prevent="update">
         <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-          <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" label="Name" />
-          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
-          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" label="Phone" />
-          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Address" />
-          <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
-          <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full lg:w-1/2" label="Province/State" />
-          <select-input v-model="form.country" :error="form.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country">
+          <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.name')" />
+          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.email')" />
+          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.phone')" />
+          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.address')" />
+          <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.city')" />
+          <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.region')" />
+          <select-input v-model="form.country" :error="form.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.country')">
             <option :value="null" />
-            <option value="CA">Canada</option>
-            <option value="US">United States</option>
+            <option value="CA">{{ regionName('CA') }}</option>
+            <option value="US">{{ regionName('US') }}</option>
           </select-input>
-          <text-input v-model="form.postalCode" :error="form.errors.postalCode" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
+          <text-input v-model="form.postalCode" :error="form.errors.postalCode" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.postalCode')" />
         </div>
         <div class="px-8 py-4 bg-slate-50 border-t border-slate-100 flex items-center">
-          <button v-if="!organization.deleted" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete Organization</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Update Organization</loading-button>
+          <button v-if="!organization.deleted" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">{{ $t('ui.organizations.delete') }}</button>
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">{{ $t('ui.organizations.update') }}</loading-button>
         </div>
       </form>
     </div>
-    <h2 class="mt-12 font-bold text-2xl">Contacts</h2>
+    <h2 class="mt-12 font-bold text-2xl">{{ $t('ui.contacts.title') }}</h2>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-left font-bold">
-            <th class="px-6 pt-6 pb-4">Name</th>
-            <th class="px-6 pt-6 pb-4">City</th>
-            <th class="px-6 pt-6 pb-4" colspan="2">Phone</th>
+            <th class="px-6 pt-6 pb-4">{{ $t('ui.field.name') }}</th>
+            <th class="px-6 pt-6 pb-4">{{ $t('ui.field.city') }}</th>
+            <th class="px-6 pt-6 pb-4" colspan="2">{{ $t('ui.field.phone') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -119,7 +120,7 @@ const restore = () => {
             </td>
           </tr>
           <tr v-if="organization.contacts.length === 0">
-            <td class="border-t px-6 py-4" colspan="4">No contacts found.</td>
+            <td class="border-t px-6 py-4" colspan="4">{{ $t('ui.contacts.empty') }}</td>
           </tr>
         </tbody>
       </table>

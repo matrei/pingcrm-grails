@@ -52,31 +52,31 @@ const reset = () => {
 </script>
 
 <template>
-  <inertia-head title="Contacts" />
+  <inertia-head :title="$t('ui.contacts.title')" />
   <div>
-    <h1 class="mb-8 font-bold text-3xl">Contacts</h1>
+    <h1 class="mb-8 font-bold text-3xl">{{ $t('ui.contacts.title') }}</h1>
     <div class="mb-6 flex justify-between items-center">
       <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
-        <label class="block text-slate-700">Trashed:</label>
+        <label class="block text-slate-700">{{ $t('ui.filter.trashed') }}</label>
         <select v-model="form.trashed" class="mt-1 w-full form-select">
           <option :value="null" />
-          <option value="with">With Trashed</option>
-          <option value="only">Only Trashed</option>
+          <option value="with">{{ $t('ui.filter.trashed.with') }}</option>
+          <option value="only">{{ $t('ui.filter.trashed.only') }}</option>
         </select>
       </search-filter>
       <inertia-link class="btn-indigo" href="/contacts/create">
-        <span>Create</span>
-        <span class="hidden md:inline"> Contact</span>
+        <span class="md:hidden">{{ $t('ui.common.create') }}</span>
+        <span class="hidden md:inline">{{ $t('ui.contacts.create') }}</span>
       </inertia-link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-left font-bold">
-            <th class="px-6 pt-6 pb-4">Name</th>
-            <th class="px-6 pt-6 pb-4">Organization</th>
-            <th class="px-6 pt-6 pb-4">City</th>
-            <th class="px-6 pt-6 pb-4" colspan="2">Phone</th>
+            <th class="px-6 pt-6 pb-4">{{ $t('ui.field.name') }}</th>
+            <th class="px-6 pt-6 pb-4">{{ $t('ui.field.organization') }}</th>
+            <th class="px-6 pt-6 pb-4">{{ $t('ui.field.city') }}</th>
+            <th class="px-6 pt-6 pb-4" colspan="2">{{ $t('ui.field.phone') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -111,7 +111,7 @@ const reset = () => {
             </td>
           </tr>
           <tr v-if="contacts.data.length === 0">
-            <td class="border-t px-6 py-4" colspan="4">No contacts found.</td>
+            <td class="border-t px-6 py-4" colspan="4">{{ $t('ui.contacts.empty') }}</td>
           </tr>
         </tbody>
       </table>

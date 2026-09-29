@@ -16,6 +16,8 @@
 
 <script setup>
 
+import { locale } from '@/Use/use-i18n'
+
 const props = defineProps({
   label: String,
   accept: String,
@@ -33,7 +35,8 @@ watch (
 
 const filesize = (size) => {
   const i = Math.floor(Math.log(size) / Math.log(1024))
-  return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+  const value = new Intl.NumberFormat(locale(), { maximumFractionDigits: 2 }).format(size / Math.pow(1024, i))
+  return value + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
 }
 
 const browse = () => file.value.click()
@@ -49,7 +52,7 @@ const remove = () => modelValue.value = null
       <input ref="file" type="file" :accept="accept" class="hidden" @change="change" />
       <div v-if="!modelValue" class="p-2">
         <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-sm text-xs font-medium text-white" @click="browse">
-          Browse
+          {{ $t('ui.file.browse') }}
         </button>
       </div>
       <div v-else class="flex items-center justify-between p-2">
@@ -57,7 +60,7 @@ const remove = () => modelValue.value = null
           {{ modelValue.name }} <span class="text-slate-500 text-xs">({{ filesize(modelValue.size) }})</span>
         </div>
         <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-sm text-xs font-medium text-white" @click="remove">
-          Remove
+          {{ $t('ui.file.remove') }}
         </button>
       </div>
     </div>

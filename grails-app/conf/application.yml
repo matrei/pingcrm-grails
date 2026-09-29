@@ -159,5 +159,10 @@ spring:
             whitelabel:
                 enabled: false
 pingcrm:
+    i18n:
+        # The languages the UI is translated into (grails-app/i18n/messages*.properties), the first one is the default
+        locales:
+            - en
+            - sv
     upload:
         maxFileSize: 524288

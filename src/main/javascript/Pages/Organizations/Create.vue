@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { regionName } from '@/Use/use-i18n'
 import { useForm } from '@inertiajs/vue3'
 
 const form = useForm({
@@ -39,30 +40,30 @@ const store = () => form.post('/organizations')
 </script>
 
 <template>
-  <inertia-head title="Create Organization" />
+  <inertia-head :title="$t('ui.organizations.create')" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/organizations">Organizations</inertia-link>
-      <span class="text-indigo-400 font-medium">&nbsp;/</span> Create
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/organizations">{{ $t('ui.organizations.title') }}</inertia-link>
+      <span class="text-indigo-400 font-medium">&nbsp;/</span> {{ $t('ui.common.create') }}
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
       <form @submit.prevent="store">
         <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-          <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" label="Name" />
-          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
-          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" label="Phone" />
-          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Address" />
-          <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
-          <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full lg:w-1/2" label="Province/State" />
-          <select-input v-model="form.country" :error="form.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" label="Country">
+          <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.name')" />
+          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.email')" />
+          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.phone')" />
+          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.address')" />
+          <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.city')" />
+          <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.region')" />
+          <select-input v-model="form.country" :error="form.errors.country" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.country')">
             <option :value="null" />
-            <option value="CA">Canada</option>
-            <option value="US">United States</option>
+            <option value="CA">{{ regionName('CA') }}</option>
+            <option value="US">{{ regionName('US') }}</option>
           </select-input>
-          <text-input v-model="form.postalCode" :error="form.errors.postalCode" class="pr-6 pb-8 w-full lg:w-1/2" label="Postal code" />
+          <text-input v-model="form.postalCode" :error="form.errors.postalCode" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.postalCode')" />
         </div>
         <div class="px-8 py-4 bg-slate-50 border-t border-slate-100 flex justify-end items-center">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Create Organization</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">{{ $t('ui.organizations.create') }}</loading-button>
         </div>
       </form>
     </div>

@@ -23,6 +23,8 @@ import grails.plugin.inertia.Inertia
 import grails.plugin.springsecurity.annotation.Secured
 import grails.util.Environment
 
+import pingcrm.i18n.LocalizedMessages
+
 /**
  * A controller for handling errors.
  * @author Mattias Reichel
@@ -30,7 +32,7 @@ import grails.util.Environment
  */
 @CompileStatic
 @Secured('permitAll')
-class ErrorHandlingController {
+class ErrorHandlingController implements LocalizedMessages {
 
     def forbidden() {
         render('forbidden')
@@ -45,7 +47,7 @@ class ErrorHandlingController {
     }
 
     def csrfTokenMismatch() {
-        flash.error = 'The page expired, please try again.'
+        flash.error = localizedMessage('flash.csrf.expired')
         def referer = request.getHeader('referer')
         if (referer) {
             redirect(uri: referer)

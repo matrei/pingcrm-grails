@@ -19,6 +19,8 @@ import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 
 import '@/Styles/index.pcss'
 
+import { i18n } from '@/Use/use-i18n'
+
 const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
 
 createInertiaApp({
@@ -30,6 +32,7 @@ createInertiaApp({
   setup ({el, App, props, plugin}) {
     createApp({render: () => h(App, props)})
       .use(plugin)
+      .use(i18n)
       .component('inertia-link', Link)
       .component('inertia-head', Head)
       .mount(el)

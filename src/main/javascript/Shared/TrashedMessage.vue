@@ -28,6 +28,6 @@ defineEmits(['restore'])
         <slot />
       </div>
     </div>
-    <button class="text-sm text-yellow-800 hover:underline" tabindex="-1" type="button" @click="$emit('restore')">Restore</button>
+    <button class="text-sm text-yellow-800 hover:underline" tabindex="-1" type="button" @click="$emit('restore')">{{ $t('ui.common.restore') }}</button>
   </div>
 </template>

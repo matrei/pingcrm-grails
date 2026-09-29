@@ -17,13 +17,19 @@ package pingcrm.interceptor
 
 import groovy.transform.CompileStatic
 
+import org.springframework.context.i18n.LocaleContextHolder
+
+import grails.plugin.inertia.Inertia
+
 import pingcrm.AppService
+import pingcrm.UiMessagesService
 
 /**
  * This interceptor helps passing on data (in Inertia lingo 'shared data') to the client that is almost always
  * needed so we don't have to do it manually in every controller.
  *
- * In this case we send details about the user (if logged in) and flash messages.
+ * In this case we send details about the user (if logged in), flash messages, the current locale
+ * and the UI messages for that locale.
  *
  * @author Mattias Reichel
  * @since 1.0.0
@@ -32,6 +38,7 @@ import pingcrm.AppService
 class SharedDataInterceptor {
 
     AppService appService
+    UiMessagesService uiMessagesService
 
     SharedDataInterceptor() {
         match(controller: '*')
@@ -62,6 +69,13 @@ class SharedDataInterceptor {
                 success: flash.success,
                 error: flash.error
             ]
+        ]
+
+        def locale = LocaleContextHolder.locale
+        sharedData << [
+            locale: locale.toLanguageTag(),
+            // Sent once and then cached by the client (until the locale changes)
+            messages: Inertia.once({ uiMessagesService.messagesFor(locale) }, "messages-${locale.toLanguageTag()}".toString())
         ]
 
         inertiaSharedData = sharedData

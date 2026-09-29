@@ -22,6 +22,7 @@ import jakarta.inject.Inject
 import org.grails.web.util.GrailsApplicationAttributes
 
 import pingcrm.UserService
+import pingcrm.i18n.LocalizedMessages
 
 /**
  * This interceptor prevents anyone from editing or deleting the "demo user" (johndoe@example.com).
@@ -32,7 +33,7 @@ import pingcrm.UserService
  * @since 1.0.0
  */
 @CompileStatic
-class EditPreventionInterceptor {
+class EditPreventionInterceptor implements LocalizedMessages {
 
     UserService userService
 
@@ -44,7 +45,7 @@ class EditPreventionInterceptor {
     boolean before() {
         def id = params.long('id')
         if (userService.isDemoUser(id)) {
-            flash.error = "${actionName == 'delete' ? 'Deleting' : 'Updating'} the demo user is not allowed."
+            flash.error = localizedMessage("flash.user.demo.${actionName == 'delete' ? 'deleteNotAllowed' : 'updateNotAllowed'}")
             def url = grailsLinkGenerator.link(controller: 'users', action: 'edit', id: id)
             response.status = 303
             response.setHeader('Location', url)

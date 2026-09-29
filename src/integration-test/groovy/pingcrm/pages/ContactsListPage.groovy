@@ -5,7 +5,7 @@ import pingcrm.modules.TableModule
 
 class ContactsListPage extends BasePage {
 
-    static heading = 'Contacts'
+    static heading = [en: 'Contacts', sv: 'Kontakter']
     static url = '/contacts'
 
     static content = {

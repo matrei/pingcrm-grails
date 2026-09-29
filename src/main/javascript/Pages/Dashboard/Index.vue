@@ -20,16 +20,17 @@ export default { layout }
 </script>
 
 <template>
-  <inertia-head title="Dashboard" />
-  <h1 class="mb-8 font-bold text-3xl">Dashboard</h1>
+  <inertia-head :title="$t('ui.dashboard.title')" />
+  <h1 class="mb-8 font-bold text-3xl">{{ $t('ui.dashboard.title') }}</h1>
   <p class="mb-8 leading-normal">
-    Hey there! Welcome to Ping CRM, a demo app designed to help illustrate how
-    <a class="text-indigo-500 underline hover:text-orange-600" href="https://inertiajs.com">Inertia.js</a> works
-    with <a class="text-indigo-500 underline hover:text-orange-600" href="https://grails.org">Grails</a>.
+    {{ $t('ui.dashboard.welcome.beforeInertia') }}
+    <a class="text-indigo-500 underline hover:text-orange-600" href="https://inertiajs.com">Inertia.js</a>
+    {{ $t('ui.dashboard.welcome.beforeGrails') }}
+    <a class="text-indigo-500 underline hover:text-orange-600" href="https://grails.org">Grails</a>{{ $t('ui.dashboard.welcome.end') }}
   </p>
   <div class="leading-[50px]">
-    <inertia-link href="/test-500-error" class="btn-indigo">Trigger 500 Server Error</inertia-link>&nbsp;
-    <inertia-link href="/static/test-404-error" class="btn-indigo">Trigger 404 Not Found</inertia-link>&nbsp;
-    <inertia-link href="/hello" class="btn-indigo">Trigger 403 Forbidden</inertia-link>
+    <inertia-link href="/test-500-error" class="btn-indigo">{{ $t('ui.dashboard.trigger500') }}</inertia-link>&nbsp;
+    <inertia-link href="/static/test-404-error" class="btn-indigo">{{ $t('ui.dashboard.trigger404') }}</inertia-link>&nbsp;
+    <inertia-link href="/hello" class="btn-indigo">{{ $t('ui.dashboard.trigger403') }}</inertia-link>
   </div>
 </template>

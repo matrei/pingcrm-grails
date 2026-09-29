@@ -18,6 +18,8 @@ package pingcrm.controller
 import groovy.transform.CompileStatic
 
 import grails.gorm.PagedResultList
+import org.springframework.context.i18n.LocaleContextHolder
+
 import grails.logical.delete.LogicalDelete
 import org.grails.web.util.GrailsApplicationAttributes
 
@@ -26,6 +28,7 @@ import pingcrm.Paginator
 import pingcrm.PublicData
 import pingcrm.PublicDataMapper
 import pingcrm.ValidationMessageRenderer
+import pingcrm.i18n.LocalizedMessages
 
 /**
  * Base class for CRUD controllers.
@@ -34,7 +37,7 @@ import pingcrm.ValidationMessageRenderer
  * @since 1.0.0
  */
 @CompileStatic
-abstract class AppController<D extends LogicalDelete & PublicData> implements ValidationMessageRenderer {
+abstract class AppController<D extends LogicalDelete & PublicData> implements ValidationMessageRenderer, LocalizedMessages {
 
     private static final String ATTRIBUTE_KEY_MODEL = 'pingcrm.controller.INERTIA_MODEL'
 
@@ -86,7 +89,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
             (collectionName): paginator.paginate(
                     publicData, params, [
                         total: totalCount,
-                        locale: request.locale
+                        locale: LocaleContextHolder.locale
                     ]
             ),
             filters: filters
@@ -109,7 +112,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def store() {
         def entity = appService.create(domainClass, request.JSON)
         if (!entity) {
-            flash.error = "Failed to create $entityNameLC"
+            flash.error = flashMessage('createFailed')
             seeOtherRedirect(action: 'create')
             return
         }
@@ -119,7 +122,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
             return
         }
 
-        flash.success = "$entityName created."
+        flash.success = flashMessage('created')
         seeOtherRedirect(action: 'index')
     }
 
@@ -132,22 +135,22 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
             return
         }
 
-        flash.success = "$entityName updated."
+        flash.success = flashMessage('updated')
         seeOtherRedirect(action: 'edit', id: id)
     }
 
     def delete(Long id) {
         def deleted = appService.delete(domainClass, id)
-        if (deleted) flash.success = "$entityName deleted."
-        else flash.error = "Failed to delete $entityNameLC."
+        if (deleted) flash.success = flashMessage('deleted')
+        else flash.error = flashMessage('deleteFailed')
 
         seeOtherRedirect(action: 'edit', id: id)
     }
 
     def restore(Long id) {
         def restored = appService.restore(domainClass, id)
-        if (restored) flash.success = "$entityName restored."
-        else flash.error = "Failed to restore $entityNameLC."
+        if (restored) flash.success = flashMessage('restored')
+        else flash.error = flashMessage('restoreFailed')
 
         seeOtherRedirect(action: 'edit', id: id)
     }
@@ -162,11 +165,18 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     protected D findOrRedirect(Serializable id) {
         def entity = errors.hasErrors() ? null : appService.find(domainClass, id)
         if (!entity) {
-            flash.error = "$entityName not found."
+            flash.error = flashMessage('notFound')
             seeOtherRedirect(action: 'index')
             return null
         }
         return entity
+    }
+
+    /**
+     * Resolves an entity specific flash message, e.g. {@code flash.contact.created}.
+     */
+    protected final String flashMessage(String name) {
+        localizedMessage("flash.${entityNameLC}.${name}")
     }
 
     protected final void addToModel(Map model) {

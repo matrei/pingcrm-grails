@@ -20,9 +20,9 @@ export default { layout }
 </script>
 
 <template>
-  <inertia-head title="Reports" />
+  <inertia-head :title="$t('ui.reports.title')" />
   <div>
-    <h1 class="mb-8 font-bold text-3xl">Reports</h1>
+    <h1 class="mb-8 font-bold text-3xl">{{ $t('ui.reports.title') }}</h1>
   </div>
 </template>
 

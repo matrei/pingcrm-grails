@@ -142,7 +142,7 @@ class UsersController extends AppController<User> {
         }
 
         if (!user) {
-            flash.error = 'Failed to create user.'
+            flash.error = flashMessage('createFailed')
             seeOtherRedirect(
                     action: 'create'
             )
@@ -157,7 +157,7 @@ class UsersController extends AppController<User> {
             return
         }
 
-        flash.success = 'User created.'
+        flash.success = flashMessage('created')
         seeOtherRedirect(
                 action: 'index'
         )
@@ -198,7 +198,7 @@ class UsersController extends AppController<User> {
                 )
                 return
             } else {
-                flash.error = 'User not found.'
+                flash.error = flashMessage('notFound')
                 seeOtherRedirect(
                         action: 'index'
                 )
@@ -206,7 +206,7 @@ class UsersController extends AppController<User> {
             }
         }
 
-        flash.success = 'User updated.'
+        flash.success = flashMessage('updated')
         seeOtherRedirect(
                 action: 'edit',
                 id: userCmd.id,
@@ -222,7 +222,7 @@ class UsersController extends AppController<User> {
                 session.invalidate()
                 seeOtherRedirect(controller: 'login')
             } else {
-                flash.error = 'Failed to delete user.'
+                flash.error = flashMessage('deleteFailed')
                 seeOtherRedirect(
                         action: 'edit',
                         id: id
@@ -233,14 +233,14 @@ class UsersController extends AppController<User> {
 
         if (appService.delete User, id) {
             userService.invalidateSessionsForUserId(id)
-            flash.success = 'User deleted.'
+            flash.success = flashMessage('deleted')
             seeOtherRedirect(
                     action: 'edit',
                     id: id
             )
             return
         }
-        flash.error = 'Failed to delete user.'
+        flash.error = flashMessage('deleteFailed')
         seeOtherRedirect(
                 action: 'edit',
                 id: id

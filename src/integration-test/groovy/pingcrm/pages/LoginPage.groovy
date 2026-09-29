@@ -1,17 +1,18 @@
 package pingcrm.pages
 
 import geb.Page
+import geb.url.UrlFragment
 import geb.module.Checkbox
 import geb.module.EmailInput
 import geb.module.PasswordInput
 
-class LoginPage extends Page {
+class LoginPage extends Page implements LocalizedPage {
 
-    static heading = 'Welcome Back!'
+    static heading = [en: 'Welcome Back!', sv: 'Välkommen tillbaka!']
     static url = '/login'
 
     static at = {
-        heading == js.exec(
+        delegate.expectedHeading == js.exec(
                 'return document.querySelector("h1").textContent'
         )
         emailInput.displayed // Without this I have gotten StaleElementReferenceException
@@ -55,5 +56,10 @@ class LoginPage extends Page {
 
     void loginDemoUser() {
         login('johndoe@example.com', 'secret')
+    }
+
+    @Override
+    void to(Map params, UrlFragment fragment, Object[] args) {
+        super.to(withLangParam(params), fragment, args)
     }
 }

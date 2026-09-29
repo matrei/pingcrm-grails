@@ -31,23 +31,23 @@ const login = () => {
 </script>
 
 <template>
-  <inertia-head title="Login" />
+  <inertia-head :title="$t('ui.login.title')" />
   <div class="p-6 bg-indigo-800 min-h-screen flex justify-center items-center">
     <div class="w-full max-w-md">
       <logo class="block mx-auto w-full max-w-xs fill-white" height="50" />
       <form class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden" @submit.prevent="login">
         <div class="px-10 py-12">
-          <h1 class="text-center font-bold text-3xl">Welcome Back!</h1>
+          <h1 class="text-center font-bold text-3xl">{{ $t('ui.login.welcome') }}</h1>
           <div class="mx-auto mt-6 w-24 border-b-2" />
-          <text-input v-model="form.username" :error="form.errors.username" class="mt-10" label="Email" type="email" autofocus autocapitalize="off" />
-          <text-input v-model="form.password" :error="form.errors.password" class="mt-6" label="Password" type="password" />
+          <text-input v-model="form.username" :error="form.errors.username" class="mt-10" :label="$t('ui.field.email')" type="email" autofocus autocapitalize="off" />
+          <text-input v-model="form.password" :error="form.errors.password" class="mt-6" :label="$t('ui.field.password')" type="password" />
           <label class="mt-6 select-none flex items-center" for="remember">
             <input id="remember" v-model="form['remember-me']" class="mr-1" type="checkbox" />
-            <span class="text-sm">Remember Me</span>
+            <span class="text-sm">{{ $t('ui.login.rememberMe') }}</span>
           </label>
         </div>
         <div class="px-10 py-4 bg-slate-100 border-t border-slate-100 flex">
-          <loading-button :loading="form.processing" class="ml-auto btn-indigo" type="submit">Login</loading-button>
+          <loading-button :loading="form.processing" class="ml-auto btn-indigo" type="submit">{{ $t('ui.login.submit') }}</loading-button>
         </div>
       </form>
     </div>
