@@ -1,11 +1,11 @@
 import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
-    id 'org.apache.grails.gradle.grails-web'
-    id 'org.apache.grails.gradle.grails-gsp'
-    id 'com.github.node-gradle.node'
-    id 'com.gorylenko.gradle-git-properties'
-    id 'war'
+    id('org.apache.grails.gradle.grails-web')
+    id('org.apache.grails.gradle.grails-gsp')
+    id('com.github.node-gradle.node')
+    id('com.gorylenko.gradle-git-properties')
+    id('war')
 }
 
 group = 'io.github.matrei'
