@@ -1,10 +1,7 @@
 package pingcrm
 
-import io.micronaut.http.HttpMethod
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.http.cookie.Cookie
+import java.net.http.HttpClient
+
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -12,39 +9,33 @@ import spock.lang.Unroll
 
 import grails.testing.mixin.integration.Integration
 
-import static io.micronaut.http.HttpMethod.DELETE
-import static io.micronaut.http.HttpMethod.GET
-import static io.micronaut.http.HttpMethod.PATCH
-import static io.micronaut.http.HttpMethod.POST
-import static io.micronaut.http.HttpMethod.PUT
-
 @Integration
 class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClientSpec {
 
+    private static final String GET = 'GET'
+    private static final String POST = 'POST'
+    private static final String PUT = 'PUT'
+    private static final String DELETE = 'DELETE'
+    private static final String PATCH = 'PATCH'
+
     @Shared
     @AutoCleanup
-    HttpClient httpClient
+    HttpClient noRedirectHttpClient
 
     @Shared
-    Cookie sessionCookie
+    String sessionId
 
     @Shared
-    Cookie csrfCookie
+    String csrfToken
 
     @Unroll
-    void 'HTTP #httpMethod is allowed for #requestPath'(String requestPath, HttpMethod httpMethod, int statusCode) {
+    void 'HTTP #httpMethod is allowed for #requestPath'(String requestPath, String httpMethod, int statusCode) {
 
-        given: 'a request with a valid HTTP method'
-            def request = HttpRequest
-                    .create(httpMethod, requestPath)
-                    .cookie(sessionCookie)
-                    .header('X-XSRF-TOKEN', csrfCookie.value)
-
-        when: 'accessing an url'
-            def response = httpClient.toBlocking().exchange(request)
+        when: 'accessing an url with a valid HTTP method'
+            def response = httpAsLoggedInUser(httpMethod, requestPath)
 
         then: 'the response is as expected'
-            response.status.code == statusCode
+            response.assertStatus(statusCode)
 
         where:
             requestPath                | httpMethod | statusCode
@@ -87,21 +78,13 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     }
 
     @Unroll
-    void 'HTTP #httpMethod is not allowed for #requestPath'(String requestPath, HttpMethod httpMethod) {
+    void 'HTTP #httpMethod is not allowed for #requestPath'(String requestPath, String httpMethod) {
 
-        given: 'a request with a forbidden HTTP method'
-            def request = HttpRequest
-                    .create(httpMethod, requestPath)
-                    .cookie(sessionCookie)
-                    .header('X-XSRF-TOKEN', csrfCookie.value)
-
-        when: 'accessing an url'
-            def response = httpClient.toBlocking().exchange(request)
+        when: 'accessing an url with a forbidden HTTP method'
+            def response = httpAsLoggedInUser(httpMethod, requestPath)
 
         then: 'the response is that the method is not allowed'
-            //!response
-            def ex = thrown(HttpClientResponseException)
-            ex.status.code == 405
+            response.assertStatus(405)
 
         where:
             requestPath                              | httpMethod
@@ -180,18 +163,10 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
 
     void 'HTTP GET is allowed for image controller'() {
 
-        given: 'a GET request to the image controller'
-            def request = HttpRequest
-                    .create(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop')
-                    .cookie(sessionCookie)
-                    .header('X-XSRF-TOKEN', csrfCookie.value)
-
-        when: 'making the request'
-            def response = httpClient.toBlocking().exchange(request)
+        when: 'making a GET request to the image controller'
+            def response = httpAsLoggedInUser(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop')
 
         then: 'the response is 404 (because the image is not found)'
-            !response
-            def ex = thrown(HttpClientResponseException)
-            ex.status.code == 404
+            response.assertStatus(404)
     }
 }

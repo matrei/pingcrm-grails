@@ -1,42 +1,22 @@
 package pingcrm
 
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.client.DefaultHttpClientConfiguration
-import io.micronaut.http.client.HttpClient
-import spock.lang.AutoCleanup
-import spock.lang.Shared
 import spock.lang.Specification
 
 import grails.testing.mixin.integration.Integration
-import grails.testing.spock.OnceBefore
+import org.apache.grails.testing.http.client.HttpClientSupport
 
 @Integration
-class StaticResourcesCachingSpec extends Specification {
-
-    @Shared
-    @AutoCleanup
-    HttpClient httpClient
-
-    @OnceBefore
-    @SuppressWarnings('unused')
-    void init() {
-        def baseUrl = "http://localhost:$serverPort"
-        httpClient = HttpClient.create(
-                baseUrl.toURL(),
-                new DefaultHttpClientConfiguration()
-        )
-    }
+class StaticResourcesCachingSpec extends Specification implements HttpClientSupport {
 
     void 'bundled javascript and css are cached for one year'() {
-        given: 'a request for a bundled resource'
-            def request = HttpRequest.GET("/static/dist/js/$resourceFile")
 
-        when: 'requesting the resource'
-            def response = httpClient.toBlocking().exchange(request)
+        when: 'requesting a bundled resource'
+            def response = http("/static/dist/js/$resourceFile")
 
         then: 'the cache header is correct'
-            response.status.code == 200
-            response.header('Cache-Control') == 'max-age=31536000, public'
+            response.assertHeaders(200,
+                'Cache-Control': 'max-age=31536000, public'
+            )
 
         where:
             resourceFile << [
@@ -47,15 +27,13 @@ class StaticResourcesCachingSpec extends Specification {
 
     void 'favicon is cached for one hour'() {
 
-        given: 'a request for the favicon'
-            def request = HttpRequest.GET('/static/favicon.svg')
-
         when: 'requesting the favicon'
-            def response = httpClient.toBlocking().exchange(request)
+            def response = http('/static/favicon.svg')
 
         then: 'the cache header is correct'
-            response.status.code == 200
-            response.header('Cache-Control') == 'max-age=3600, public'
+            response.assertHeaders(200,
+                'Cache-Control': 'max-age=3600, public'
+            )
     }
 
 }

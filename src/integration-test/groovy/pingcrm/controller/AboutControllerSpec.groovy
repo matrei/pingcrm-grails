@@ -1,9 +1,7 @@
 package pingcrm.controller
 
-import io.micronaut.http.HttpMethod
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.cookie.Cookie
+import java.net.http.HttpClient
+
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -17,26 +15,20 @@ class AboutControllerSpec extends Specification implements LoggedInHttpClientSpe
 
     @Shared
     @AutoCleanup
-    HttpClient httpClient
+    HttpClient noRedirectHttpClient
 
     @Shared
-    Cookie sessionCookie
+    String sessionId
 
     @Shared
-    Cookie csrfCookie
+    String csrfToken
 
     void 'controller returns git information'() {
 
-        given: 'a request with a valid HTTP method'
-            def request = HttpRequest
-                    .create(HttpMethod.GET, '/about')
-                    .cookie(sessionCookie)
-                    .header('X-XSRF-TOKEN', csrfCookie.value)
-
-        when: 'accessing an url'
-            def response = httpClient.toBlocking().exchange(request, String)
+        when: 'accessing the about page'
+            def response = httpAsLoggedInUser('GET', '/about')
 
         then: 'the response contains the git commit information'
-            response.body.get().contains('ebed8d6')
+            response.assertContains('ebed8d6')
     }
 }

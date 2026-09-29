@@ -1,37 +1,38 @@
 package pingcrm
 
-import io.micronaut.http.client.DefaultHttpClientConfiguration
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.client.exceptions.HttpClientResponseException
+import java.net.http.HttpClient
+
+import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
+import org.apache.grails.testing.http.client.HttpClientSupport
 
 @Integration
-class AssetSecuritySpec extends Specification {
+class AssetSecuritySpec extends Specification implements HttpClientSupport {
 
     @Shared
-    HttpClient httpClient
+    @AutoCleanup
+    HttpClient noRedirectHttpClient
 
-    @SuppressWarnings('unused')
     @OnceBefore
+    @SuppressWarnings('unused')
     void init() {
-        def baseUrl = "http://localhost:$serverPort"
         // disable redirects to catch redirect responses (e.g. redirect to login page)
-        def config = new DefaultHttpClientConfiguration()
-        config.followRedirects = false
-        this.httpClient = HttpClient.create(baseUrl.toURL(), config)
+        noRedirectHttpClient = newHttpClientWith {
+            followRedirects(HttpClient.Redirect.NEVER)
+        }
     }
 
     void 'no login is required to access assets'() {
 
         when: 'accessing an asset'
-            def response = httpClient.toBlocking().exchange(assetPath)
+            def response = http(assetPath, noRedirectHttpClient)
 
         then: 'the response is as expected'
-            response.status.code == statusCode
+            response.assertStatus(statusCode)
 
         where:
             assetPath             | statusCode
@@ -41,10 +42,9 @@ class AssetSecuritySpec extends Specification {
     void 'no login is required to access favicon.ico'() {
 
         when: 'accessing (non-existing) favicon.ico'
-            httpClient.toBlocking().exchange('/favicon.ico')
+            def response = http('/favicon.ico', noRedirectHttpClient)
 
         then: 'the response status is 404 Not Found'
-            def ex = thrown(HttpClientResponseException)
-            ex.status.code == 404
+            response.assertStatus(404)
     }
 }

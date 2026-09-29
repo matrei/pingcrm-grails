@@ -99,8 +99,7 @@ dependencies {
     testImplementation 'org.spockframework:spock-core'
     testImplementation 'org.apache.groovy:groovy-test'
 
-    integrationTestImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    integrationTestImplementation "io.micronaut:micronaut-jackson-databind:$micronautVersion"
+    integrationTestImplementation 'org.apache.grails:grails-testing-support-http-client'
     integrationTestImplementation 'org.seleniumhq.selenium:selenium-firefox-driver'
     integrationTestImplementation testFixtures('org.apache.grails:grails-geb')
 
