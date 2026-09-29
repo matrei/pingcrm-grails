@@ -7,12 +7,6 @@ info:
 # Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
 # spring.h2.console.enabled: true
 grails:
-    controllers:
-        upload:
-            # Servlet safety limits; the 512 KiB business limit is configured below.
-            maxFileSize: 104857600
-            maxRequestSize: 104857600
-            fileSizeThreshold: 0
     mime:
         disable:
             accept:
@@ -111,7 +105,7 @@ dataSource:
     # Uncomment the next two lines to log SQL queries (also look in logback.xml)
     #logSql: true
     #formatSql: true
-    properties: # https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
+    #properties: https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
         # autoCommit: true # Default: true
         # connectionTimeout: 30000 # Default: 30000 (30 seconds)
         # idleTimeout: 600000 # Default: 600000 (10 minutes)
@@ -156,6 +150,7 @@ csrf:
 spring:
     servlet:
         multipart:
+            # Servlet safety limits; the 512 KiB business limit is configured below.
             max-file-size: 100MB
             max-request-size: 100MB
             file-size-threshold: 0

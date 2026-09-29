@@ -37,8 +37,9 @@ dependencies {
     implementation platform("org.apache.grails:grails-bom:${versions['grailsVersion']}")
 
     //implementation buildsrcLibs.springBoot.gradlePlugin
-    implementation 'org.apache.grails:grails-gradle-plugins'
-    runtimeOnly 'org.apache.grails.web:grails-web-url-mappings'
+    // Keep the plugin classpath on the exact same Grails revision as the BOM.
+    implementation "org.apache.grails:grails-gradle-plugins:${versions['grailsVersion']}"
+    runtimeOnly "org.apache.grails.web:grails-web-url-mappings:${versions['grailsVersion']}"
     implementation "com.gorylenko.gradle-git-properties:gradle-git-properties:${versions['gradleGitPropertiesVersion']}"
     implementation "com.github.node-gradle:gradle-node-plugin:${versions['gradleNodeVersion']}"
 

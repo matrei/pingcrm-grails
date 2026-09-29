@@ -23,7 +23,6 @@ grails {
 */
 
 repositories {
-    mavenLocal()
     mavenCentral()
     maven { url = 'https://repo.grails.org/grails/restricted' }
     maven {
@@ -46,6 +45,7 @@ repositories {
             snapshotsOnly()
         }
     }
+    mavenLocal()
 }
 
 dependencies {
@@ -60,12 +60,12 @@ dependencies {
     implementation 'org.apache.grails:grails-gsp'
     implementation 'org.apache.grails:grails-layout'
     implementation 'org.apache.grails:grails-interceptors'
+    implementation 'org.apache.grails:grails-spring-security'
     implementation 'org.apache.grails:grails-views-gson'
     implementation 'org.apache.grails.web:grails-web-common'
     implementation 'org.apache.grails.web:grails-web-databinding'
 
-    // Grails Plugins
-    implementation "org.apache.grails:grails-spring-security:$grailsSpringSecurityVersion"
+    // 3rd party Grails Plugins
     implementation "org.grails.plugins:grails-logical-delete:$grailsLogicalDeleteVersion"
     implementation "io.github.matrei:grails-inertia:$grailsInertiaVersion"
 
@@ -119,6 +119,13 @@ tasks.withType(Test).configureEach {
 
     systemProperty('grails.geb.atCheckWaiting.enabled', true)
     systemProperty('grails.geb.recording.mode', 'RECORD_FAILING')
+
+    // Workaround: GORM's @ManagedEntity transform (grails-data-hibernate7 8.0.0-RC1) initializes
+    // $$_hibernate_instanceId to -1, tripping an `assert instanceId == 0` in Hibernate 7.4
+    // when saving a new entity. Hibernate overwrites the value on association, so it is harmless.
+    // Remove once the transform initializes the field to 0.
+    // See: https://github.com/apache/grails-core/issues/16423
+    jvmArgs('-da:org.hibernate.engine.internal.EntityEntryContext')
 /*
     jvmArgs += [
             '-Xmx2g', '-Xdebug', '-Xnoagent', '-Djava.compiler=NONE',
