@@ -89,10 +89,12 @@ class ContactService extends DomainService<Contact> {
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
+        // Resolved outside the criteria closure, where unknown properties resolve to the criteria (DELEGATE_FIRST)
+        def account = userService.currentUser.account
         new DetachedCriteria(Contact).build {
             join('organization', JoinType.LEFT)
             createAlias('organization', 'org')
-            eq('account', userService.currentUser.account)
+            eq('account', account)
             if (filters.search) {
                 String search = lc(filters.search)
                 or {

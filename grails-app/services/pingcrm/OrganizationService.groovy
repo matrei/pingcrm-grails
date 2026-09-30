@@ -71,8 +71,10 @@ class OrganizationService extends DomainService<Organization> {
 
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
+        // Resolved outside the criteria closure, where unknown properties resolve to the criteria (DELEGATE_FIRST)
+        def account = userService.currentUser.account
         new DetachedCriteria(Organization).build {
-            eq('account', userService.currentUser.account)
+            eq('account', account)
             if (filters.search) {
                 ilike('name', "%${lc(filters.search)}%")
             }
