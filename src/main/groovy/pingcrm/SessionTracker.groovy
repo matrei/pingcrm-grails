@@ -22,6 +22,7 @@ import groovy.transform.CompileStatic
 
 import jakarta.servlet.http.HttpSession
 import jakarta.servlet.http.HttpSessionEvent
+import jakarta.servlet.http.HttpSessionIdListener
 import jakarta.servlet.http.HttpSessionListener
 
 import org.springframework.security.core.context.SecurityContext
@@ -38,7 +39,7 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
  * @since 1.0.0
  */
 @CompileStatic
-class SessionTracker implements HttpSessionListener {
+class SessionTracker implements HttpSessionListener, HttpSessionIdListener {
 
     private static final ConcurrentMap<Serializable, HttpSession> sessions = new ConcurrentHashMap<>()
 
@@ -50,6 +51,16 @@ class SessionTracker implements HttpSessionListener {
     @Override
     void sessionDestroyed(HttpSessionEvent sessionEvent) {
         sessions.remove(sessionEvent.session.id)
+    }
+
+    /**
+     * Keeps track of sessions that get a new id, e.g. when logging in
+     * (Spring Security's default session fixation protection changes the session id).
+     */
+    @Override
+    void sessionIdChanged(HttpSessionEvent sessionEvent, String oldSessionId) {
+        sessions.remove(oldSessionId)
+        sessions.put(sessionEvent.session.id, sessionEvent.session)
     }
 
     static void invalidateSessionsForUserId(Serializable id) {
