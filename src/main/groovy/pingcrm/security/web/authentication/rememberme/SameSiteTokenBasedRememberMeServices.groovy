@@ -47,13 +47,13 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
 
     @Override
     protected void setCookie(String[] tokens, int maxAge, HttpServletRequest request, HttpServletResponse response) {
-        String cookieValue = encodeCookie(tokens)
-        ResponseCookie rememberMeCookie = ResponseCookie
+        def cookieValue = encodeCookie(tokens)
+        def rememberMeCookie = ResponseCookie
             .from(cookieName, cookieValue)
             .maxAge(maxAge)
             .path(getCookiePath(request))
             .domain(cookieDomain)
-            .secure(useSecureCookie ?: request.isSecure())
+            .secure(useSecureCookie ?: request.secure)
             .httpOnly(true)
             .sameSite(sameSite)
             .build()
@@ -63,12 +63,12 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
     @Override
     protected void cancelCookie(HttpServletRequest request, HttpServletResponse response) {
         log.debug('Cancelling cookie')
-        ResponseCookie rememberMeCookie = ResponseCookie
+        def rememberMeCookie = ResponseCookie
             .from(cookieName, null)
             .maxAge(0)
             .path(getCookiePath(request))
             .domain(cookieDomain)
-            .secure(useSecureCookie ?: request.isSecure())
+            .secure(useSecureCookie ?: request.secure)
             .httpOnly(true)
             .sameSite(sameSite)
             .build()
@@ -81,7 +81,7 @@ class SameSiteTokenBasedRememberMeServices extends TokenBasedRememberMeServices 
 
     @Override
     void setCookieDomain(String cookieDomain) {
-        super.setCookieDomain cookieDomain
+        super.setCookieDomain(cookieDomain)
         this.cookieDomain = cookieDomain
     }
 

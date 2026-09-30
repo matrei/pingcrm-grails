@@ -60,7 +60,7 @@ class FileService {
 
     static String uploadFile(MultipartFile uploadedFile, String namePrefix, String storagePath) {
 
-        if (uploadedFile.isEmpty()) return null
+        if (uploadedFile.empty) return null
 
         def storage = getFileStorage(storagePath, true)
         if (!storage) return null
@@ -101,7 +101,7 @@ class FileService {
                 return null
             }
         }
-        storage
+        return storage
     }
 
     static String getSupportedFileExtension(String contentType) {

@@ -42,7 +42,9 @@ class AppUserDetailsService implements GrailsUserDetailsService {
      * one role, so we give a user with no granted roles this one which gets
      * past that restriction but doesn't grant anything.
      */
-    static final List NO_ROLES = [new SimpleGrantedAuthority(SpringSecurityUtils.NO_ROLE)]
+    static final List NO_ROLES = [
+            new SimpleGrantedAuthority(SpringSecurityUtils.NO_ROLE)
+    ]
 
     @Override
     UserDetails loadUserByUsername(String username, boolean loadRoles) throws UsernameNotFoundException {
@@ -56,7 +58,7 @@ class AppUserDetailsService implements GrailsUserDetailsService {
     )
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = User.createCriteria().get {
+        def user = User.createCriteria().get {
             ilike('email', username?.toLowerCase(Locale.ENGLISH))
         } as User
         if (!user || user.deleted) throw new NoStackUsernameNotFoundException()

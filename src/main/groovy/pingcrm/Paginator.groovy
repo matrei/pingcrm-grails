@@ -113,7 +113,7 @@ class Paginator implements Validateable {
         def maxSteps = pgData.int('maxSteps', 10)
         if (!maxItemsPerPage) maxItemsPerPage = pgData.int('max', 10)
 
-        Map linkParams = [:]
+        def linkParams = [:]
         linkParams.putAll(params)
         if (pgData.params instanceof Map) linkParams.putAll((Map)pgData.params)
         linkParams.offset = offset - maxItemsPerPage
@@ -254,7 +254,7 @@ class Paginator implements Validateable {
             ]
         }
 
-        return [
+        [
                 current_page: currentStep,
                 data: data,
                 links: links,

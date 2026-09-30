@@ -44,6 +44,6 @@ class PhotoUploadValidator {
             return false
         }
 
-        true
+        return true
     }
 }

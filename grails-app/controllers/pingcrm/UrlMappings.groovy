@@ -35,37 +35,37 @@ class UrlMappings {
         '/login/denied' (controller: 'login', action: [GET: 'denied'])
         '/login/authfail' (controller: 'login', action: [GET: 'authfail'])
 
-        "/" (controller: 'dashboard', action: [GET: 'index'])
-        "/about" (controller: 'about', action: [GET: 'index'])
-        "/reports" (controller: 'reports', action: [GET: 'index'])
+        '/' (controller: 'dashboard', action: [GET: 'index'])
+        '/about' (controller: 'about', action: [GET: 'index'])
+        '/reports' (controller: 'reports', action: [GET: 'index'])
 
-        "/organizations"             (controller: 'organizations', action: [GET: 'index', POST: 'store'])
-        "/organizations/create"      (controller: 'organizations', action: [GET: 'create'])
+        '/organizations'             (controller: 'organizations', action: [GET: 'index', POST: 'store'])
+        '/organizations/create'      (controller: 'organizations', action: [GET: 'create'])
         "/organizations/$id/edit"    (controller: 'organizations', action: [GET: 'edit']) { constraints(idConstraints) }
         "/organizations/$id"         (controller: 'organizations', action: [PUT: 'update', POST: 'update', DELETE: 'delete']) { constraints(idConstraints) }
         "/organizations/$id/restore" (controller: 'organizations', action: 'restore') { constraints(idConstraints) }
 
-        "/contacts"             (controller: 'contacts', action: [GET: 'index', POST: 'store'])
-        "/contacts/create"      (controller: 'contacts', action: [GET: 'create'])
+        '/contacts'             (controller: 'contacts', action: [GET: 'index', POST: 'store'])
+        '/contacts/create'      (controller: 'contacts', action: [GET: 'create'])
         "/contacts/$id/edit"    (controller: 'contacts', action: [GET: 'edit']) { constraints(idConstraints) }
         "/contacts/$id"         (controller: 'contacts', action: [PUT: 'update', POST: 'update', DELETE: 'delete']) { constraints(idConstraints) }
         "/contacts/$id/restore" (controller: 'contacts', action: 'restore') { constraints(idConstraints) }
 
-        "/users"             (controller: 'users', action: [GET: 'index', POST: 'storeUser'])
-        "/users/create"      (controller: 'users', action: [GET: 'create'])
+        '/users'             (controller: 'users', action: [GET: 'index', POST: 'storeUser'])
+        '/users/create'      (controller: 'users', action: [GET: 'create'])
         "/users/$id/edit"    (controller: 'users', action: [GET: 'edit']) { constraints(idConstraints) }
         "/users/$id"         (controller: 'users', action: [PUT: 'updateUser', POST: 'updateUser', DELETE: 'delete']) { constraints(idConstraints) }
         "/users/$id/restore" (controller: 'users', action: 'restore') { constraints(idConstraints) }
 
         "/img/$path**" (controller: 'images', action: 'thumbnail')
 
-        "/test-500-error" (controller: 'errorTest', action: 'generateInternalServerError')
+        '/test-500-error' (controller: 'errorTest', action: 'generateInternalServerError')
 
-        "/error" (view: '/error')
-        "400" (controller: 'errorHandling', action: 'csrfTokenMismatch')
-        "403" (controller: 'errorHandling', action: 'forbidden')
-        "404" (controller: 'errorHandling', action: 'notFound')
-        "500" (controller: 'errorHandling', action: 'internalServerError')
-        "503" (controller: 'errorHandling', action: 'serviceUnavailable')
+        '/error' (view: '/error')
+        '400' (controller: 'errorHandling', action: 'csrfTokenMismatch')
+        '403' (controller: 'errorHandling', action: 'forbidden')
+        '404' (controller: 'errorHandling', action: 'notFound')
+        '500' (controller: 'errorHandling', action: 'internalServerError')
+        '503' (controller: 'errorHandling', action: 'serviceUnavailable')
     }
 }

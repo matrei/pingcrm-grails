@@ -57,11 +57,11 @@ class OrganizationService extends DomainService<Organization> {
 
     @Transactional @Override
     Organization create(Object bindingSource) {
-        Organization organization = new Organization()
+        def organization = new Organization()
         organization.setProperties(bindingSource)
         organization.account = userService.currentUser.account
         organization.save()
-        return organization
+        organization
     }
 
     @ReadOnly

@@ -83,7 +83,7 @@ class UserService extends DomainService<User> {
 
     @Transactional
     User createUser(UserCommand userCmd) {
-        User user = new User()
+        def user = new User()
         userCmd.transferValuesTo(user)
         user.account = currentUser.account
 
@@ -109,7 +109,7 @@ class UserService extends DomainService<User> {
             }
         }
 
-        user.save()
+        return user.save()
     }
 
     @Transactional
@@ -138,12 +138,12 @@ class UserService extends DomainService<User> {
             }
         }
 
-        def roleChanged = (user.isOwner() != userCmd.isOwner())
+        def roleChanged = (user.owner != userCmd.owner)
         if (roleChanged) {
             def roleOwner = Role.findByAuthority('ROLE_OWNER')
             def roleUser = Role.findByAuthority('ROLE_USER')
-            def userRole = UserRole.get(user, user.isOwner() ? roleOwner : roleUser)
-            userRole.role = user.isOwner() ? roleUser : roleOwner
+            def userRole = UserRole.get(user, user.owner ? roleOwner : roleUser)
+            userRole.role = user.owner ? roleUser : roleOwner
             userRole.save()
         }
 

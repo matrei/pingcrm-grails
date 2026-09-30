@@ -50,7 +50,7 @@ class UserRole implements Serializable {
 		user(nullable: false)
 		role(nullable: false, validator: { Role r, UserRole ur ->
 			if (ur.user?.id) {
-				if (exists ur.user.id, r.id) {
+				if (exists(ur.user.id, r.id)) {
 					return ['userRole.exists']
 				}
 			}
@@ -102,7 +102,7 @@ class UserRole implements Serializable {
 				user == u && role == r
 			}.deleteAll()
 		}
-		false
+		return false
 	}
 
 	@SuppressWarnings('unused')
@@ -124,12 +124,12 @@ class UserRole implements Serializable {
 		if (other instanceof UserRole) {
 			return other.userId == user?.id && other.roleId == role?.id
 		}
-		false
+		return false
 	}
 
 	@Override
 	int hashCode() {
-		int hashCode = HashCodeHelper.initHash()
+		def hashCode = HashCodeHelper.initHash()
 		if (user) hashCode = HashCodeHelper.updateHash(hashCode, user.id)
 		if (role) hashCode = HashCodeHelper.updateHash(hashCode, role.id)
 		hashCode

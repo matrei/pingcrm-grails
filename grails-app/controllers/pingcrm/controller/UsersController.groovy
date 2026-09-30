@@ -217,8 +217,8 @@ class UsersController extends AppController<User> {
     @Override
     def delete(Long id) {
 
-        if (isCurrentUser id) {
-            if (appService.delete User, id) {
+        if (isCurrentUser(id)) {
+            if (appService.delete(User, id)) {
                 session.invalidate()
                 seeOtherRedirect(controller: 'login')
             } else {
@@ -231,7 +231,7 @@ class UsersController extends AppController<User> {
             return
         }
 
-        if (appService.delete User, id) {
+        if (appService.delete(User, id)) {
             userService.invalidateSessionsForUserId(id)
             flash.success = flashMessage('deleted')
             seeOtherRedirect(

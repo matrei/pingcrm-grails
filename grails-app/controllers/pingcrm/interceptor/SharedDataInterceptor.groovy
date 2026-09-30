@@ -80,6 +80,6 @@ class SharedDataInterceptor {
 
         inertiaSharedData = sharedData
 
-        return true
+        true
     }
 }

@@ -44,7 +44,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
             ScalingQuality scalingQuality = ScalingQuality.AUTOMATIC
     ) {
 
-        long t = System.currentTimeMillis()
+        long startTime = System.currentTimeMillis()
 
         if (src == null) throw new IllegalArgumentException('src cannot be null')
         if (targetWidth < 0) throw new IllegalArgumentException('targetWidth must be >= 0')
@@ -227,11 +227,11 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
             log(
                     0,
                     'Resized Image in %d ms',
-                    System.currentTimeMillis() - t
+                    System.currentTimeMillis() - startTime
             )
         }
 
-        result
+        return result
     }
 
     @Override
@@ -264,6 +264,6 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     }
 
     private static int roundedInt(BigDecimal value) {
-        return value.round().intValue()
+        value.round().intValue()
     }
 }

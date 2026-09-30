@@ -59,12 +59,12 @@ class ContactService extends DomainService<Contact> {
 
     @Transactional @Override
     Contact create(Object bindingSource) {
-        Contact contact = new Contact()
+        def contact = new Contact()
         contact.setProperties(bindingSource)
         contact.account = userService.currentUser.account
         bindContactToOrganization(contact, bindingSource)
         contact.save()
-        return contact
+        contact
     }
 
     @Transactional @Override
@@ -96,7 +96,7 @@ class ContactService extends DomainService<Contact> {
             createAlias('organization', 'org')
             eq('account', account)
             if (filters.search) {
-                String search = lc(filters.search)
+                def search = lc(filters.search)
                 or {
                     ilike('firstName', "%$search%")
                     ilike('lastName', "%$search%")

@@ -69,14 +69,14 @@ abstract class DomainService<D extends LogicalDelete> {
     protected boolean delete(D entity) {
         if (!entity) return false
         entity.delete(flush: true)
-        entity.deleted
+        return entity.deleted
     }
 
     @Transactional @SuppressWarnings('GrMethodMayBeStatic')
     private boolean undelete(D entity) {
         if (!entity) return false
         entity.undelete()
-        !entity.deleted
+        return !entity.deleted
     }
 
     protected static String lc(Object str) {
