@@ -18,6 +18,7 @@ package pingcrm.security
 import groovy.transform.CompileStatic
 
 import jakarta.servlet.DispatcherType
+import jakarta.servlet.http.Cookie
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -26,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.RememberMeServices
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher
@@ -35,7 +37,6 @@ import grails.compiler.beans.GrailsBeans
 import pingcrm.AppUserDetailsService
 import pingcrm.SessionTracker
 import pingcrm.UserPasswordEncoderListener
-import pingcrm.security.web.authentication.rememberme.SameSiteTokenBasedRememberMeServices
 
 /**
  * The Spring Security configuration of the application.
@@ -68,11 +69,12 @@ class SecurityConfig {
         // Keeps track of sessions so all sessions of a deleted user can be invalidated
         bean(SessionTracker)
 
-        // Sets the same-site attribute on the remember-me cookie
         bean('rememberMeServices', RememberMeServices) { AppUserDetailsService appUserDetailsService ->
-            new SameSiteTokenBasedRememberMeServices(rememberMeKey, appUserDetailsService).tap {
+            new TokenBasedRememberMeServices(rememberMeKey, appUserDetailsService).tap {
                 cookieName = rememberMeCookieName
-                sameSite = rememberMeSameSite
+                cookieCustomizer = { Cookie cookie ->
+                    cookie.setAttribute('SameSite', rememberMeSameSite)
+                }
             }
         }
 
