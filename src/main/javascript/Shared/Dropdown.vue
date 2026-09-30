@@ -16,33 +16,44 @@
 
 <script setup>
 
-import Popper from 'popper.js'
+import { autoUpdate, computePosition, flip, shift } from '@floating-ui/dom'
 
 const props = defineProps({
   placement: { type: String, default: 'bottom-end' },
-  boundary: { type: String, default: 'scrollParent' },
   autoClose: { type: Boolean, default: true },
 })
 
 const root = ref(null)
 const dropdown = ref(null)
 let show = ref(false)
-let popper
+let stopAutoUpdate
+
+const updatePosition = () => {
+  computePosition(root.value, dropdown.value, {
+    placement: props.placement,
+    middleware: [flip(), shift()],
+  }).then(({ x, y }) => {
+    Object.assign(dropdown.value.style, { left: `${x}px`, top: `${y}px` })
+  })
+}
+
+const stopPositioning = () => {
+  stopAutoUpdate?.()
+  stopAutoUpdate = null
+}
 
 watch(show, (isVisible) => {
   if (isVisible) {
-    nextTick(function () {
-      popper = new Popper(root.value, dropdown.value, {
-        placement: props.placement,
-        modifiers: {
-          preventOverflow: { boundariesElement: props.boundary },
-        },
-      })
+    nextTick(() => {
+      // Keeps the dropdown positioned while the page is scrolled or resized
+      stopAutoUpdate = autoUpdate(root.value, dropdown.value, updatePosition)
     })
-  } else if (popper) {
-    setTimeout(() => popper.destroy(), 100)
+  } else {
+    stopPositioning()
   }
 })
+
+onUnmounted(stopPositioning)
 
 onMounted(() => {
   document.addEventListener('keydown', e => {
