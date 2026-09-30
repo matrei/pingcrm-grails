@@ -130,6 +130,7 @@ tasks.withType(Test).configureEach {
 
 node {
     download = true
+    version = nodeVersion
 }
 
 tasks.register('viteBuild', NpmTask) {
