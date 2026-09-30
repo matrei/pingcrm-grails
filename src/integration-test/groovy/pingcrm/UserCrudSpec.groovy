@@ -40,7 +40,7 @@ class UserCrudSpec extends ContainerGebSpec {
 
         and: 'getting the id of the new user from the user list'
             def userListPage = at(UserListPage)
-            def userId = userListPage.getIdForUser(email)
+            def userId = userListPage.findUserId(email)
 
         and: 'logging out the demo user'
             go('/logoff')

@@ -62,10 +62,10 @@ class FileService {
 
         if (uploadedFile.empty) return null
 
-        def storage = getFileStorage(storagePath, true)
+        def storage = resolveFileStorage(storagePath, true)
         if (!storage) return null
 
-        def fileExt = getSupportedFileExtension(uploadedFile.contentType)
+        def fileExt = findSupportedFileExtension(uploadedFile.contentType)
         if (!fileExt) {
             log.debug('File with contentType {} not accepted.', uploadedFile.contentType)
             return null
@@ -87,12 +87,12 @@ class FileService {
     }
 
     static boolean deleteFile(String filename, String storagePath) {
-        def storage = getFileStorage(storagePath)
+        def storage = resolveFileStorage(storagePath)
         def f = new File(storage, filename)
         f.delete()
     }
 
-    static File getFileStorage(String storagePath, boolean create = false) {
+    static File resolveFileStorage(String storagePath, boolean create = false) {
         def storage = new File(storagePath)
         if (create && !storage.exists()) {
             log.info('Creating storage dir: {}', storage.absolutePath)
@@ -104,7 +104,7 @@ class FileService {
         return storage
     }
 
-    static String getSupportedFileExtension(String contentType) {
+    static String findSupportedFileExtension(String contentType) {
         String ext = null
         switch (contentType) {
             case 'image/png': ext = '.png'; break

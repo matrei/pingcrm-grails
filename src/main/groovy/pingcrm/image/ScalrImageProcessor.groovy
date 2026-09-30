@@ -50,7 +50,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
         if (targetWidth < 0) throw new IllegalArgumentException('targetWidth must be >= 0')
         if (targetHeight < 0) throw new IllegalArgumentException('targetHeight must be >= 0')
 
-        def scalrScalingMethod = getScalrMethod(scalingQuality)
+        def scalrScalingMethod = toScalrMethod(scalingQuality)
 
         BufferedImage result = null
 
@@ -236,11 +236,11 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
 
     @Override
     BufferedImage rotate(BufferedImage src, Rotation rotation) {
-        def scalrRotation = getScalrRotation(rotation)
+        def scalrRotation = toScalrRotation(rotation)
         scalrRotation ? rotate(src, scalrRotation, null) : src
     }
 
-    static Method getScalrMethod(ScalingQuality scalingQuality) {
+    static Method toScalrMethod(ScalingQuality scalingQuality) {
         def scalrMethod = Method.AUTOMATIC
         switch (scalingQuality) {
             case ScalingQuality.SPEED: scalrMethod = Method.SPEED; break
@@ -252,7 +252,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
         scalrMethod
     }
 
-    static Scalr.Rotation getScalrRotation(Rotation rotation) {
+    static Scalr.Rotation toScalrRotation(Rotation rotation) {
         Scalr.Rotation scalrRotation = null
         switch (rotation) {
             case Scalr.Rotation.CW_90: scalrRotation = Scalr.Rotation.CW_90; break

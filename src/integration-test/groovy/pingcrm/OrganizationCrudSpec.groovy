@@ -70,7 +70,7 @@ class OrganizationCrudSpec extends ContainerGebSpec {
 
         then: 'the user is created and shown on the list page'
             def userListPage = to(UserListPage)
-            userListPage.getIdForUser(newUserEmail) > 1
+            userListPage.findUserId(newUserEmail) > 1
 
         where:
             user                | newUserFirstname | newUserLastname | newUserEmail  | newUserPassword

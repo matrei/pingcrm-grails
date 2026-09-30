@@ -82,7 +82,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     def index(Paginator paginator) {
         def filters = params.subMap(filterNames)
         def list = appService.list(domainClass, paginator, filters)
-        def totalCount = getTotalCount(list, filters)
+        def totalCount = resolveTotalCount(list, filters)
         def publicData = publicDataMapper.map(list as List<PublicData>, indexProperties)
 
         renderInertia(indexComponent, currentModel + [
@@ -155,7 +155,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
         seeOtherRedirect(action: 'edit', id: id)
     }
 
-    private int getTotalCount(List list, Map filters) {
+    private int resolveTotalCount(List list, Map filters) {
         if (list instanceof PagedResultList) {
             return (list as PagedResultList).totalCount
         }

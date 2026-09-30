@@ -42,7 +42,7 @@ trait ImageProcessor {
 
     abstract BufferedImage rotate(BufferedImage src, Rotation rotation)
 
-    Rotation getImageRotation(File file) {
+    Rotation detectImageRotation(File file) {
 
         def rotation = Rotation.NONE
 

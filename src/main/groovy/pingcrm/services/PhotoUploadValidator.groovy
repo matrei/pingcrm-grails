@@ -38,7 +38,7 @@ class PhotoUploadValidator {
             return false
         }
 
-        if (!FileService.getSupportedFileExtension(file.contentType)) {
+        if (!FileService.findSupportedFileExtension(file.contentType)) {
             errors.rejectValue('photo', 'user.photo.invalid.type', [file.contentType] as Object[],
                     'Invalid file type.')
             return false

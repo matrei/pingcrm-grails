@@ -43,7 +43,7 @@ class ImageService {
 
     BufferedImage resizeImage(File file, Map options) throws IOException {
 
-        def rotation = imageProcessor.getImageRotation(file)
+        def rotation = imageProcessor.detectImageRotation(file)
         def scalingQuality = ImageProcessor.ScalingQuality.get(options.quality)
         def resizingMode = ImageProcessor.ResizingMode.get(options.fit)
 

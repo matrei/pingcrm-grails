@@ -36,7 +36,7 @@ class AppService {
     ContactService contactService
     OrganizationService organizationService
 
-    private <D extends LogicalDelete<D>> DomainService<D> getDomainService(Class domainClass) {
+    private <D extends LogicalDelete<D>> DomainService<D> resolveDomainService(Class domainClass) {
         switch(domainClass) {
             case User: return userService as DomainService<D>; break
             case Contact: return contactService as DomainService<D>; break
@@ -46,31 +46,31 @@ class AppService {
     }
 
     public <D extends LogicalDelete<?> & PublicData> List<D> list(Class<D> domainClass, Paginator paginator, Map filters) {
-        getDomainService(domainClass).list(paginator, filters) as List<D>
+        resolveDomainService(domainClass).list(paginator, filters) as List<D>
     }
 
     public <D> int count(Class<D> domainClass, Map filters) {
-        getDomainService(domainClass).count(filters)
+        resolveDomainService(domainClass).count(filters)
     }
 
     public <D> D create(Class<D> domainClass, Object bindingSource) {
-        getDomainService(domainClass).create(bindingSource) as D
+        resolveDomainService(domainClass).create(bindingSource) as D
     }
 
     public <D> boolean delete(Class<D> domainClass, Serializable id) {
-        getDomainService(domainClass).delete(id)
+        resolveDomainService(domainClass).delete(id)
     }
 
     public <D> boolean restore(Class<D> domainClass, Serializable id) {
-        getDomainService(domainClass).restore(id)
+        resolveDomainService(domainClass).restore(id)
     }
 
     public <D> D find(Class<D> domainClass, Serializable id) {
-        getDomainService(domainClass).get(id, true) as D
+        resolveDomainService(domainClass).get(id, true) as D
     }
 
     public <D> D bindAndSave(Class<D> domainClass, GormEntity entity, Object bindingSource) {
-        getDomainService(domainClass).bindAndSave(entity, bindingSource) as D
+        resolveDomainService(domainClass).bindAndSave(entity, bindingSource) as D
     }
 
     List<Contact> findAllContactsInOrganization(Organization organization) {

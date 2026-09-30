@@ -33,7 +33,7 @@ class UserListPage extends BasePage {
     }
 
     @SuppressWarnings('GrMethodMayBeStatic')
-    Long getIdForUser(String email) {
+    Long findUserId(String email) {
         def href = userLinks.filter(text: email).attr('href')
         def matcher = href =~ /\/(\d+)\//
         def id = -1
