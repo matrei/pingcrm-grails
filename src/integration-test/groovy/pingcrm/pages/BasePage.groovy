@@ -23,6 +23,14 @@ abstract class BasePage extends Page implements LocalizedPage {
                     .text()
         }
 
+        userMenu {
+            $('button[type=button].mt-1', 0)
+        }
+
+        logoutBtn(wait: true) {
+            $('button', text: 'Logout')
+        }
+
         menuItem { String href ->
             $("a[href='$href'].flex.items-center.group.py-3")
         }
@@ -47,5 +55,13 @@ abstract class BasePage extends Page implements LocalizedPage {
     @Override
     void to(Map params, UrlFragment fragment, Object[] args) {
         super.to(withLangParam(params), fragment, args)
+    }
+
+    /**
+     * Logs out with the logout button in the user menu (an Inertia DELETE request).
+     */
+    void logout() {
+        userMenu.click()
+        logoutBtn.click()
     }
 }

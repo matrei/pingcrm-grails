@@ -19,14 +19,20 @@ import groovy.transform.CompileStatic
 
 import jakarta.servlet.DispatcherType
 import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.DefaultRedirectStrategy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.RememberMeServices
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.security.web.savedrequest.RequestCache
@@ -85,6 +91,11 @@ class SecurityConfig {
         }
 
         bean('securityFilterChain', SecurityFilterChain) { HttpSecurity http, AppUserDetailsService appUserDetailsService, RememberMeServices rememberMeServices, RequestCache requestCache ->
+            // Redirect with 303 See Other, so the browser always follows the redirect with a GET request.
+            // With a 302, a browser keeps the method of e.g. an Inertia DELETE request (as when logging off).
+            def seeOtherRedirectStrategy = new DefaultRedirectStrategy().tap {
+                statusCode = HttpStatus.SEE_OTHER
+            }
             http
                 .userDetailsService(appUserDetailsService)
                 .authorizeHttpRequests {
@@ -118,13 +129,18 @@ class SecurityConfig {
                     it
                         // Log off with any HTTP method (the UI uses DELETE)
                         .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher('/logoff'))
-                        .logoutSuccessUrl('/')
+                        .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler().tap {
+                            defaultTargetUrl = '/'
+                            redirectStrategy = seeOtherRedirectStrategy
+                        })
                 }
                 .exceptionHandling {
                     it
                         // Redirect to the login page for all requests,
                         // also Inertia requests (which look like XMLHttpRequests)
-                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_URL))
+                        .authenticationEntryPoint({ HttpServletRequest request, HttpServletResponse response, AuthenticationException exception ->
+                            seeOtherRedirectStrategy.sendRedirect(request, response, LOGIN_URL)
+                        } as AuthenticationEntryPoint)
                         .accessDeniedPage('/login/denied')
                 }
                 .requestCache {

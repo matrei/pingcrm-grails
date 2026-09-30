@@ -42,6 +42,20 @@ class LoginSpec extends ContainerGebSpec {
             at(DashboardPage)
     }
 
+    void 'the demo user can log out'() {
+
+        given: 'a logged-in demo user'
+            def loginPage = to(LoginPage)
+            loginPage.loginDemoUser()
+            def dashboardPage = at(DashboardPage)
+
+        when: 'logging out with the logout button in the user menu'
+            dashboardPage.logout()
+
+        then: 'the login page is shown'
+            at(LoginPage)
+    }
+
     void 'users can log in'() {
 
         given: 'a logged-in demo user'

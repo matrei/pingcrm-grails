@@ -7,6 +7,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 import grails.testing.mixin.integration.Integration
+import org.apache.grails.testing.http.client.TestHttpResponse
 
 @Integration
 class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
@@ -29,12 +30,12 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
         when: 'logging off'
             def response = httpAsLoggedInUser(httpMethod, '/logoff')
 
-        then: 'the user is redirected to the start page'
-            response.statusCode() == 302
-            response.headerValue('Location') == "$httpBaseUrl/"
+        then: 'the user is redirected to the start page with 303 See Other, so the browser follows with a GET request'
+            response.statusCode() == 303
+            redirectPath(response) == '/'
 
         and: 'the session is no longer logged in'
-            httpAsLoggedInUser('GET', '/').headerValue('Location') == "$httpBaseUrl/login"
+            redirectPath(httpAsLoggedInUser('GET', '/')) == '/login'
 
         where:
             httpMethod << ['GET', 'POST', 'DELETE']
@@ -46,8 +47,8 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             def response = http(headers, '/contacts', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
-            response.statusCode() == 302
-            response.headerValue('Location') == "$httpBaseUrl/login"
+            response.statusCode() == 303
+            redirectPath(response) == '/login'
 
         where:
             description | headers
@@ -81,7 +82,11 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             def response = http('/hello', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
-            response.statusCode() == 302
-            response.headerValue('Location') == "$httpBaseUrl/login"
+            response.statusCode() == 303
+            redirectPath(response) == '/login'
+    }
+
+    private static String redirectPath(TestHttpResponse response) {
+        URI.create(response.headerValue('Location')).path
     }
 }
