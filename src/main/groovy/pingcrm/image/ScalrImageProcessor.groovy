@@ -255,9 +255,9 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
     static Scalr.Rotation toScalrRotation(Rotation rotation) {
         Scalr.Rotation scalrRotation = null
         switch (rotation) {
-            case Scalr.Rotation.CW_90: scalrRotation = Scalr.Rotation.CW_90; break
-            case Scalr.Rotation.CW_180: scalrRotation = Scalr.Rotation.CW_180; break
-            case Scalr.Rotation.CW_270: scalrRotation = Scalr.Rotation.CW_270; break
+            case Rotation.CW_90: scalrRotation = Scalr.Rotation.CW_90; break
+            case Rotation.CW_180: scalrRotation = Scalr.Rotation.CW_180; break
+            case Rotation.CW_270: scalrRotation = Scalr.Rotation.CW_270; break
             default: break
         }
         scalrRotation
