@@ -18,9 +18,9 @@ package pingcrm
 import groovy.transform.CompileStatic
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.password.PasswordEncoder
 
 import grails.events.annotation.gorm.Listener
-import grails.plugin.springsecurity.SpringSecurityService
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.mapping.engine.event.PreInsertEvent
 import org.grails.datastore.mapping.engine.event.PreUpdateEvent
@@ -35,7 +35,7 @@ import org.grails.datastore.mapping.engine.event.PreUpdateEvent
 class UserPasswordEncoderListener {
 
     @Autowired
-    SpringSecurityService springSecurityService
+    PasswordEncoder passwordEncoder
 
     @Listener(User)
     @SuppressWarnings('unused')
@@ -59,6 +59,6 @@ class UserPasswordEncoderListener {
     }
 
     private String encodePassword(String password) {
-        springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+        passwordEncoder ? passwordEncoder.encode(password) : password
     }
 }

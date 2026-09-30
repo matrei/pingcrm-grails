@@ -19,17 +19,16 @@ import groovy.transform.CompileStatic
 
 import org.springframework.security.core.GrantedAuthority
 
-import grails.plugin.springsecurity.userdetails.GrailsUser
-
 /**
- * A custom user details class that adds a full name property.
+ * A custom user details class that adds the user id and full name.
  *
  * @author Mattias Reichel
  * @since 1.0.0
  */
 @CompileStatic
-class AppUserDetails extends GrailsUser {
+class AppUserDetails extends org.springframework.security.core.userdetails.User {
 
+    final Serializable id
     final String fullName
 
     AppUserDetails(
@@ -40,11 +39,12 @@ class AppUserDetails extends GrailsUser {
         boolean credentialsNonExpired,
         boolean accountNonLocked,
         Collection<GrantedAuthority> authorities,
-        Object id,
+        Serializable id,
         String fullName
     )
     {
-        super(email, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, id)
+        super(email, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities)
+        this.id = id
         this.fullName = fullName
     }
 }

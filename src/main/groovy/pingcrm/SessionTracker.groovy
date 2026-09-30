@@ -27,8 +27,6 @@ import jakarta.servlet.http.HttpSessionListener
 
 import org.springframework.security.core.context.SecurityContext
 
-import grails.plugin.springsecurity.userdetails.GrailsUser
-
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY
 
 /**
@@ -66,7 +64,7 @@ class SessionTracker implements HttpSessionListener, HttpSessionIdListener {
     static void invalidateSessionsForUserId(Serializable id) {
         sessions.each { Serializable sessionId, HttpSession session ->
             def sc = session.getAttribute(SPRING_SECURITY_CONTEXT_KEY) as SecurityContext
-            def user = sc?.authentication?.principal as GrailsUser
+            def user = sc?.authentication?.principal as AppUserDetails
             if (!user || user.id == id) {
                 session.invalidate()
             }

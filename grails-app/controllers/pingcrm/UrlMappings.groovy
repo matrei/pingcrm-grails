@@ -31,7 +31,7 @@ class UrlMappings {
 
         "/$controller/$action?/$id?" { constraints(idConstraints) }
 
-        '/login' (controller: 'login', action: [GET: 'index', POST: 'auth'])
+        '/login' (controller: 'login', action: [GET: 'index'])
         '/login/denied' (controller: 'login', action: [GET: 'denied'])
         '/login/authfail' (controller: 'login', action: [GET: 'authfail'])
 

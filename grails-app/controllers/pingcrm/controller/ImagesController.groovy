@@ -24,7 +24,6 @@ import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 
 import grails.compiler.GrailsCompileStatic
-import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.Validateable
 
 import pingcrm.image.ImageProcessor
@@ -41,7 +40,6 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
  * @since 1.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class ImagesController {
 
     private final FileService fileService

@@ -4,7 +4,7 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
         repoUrl: 'https://github.com/matrei/pingcrm-grails'
-# Uncomment for enabling h2 database console (also look at grails.plugin.springsecurity below)
+# Uncomment for enabling h2 database console (also look at the permitted URLs in pingcrm.security.SecurityConfig)
 # spring.h2.console.enabled: true
 grails:
     mime:
@@ -55,39 +55,6 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
-    plugin:
-        springsecurity:
-            auth.loginFormUrl: /login
-            authority.className: pingcrm.auth.Role
-            userLookup:
-                userDomainClassName: pingcrm.User
-                authorityJoinClassName: pingcrm.auth.UserRole
-            rememberMe:
-                cookieName: pingcrm-remember-me
-                key: this-should-be-unique-per-application
-                sameSite: Lax
-            controllerAnnotations.staticRules:
-                - pattern: '/'
-                  access: ['permitAll']
-                - pattern: '/error'
-                  access: ['permitAll']
-                - pattern: '/**/favicon.ico'
-                  access: ['permitAll']
-                - pattern: '/static/**'
-                  access: ['permitAll']
-                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
-                # - pattern: '/h2-console/**'
-                #   access: ['permitAll']
-            filterChain.chainMap:
-                - pattern: '/**/favicon.ico'
-                  filters: 'none'
-                - pattern: '/static/**'
-                  filters: 'none'
-                # Uncomment to enable access to h2 database console (also look at spring.h2.console.enabled above)
-                # - pattern: '/h2-console/**'
-                #   filters: 'none'
-                - pattern: '/**'
-                  filters: 'JOINED_FILTERS'
 hibernate:
     cache:
         queries: false
@@ -159,6 +126,11 @@ spring:
             whitelabel:
                 enabled: false
 pingcrm:
+    security:
+        rememberMe:
+            cookieName: pingcrm-remember-me
+            key: this-should-be-unique-per-application
+            sameSite: Lax
     i18n:
         # The languages the UI is translated into (grails-app/i18n/messages*.properties), the first one is the default
         locales:

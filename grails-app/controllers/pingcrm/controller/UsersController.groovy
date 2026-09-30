@@ -19,8 +19,6 @@ import groovy.transform.CompileStatic
 
 import jakarta.inject.Inject
 
-import grails.plugin.springsecurity.annotation.Secured
-
 import pingcrm.AppService
 import pingcrm.Paginator
 import pingcrm.PublicData
@@ -37,7 +35,6 @@ import pingcrm.services.PhotoUploadValidator
  * @since 1.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class UsersController extends AppController<User> {
 
     private final UserService userService

@@ -20,22 +20,20 @@ import groovy.transform.CompileStatic
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 import grails.gorm.transactions.Transactional
-import grails.plugin.springsecurity.SpringSecurityUtils
-import grails.plugin.springsecurity.userdetails.GrailsUserDetailsService
-import grails.plugin.springsecurity.userdetails.NoStackUsernameNotFoundException
 
 /**
- * A custom implementation of {@link GrailsUserDetailsService} that loads user
+ * A custom implementation of {@link UserDetailsService} that loads user
  * details from the database.
  *
  * @author Mattias Reichel
  * @since 1.0.0
  */
 @CompileStatic
-class AppUserDetailsService implements GrailsUserDetailsService {
+class AppUserDetailsService implements UserDetailsService {
 
     /**
      * Some Spring Security classes (e.g. RoleHierarchyVoter) expect at least
@@ -43,13 +41,8 @@ class AppUserDetailsService implements GrailsUserDetailsService {
      * past that restriction but doesn't grant anything.
      */
     static final List NO_ROLES = [
-            new SimpleGrantedAuthority(SpringSecurityUtils.NO_ROLE)
+            new SimpleGrantedAuthority('ROLE_NO_ROLES')
     ]
-
-    @Override
-    UserDetails loadUserByUsername(String username, boolean loadRoles) throws UsernameNotFoundException {
-        loadUserByUsername(username)
-    }
 
     @Override
     @Transactional(
@@ -61,7 +54,7 @@ class AppUserDetailsService implements GrailsUserDetailsService {
         def user = User.createCriteria().get {
             ilike('email', username?.toLowerCase(Locale.ENGLISH))
         } as User
-        if (!user || user.deleted) throw new NoStackUsernameNotFoundException()
+        if (!user || user.deleted) throw new UsernameNotFoundException('User not found')
 
         def roles = user.roles
 

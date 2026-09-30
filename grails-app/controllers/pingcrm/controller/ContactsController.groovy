@@ -19,8 +19,6 @@ import groovy.transform.CompileStatic
 
 import jakarta.inject.Inject
 
-import grails.plugin.springsecurity.annotation.Secured
-
 import pingcrm.AppService
 import pingcrm.Contact
 import pingcrm.PublicData
@@ -33,7 +31,6 @@ import pingcrm.PublicDataMapper
  * @since 1.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class ContactsController extends AppController<Contact> {
 
     final List<String> indexProperties = ['id', 'name', 'organization.name', 'phone', 'city', 'deleted']

@@ -17,8 +17,6 @@ package pingcrm.controller
 
 import groovy.transform.CompileStatic
 
-import grails.plugin.springsecurity.annotation.Secured
-
 /**
  * A controller that renders the reports page.
  *
@@ -26,7 +24,6 @@ import grails.plugin.springsecurity.annotation.Secured
  * @since 1.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class ReportsController {
 
     static final Map allowedMethods = [index: 'GET']

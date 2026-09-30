@@ -7,7 +7,7 @@ import spock.lang.Specification
  */
 class MessageBundlesSpec extends Specification {
 
-    private static final List<String> APPLICATION_MESSAGE_PREFIXES = ['ui.', 'flash.', 'user.']
+    private static final List<String> APPLICATION_MESSAGE_PREFIXES = ['ui.', 'flash.', 'user.', 'login.']
 
     void 'the #locale bundle has a translation for every application message'() {
 

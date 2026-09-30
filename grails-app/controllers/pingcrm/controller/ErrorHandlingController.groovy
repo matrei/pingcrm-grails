@@ -20,7 +20,6 @@ import groovy.transform.CompileStatic
 import org.springframework.web.servlet.ModelAndView
 
 import grails.plugin.inertia.Inertia
-import grails.plugin.springsecurity.annotation.Secured
 import grails.util.Environment
 
 import pingcrm.i18n.LocalizedMessages
@@ -31,7 +30,6 @@ import pingcrm.i18n.LocalizedMessages
  * @since 3.0.0
  */
 @CompileStatic
-@Secured('permitAll')
 class ErrorHandlingController implements LocalizedMessages {
 
     def forbidden() {

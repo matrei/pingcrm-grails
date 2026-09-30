@@ -19,13 +19,13 @@ import groovy.transform.CompileStatic
 
 import org.apache.commons.io.FilenameUtils
 
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.transaction.TransactionDefinition
 import org.springframework.transaction.interceptor.TransactionAspectSupport
 
 import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
-import grails.plugin.springsecurity.SpringSecurityService
 
 import pingcrm.auth.Role
 import pingcrm.auth.UserRole
@@ -41,8 +41,6 @@ import pingcrm.services.FileService
  */
 @CompileStatic
 class UserService extends DomainService<User> {
-
-    SpringSecurityService springSecurityService
 
     @ReadOnly @Override
     List<User> list(Paginator paginator, Map filters) {
@@ -182,7 +180,8 @@ class UserService extends DomainService<User> {
 
     @ReadOnly
     User getCurrentUser() {
-        springSecurityService.currentUser as User
+        def principal = SecurityContextHolder.context.authentication?.principal
+        principal instanceof AppUserDetails ? User.get(principal.id) : null
     }
 
     void invalidateSessionsForUserId(Serializable id) {

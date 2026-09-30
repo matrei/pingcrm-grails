@@ -17,15 +17,12 @@ package pingcrm.controller
 
 import groovy.transform.CompileStatic
 
-import grails.plugin.springsecurity.annotation.Secured
-
 /**
  * A controller for testing error handling.
  * @author Mattias Reichel
  * @since 3.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class ErrorTestController {
 
     def generateInternalServerError() {

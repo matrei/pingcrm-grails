@@ -20,7 +20,6 @@ import groovy.transform.CompileStatic
 import jakarta.inject.Inject
 
 import grails.core.GrailsApplication
-import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.GrailsPluginManager
 import grails.util.Environment
 
@@ -34,7 +33,6 @@ import pingcrm.config.GitInfo
  * @since 1.0.0
  */
 @CompileStatic
-@Secured('IS_AUTHENTICATED_REMEMBERED')
 class AboutController {
 
     static final Map allowedMethods = [index: 'GET']
