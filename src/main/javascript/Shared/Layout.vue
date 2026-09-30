@@ -23,8 +23,7 @@ defineProps({
 </script>
 
 <template>
-  <!-- Note: leading-none is set on body but I had to add it somewhere in a component or else it wouldn't make it into the final CSS -->
-  <div class="leading-none">
+  <div>
     <div class="md:flex md:flex-col">
       <div class="md:h-screen md:flex md:flex-col">
         <div class="md:flex md:shrink-0">

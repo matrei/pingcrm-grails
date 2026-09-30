@@ -16,6 +16,16 @@
 
 @tailwind base;
 
+@layer base {
+  html {
+    @apply h-full bg-slate-100;
+  }
+
+  body {
+    @apply font-sans leading-none text-slate-700 antialiased;
+  }
+}
+
 input, select, textarea, button, div, a {
   &:focus, &:active {
     outline: none;

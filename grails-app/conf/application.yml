@@ -109,6 +109,7 @@ server:
         max-swallow-size: 110MB
         redirect-context-root: false
 inertia:
+    favicon: /static/favicon.svg
     manifest:
         location: 'classpath:public/dist/.vite/manifest.json'
 csrf:
