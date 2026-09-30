@@ -52,6 +52,12 @@ class LoginPage extends Page implements LocalizedPage {
         passwordInput.text = password
         rememberMeInput.value(rememberMe)
         loginBtn.click()
+        // Wait for the login request to finish (the browser leaves the login page or shows an error).
+        // Navigating away before that aborts the request, and the new session cookie from logging in is lost.
+        waitFor {
+            js.exec('return document.querySelector("h1")?.textContent') != expectedHeading ||
+                    js.exec('return document.querySelector("div.form-error") !== null')
+        }
     }
 
     void loginDemoUser() {

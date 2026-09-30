@@ -83,5 +83,11 @@ class UserCreatePage extends Page {
         passwordField.text = password
         if (photo) photoField.file = photo
         submitBtn.click()
+        // Wait for the request to finish (the browser leaves the page or shows an error),
+        // so navigating away right after this does not abort it
+        waitFor {
+            js.exec('return document.querySelector("[type=submit]")?.textContent') != btnText ||
+                    js.exec("return document.querySelector('div.form-error, ${selectors.flashError}') !== null")
+        }
     }
 }
