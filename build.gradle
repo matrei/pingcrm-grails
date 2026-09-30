@@ -139,7 +139,7 @@ tasks.register('viteBuild', NpmTask) {
 
     inputs.dir(layout.projectDirectory.dir('node_modules'))
     inputs.dir(layout.projectDirectory.dir('src/main/javascript'))
-    inputs.files(layout.projectDirectory.files('package.json', 'vite.config.js', 'tailwind.config.js', 'postcss.config.js', 'jsconfig.json'))
+    inputs.files(layout.projectDirectory.files('package.json', 'package-lock.json', 'vite.config.js', 'jsconfig.json'))
 
     outputs.dir(layout.projectDirectory.dir('src/main/resources/public/dist'))
 

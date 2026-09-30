@@ -74,7 +74,7 @@ const reset = () => {
         <span class="hidden md:inline">{{ $t('ui.users.create') }}</span>
       </inertia-link>
     </div>
-    <div class="bg-white rounded-md shadow overflow-x-auto">
+    <div class="bg-white rounded-md shadow-sm overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-left font-bold">

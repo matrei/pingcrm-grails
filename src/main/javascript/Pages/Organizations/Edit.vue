@@ -63,7 +63,7 @@ const restore = () => {
     <trashed-message v-if="organization.deleted" class="mb-6" @restore="restore">
       {{ $t('ui.organizations.trashed') }}
     </trashed-message>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
+    <div class="bg-white rounded-md shadow-sm overflow-hidden max-w-3xl">
       <form @submit.prevent="update">
         <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
           <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.name')" />
@@ -86,7 +86,7 @@ const restore = () => {
       </form>
     </div>
     <h2 class="mt-12 font-bold text-2xl">{{ $t('ui.contacts.title') }}</h2>
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+    <div class="mt-6 bg-white rounded-sm shadow-sm overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-left font-bold">

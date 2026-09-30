@@ -51,7 +51,7 @@ const remove = () => modelValue.value = null
     <div class="form-input p-0" :class="{ error: errors.length }">
       <input ref="file" type="file" :accept="accept" class="hidden" @change="change" />
       <div v-if="!modelValue" class="p-2">
-        <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-sm text-xs font-medium text-white" @click="browse">
+        <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-xs text-xs font-medium text-white" @click="browse">
           {{ $t('ui.file.browse') }}
         </button>
       </div>
@@ -59,7 +59,7 @@ const remove = () => modelValue.value = null
         <div class="flex-1 pr-1">
           {{ modelValue.name }} <span class="text-slate-500 text-xs">({{ filesize(modelValue.size) }})</span>
         </div>
-        <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-sm text-xs font-medium text-white" @click="remove">
+        <button type="button" class="px-4 py-1 bg-slate-500 hover:bg-slate-700 rounded-xs text-xs font-medium text-white" @click="remove">
           {{ $t('ui.file.remove') }}
         </button>
       </div>

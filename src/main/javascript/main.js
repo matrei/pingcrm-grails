@@ -17,7 +17,7 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 
-import '@/Styles/index.pcss'
+import '@/Styles/index.css'
 
 import { i18n } from '@/Use/use-i18n'
 

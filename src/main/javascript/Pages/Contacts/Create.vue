@@ -50,7 +50,7 @@ const store = () => form.post('/contacts')
       <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/contacts">{{ $t('ui.contacts.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span> {{ $t('ui.common.create') }}
     </h1>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
+    <div class="bg-white rounded-md shadow-sm overflow-hidden max-w-3xl">
       <form @submit.prevent="store">
         <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
           <text-input v-model="form.firstName" :error="form.errors.firstName" class="pr-6 pb-8 w-full lg:w-1/2" :label="$t('ui.field.firstName')" />

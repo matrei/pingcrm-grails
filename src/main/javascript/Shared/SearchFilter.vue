@@ -28,8 +28,8 @@ const modelValue = defineModel({ type: String })
 
 <template>
   <div class="flex items-center">
-    <div class="flex w-full bg-white rounded shadow">
-      <dropdown :auto-close="false" class="focus:z-10 px-4 hover:bg-slate-100 border-r focus:border-white rounded-l focus:ring md:px-6" placement="bottom-start">
+    <div class="flex w-full bg-white rounded-sm shadow-sm">
+      <dropdown :auto-close="false" class="focus:z-10 px-4 hover:bg-slate-100 border-r focus:border-white rounded-l focus:ring-3 md:px-6" placement="bottom-start">
         <template #default>
           <div class="flex items-baseline">
             <span class="hidden text-slate-700 md:inline">{{ $t('ui.search.filter') }}</span>
@@ -39,7 +39,7 @@ const modelValue = defineModel({ type: String })
           </div>
         </template>
         <template #dropdown>
-          <div class="mt-2 px-4 py-6 w-screen bg-white rounded shadow-xl" :style="{ maxWidth: `${maxWidth}px` }">
+          <div class="mt-2 px-4 py-6 w-screen bg-white rounded-sm shadow-xl" :style="{ maxWidth: `${maxWidth}px` }">
             <slot />
           </div>
         </template>

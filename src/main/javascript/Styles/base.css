@@ -14,7 +14,30 @@
 * limitations under the License.
 */
 
-@tailwind base;
+/*
+  Keep the defaults of Tailwind CSS v3 that changed in v4:
+  the border color (gray-200 instead of currentcolor), the placeholder color
+  and the pointer cursor on buttons.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-slate-200, currentcolor);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-slate-400);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 @layer base {
   html {
@@ -26,8 +49,10 @@
   }
 }
 
-input, select, textarea, button, div, a {
-  &:focus, &:active {
-    outline: none;
+@layer base {
+  input, select, textarea, button, div, a {
+    &:focus, &:active {
+      outline: none;
+    }
   }
 }
