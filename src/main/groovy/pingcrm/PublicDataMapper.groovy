@@ -15,17 +15,23 @@
 */
 package pingcrm
 
+import java.time.temporal.Temporal
+
 import groovy.transform.CompileStatic
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import dev.nicklasw.squiggly.context.provider.SquigglyFilterHolder
-import dev.nicklasw.squiggly.util.SquigglyUtils
-
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
 /**
  * A mapper for mapping domain objects to public data objects.
+ * <p>
+ * Only the given properties are selected. Nested properties are selected
+ * with dot notation, e.g. {@code organization.name} results in
+ * {@code [organization: [name: 'Acme']]} (or {@code [organization: null]}
+ * when there is no organization).
+ * <p>
+ * A property path must end at a simple value (e.g. a string, number, boolean,
+ * enum or date). Selecting an associated object as a whole is not allowed,
+ * as that could expose all of its properties to the client side.
  *
  * @author Mattias Reichel
  * @since 3.2.2
@@ -34,23 +40,60 @@ import org.springframework.stereotype.Component
 @CompileStatic
 class PublicDataMapper {
 
-    private final ObjectMapper objectMapper
-
-    PublicDataMapper(@Qualifier('publicDataMapper') ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper
-    }
+    private static final List<Class> SIMPLE_TYPES = [CharSequence, Number, Boolean, Character, Enum, Temporal, Date]
 
     List<Map> map(List<PublicData> objectsToMap, List<String> propertiesToShow) {
+        def propertyPaths = toPropertyPaths(propertiesToShow)
         objectsToMap.collect {
-            map(it, propertiesToShow)
+            mapPropertyPaths(it, propertyPaths)
         }
     }
 
     Map map(PublicData objectToMap, List<String> propertiesToShow) {
-        // TODO: Remove squiggly dependency
-        // Using Squiggly here because it can resolve "deep" properties of Object (eg. contact['organization.name'])
-        // Squiggly is setup to use a ThreadLocal to set/get the filter with this object mapper
-        SquigglyFilterHolder.filter = propertiesToShow.join(',')
-        SquigglyUtils.objectify(objectMapper, objectToMap, Map)
+        mapPropertyPaths(objectToMap, toPropertyPaths(propertiesToShow))
+    }
+
+    /**
+     * Splits the properties into paths once, so it is not done for every mapped object.
+     */
+    private static List<List<String>> toPropertyPaths(List<String> properties) {
+        properties.collect {
+            it.tokenize('.')
+        }
+    }
+
+    private static Map mapPropertyPaths(Object source, List<List<String>> propertyPaths) {
+        def publicData = [:]
+        propertyPaths.each {
+            put(publicData, source, it, 0)
+        }
+        publicData
+    }
+
+    private static void put(Map target, Object source, List<String> propertyPath, int index) {
+        def name = propertyPath[index]
+        def value = source[name]
+        if (index == propertyPath.size() - 1) {
+            if (!isSimpleValue(value)) {
+                def path = propertyPath.join('.')
+                throw new IllegalArgumentException(
+                        "Property '$path' of ${source.class.simpleName} is not a simple value. " +
+                        "Select its nested properties instead, e.g. '${path}.id'."
+                )
+            }
+            target[name] = value
+            return
+        }
+        if (value == null) {
+            target[name] = null
+            return
+        }
+        def nested = (target[name] ?: [:]) as Map
+        target[name] = nested
+        put(nested, value, propertyPath, index + 1)
+    }
+
+    private static boolean isSimpleValue(Object value) {
+        value == null || SIMPLE_TYPES.any { it.isInstance(value) }
     }
 }

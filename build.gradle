@@ -74,7 +74,6 @@ dependencies {
     implementation "net.datafaker:datafaker:$datafakerVersion"
     implementation "org.imgscalr:imgscalr-lib:$imgscalrVersion"
     implementation "com.drewnoakes:metadata-extractor:$metadataExtractorVersion"
-    implementation "dev.nicklasw:squiggly-filter-jackson:$squigglyFilterVersion"
 
     runtimeOnly 'org.apache.grails:grails-services'
     runtimeOnly 'org.apache.grails:grails-url-mappings'
