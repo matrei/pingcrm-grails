@@ -12,3 +12,4 @@ docker
 !.idea/codeStyles/
 !.idea/codeStyles/Project.xml
 !.idea/codeStyles/codeStyleConfig.xml
+config-report.adoc
