@@ -90,7 +90,7 @@ class UserEditPage extends Page {
         }
 
         avatarImageFilename(required: false) {
-            def src = avatarImageSrc
+            var src = avatarImageSrc
             src.substring(
                     src.lastIndexOf('/') + 1,
                     src.indexOf('?')

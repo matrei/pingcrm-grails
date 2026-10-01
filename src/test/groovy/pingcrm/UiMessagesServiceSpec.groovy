@@ -17,7 +17,7 @@ class UiMessagesServiceSpec extends Specification {
     void 'only UI messages are provided'() {
 
         when: 'getting the UI messages'
-            def messages = service.messagesFor(Locale.ENGLISH)
+            var messages = service.messagesFor(Locale.ENGLISH)
 
         then: 'all messages are UI messages'
             messages

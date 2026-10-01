@@ -44,13 +44,13 @@ trait ImageProcessor {
 
     Rotation detectImageRotation(File file) {
 
-        def rotation = Rotation.NONE
+        var rotation = Rotation.NONE
 
-        def metadata = ImageMetadataReader.readMetadata(file)
+        var metadata = ImageMetadataReader.readMetadata(file)
         if (metadata.containsDirectoryOfType(ExifIFD0Directory)) {
 
-            def exifIFD0 = metadata.getDirectoriesOfType(ExifIFD0Directory)
-            def orientation = exifIFD0.find {
+            var exifIFD0 = metadata.getDirectoriesOfType(ExifIFD0Directory)
+            var orientation = exifIFD0.find {
                 it.containsTag(ExifIFD0Directory.TAG_ORIENTATION)
             }?.getInt(ExifIFD0Directory.TAG_ORIENTATION)
 

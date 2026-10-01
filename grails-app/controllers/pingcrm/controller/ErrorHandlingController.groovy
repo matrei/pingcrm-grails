@@ -46,7 +46,7 @@ class ErrorHandlingController implements LocalizedMessages {
 
     def csrfTokenMismatch() {
         flash.error = localizedMessage('flash.csrf.expired')
-        def referer = request.getHeader('referer')
+        var referer = request.getHeader('referer')
         if (referer) {
             redirect(uri: referer)
         } else {
@@ -73,7 +73,7 @@ class ErrorHandlingController implements LocalizedMessages {
          * If we're in production mode, we render the error page using Inertia.
          * This will display the error page as a normal page, which is more user-friendly.
          */
-        def desc = description ?: request.getAttribute('jakarta.servlet.error.message')
+        var desc = description ?: request.getAttribute('jakarta.servlet.error.message')
         renderInertia('Error/Index', [status: status, description: desc])
     }
 

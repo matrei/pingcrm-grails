@@ -43,7 +43,7 @@ class PublicDataMapper {
     private static final List<Class> SIMPLE_TYPES = [CharSequence, Number, Boolean, Character, Enum, Temporal, Date]
 
     List<Map> map(List<PublicData> objectsToMap, List<String> propertiesToShow) {
-        def propertyPaths = toPropertyPaths(propertiesToShow)
+        var propertyPaths = toPropertyPaths(propertiesToShow)
         objectsToMap.collect {
             mapPropertyPaths(it, propertyPaths)
         }
@@ -63,7 +63,7 @@ class PublicDataMapper {
     }
 
     private static Map mapPropertyPaths(Object source, List<List<String>> propertyPaths) {
-        def publicData = [:]
+        var publicData = [:]
         propertyPaths.each {
             put(publicData, source, it, 0)
         }
@@ -71,11 +71,11 @@ class PublicDataMapper {
     }
 
     private static void put(Map target, Object source, List<String> propertyPath, int index) {
-        def name = propertyPath[index]
-        def value = source[name]
+        var name = propertyPath[index]
+        var value = source[name]
         if (index == propertyPath.size() - 1) {
             if (!isSimpleValue(value)) {
-                def path = propertyPath.join('.')
+                var path = propertyPath.join('.')
                 throw new IllegalArgumentException(
                         "Property '$path' of ${source.class.simpleName} is not a simple value. " +
                         "Select its nested properties instead, e.g. '${path}.id'."
@@ -88,7 +88,7 @@ class PublicDataMapper {
             target[name] = null
             return
         }
-        def nested = (target[name] ?: [:]) as Map
+        var nested = (target[name] ?: [:]) as Map
         target[name] = nested
         put(nested, value, propertyPath, index + 1)
     }

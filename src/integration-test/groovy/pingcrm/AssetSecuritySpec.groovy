@@ -29,7 +29,7 @@ class AssetSecuritySpec extends Specification implements HttpClientSupport {
     void 'no login is required to access assets'() {
 
         when: 'accessing an asset'
-            def response = http(assetPath, noRedirectHttpClient)
+            var response = http(assetPath, noRedirectHttpClient)
 
         then: 'the response is as expected'
             response.assertStatus(statusCode)
@@ -42,7 +42,7 @@ class AssetSecuritySpec extends Specification implements HttpClientSupport {
     void 'no login is required to access favicon.ico'() {
 
         when: 'accessing (non-existing) favicon.ico'
-            def response = http('/favicon.ico', noRedirectHttpClient)
+            var response = http('/favicon.ico', noRedirectHttpClient)
 
         then: 'the response status is 404 Not Found'
             response.assertStatus(404)

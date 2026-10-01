@@ -65,7 +65,7 @@ class UserRole implements Serializable {
 	}
 
 	static Set<Role> findAllRolesForUser(User u) {
-		def userRoles = createCriteria().list {
+		var userRoles = createCriteria().list {
 			eq('user', u)
 		} as Set<UserRole>
 		userRoles*.role as Set<Role>
@@ -91,7 +91,7 @@ class UserRole implements Serializable {
 	}
 
 	static UserRole create(User user, Role role, boolean flush = false) {
-		def instance = new UserRole(user: user, role: role)
+		var instance = new UserRole(user: user, role: role)
 		instance.save(flush: flush)
 	}
 
@@ -129,7 +129,7 @@ class UserRole implements Serializable {
 
 	@Override
 	int hashCode() {
-		def hashCode = HashCodeHelper.initHash()
+		var hashCode = HashCodeHelper.initHash()
 		if (user) hashCode = HashCodeHelper.updateHash(hashCode, user.id)
 		if (role) hashCode = HashCodeHelper.updateHash(hashCode, role.id)
 		hashCode

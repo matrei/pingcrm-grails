@@ -14,7 +14,7 @@ class SupportedLocaleResolverSpec extends Specification {
     void 'the best supported match of the Accept-Language header is used'() {
 
         given: 'a request with an Accept-Language header'
-            def request = new MockHttpServletRequest()
+            var request = new MockHttpServletRequest()
             if (acceptLanguage) request.addHeader('Accept-Language', acceptLanguage)
 
         expect: 'the expected locale is resolved'
@@ -34,7 +34,7 @@ class SupportedLocaleResolverSpec extends Specification {
     void 'a supported locale set for the session overrides the Accept-Language header'() {
 
         given: 'a request preferring English'
-            def request = new MockHttpServletRequest()
+            var request = new MockHttpServletRequest()
             request.addHeader('Accept-Language', 'en')
 
         when: 'setting a locale for the session'
@@ -53,18 +53,18 @@ class SupportedLocaleResolverSpec extends Specification {
     void 'the lang query parameter is applied when the locale is resolved'() {
 
         given: 'a request with a lang parameter in the query string'
-            def request = new MockHttpServletRequest()
+            var request = new MockHttpServletRequest()
             request.addHeader('Accept-Language', 'en')
             request.queryString = "lang=$lang"
 
         and: 'a following request in the same session without the parameter'
-            def nextRequest = new MockHttpServletRequest()
+            var nextRequest = new MockHttpServletRequest()
             nextRequest.addHeader('Accept-Language', 'en')
 
         when: 'resolving the locale of both requests'
-            def locale = resolver.resolveLocaleContext(request).locale
+            var locale = resolver.resolveLocaleContext(request).locale
             nextRequest.session = request.session
-            def nextLocale = resolver.resolveLocale(nextRequest)
+            var nextLocale = resolver.resolveLocale(nextRequest)
 
         then: 'the locale is resolved accordingly and kept for the session'
             locale == expectedLocale

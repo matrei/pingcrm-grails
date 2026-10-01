@@ -29,7 +29,7 @@ class LocaleResolutionSpec extends Specification implements HttpClientSupport {
     void 'the UI language is the best supported match of the Accept-Language header'() {
 
         when: 'requesting the login page'
-            def response = http(['Accept-Language': acceptLanguage], '/login', noRedirectHttpClient)
+            var response = http(['Accept-Language': acceptLanguage], '/login', noRedirectHttpClient)
 
         then: 'the page is rendered in the expected language'
             response.assertStatus(200)
@@ -48,7 +48,7 @@ class LocaleResolutionSpec extends Specification implements HttpClientSupport {
     void 'the lang parameter sets the UI language for the request and the session'() {
 
         when: 'setting the language with the lang parameter'
-            def response = http(['Accept-Language': 'en'], '/login?lang=sv', noRedirectHttpClient)
+            var response = http(['Accept-Language': 'en'], '/login?lang=sv', noRedirectHttpClient)
 
         then: 'the page is rendered in that language'
             response.assertStatus(200)
@@ -56,7 +56,7 @@ class LocaleResolutionSpec extends Specification implements HttpClientSupport {
             response.assertContains('Välkommen tillbaka!')
 
         when: 'making another request in the same session'
-            def sessionCookie = sessionCookieOf(response)
+            var sessionCookie = sessionCookieOf(response)
             response = http(['Accept-Language': 'en', 'Cookie': sessionCookie], '/login', noRedirectHttpClient)
 
         then: 'the session language is used instead of the Accept-Language header'
@@ -68,7 +68,7 @@ class LocaleResolutionSpec extends Specification implements HttpClientSupport {
     void 'the lang parameter is ignored for unsupported or invalid languages'() {
 
         when: 'requesting a language the application is not translated into'
-            def response = http(['Accept-Language': 'sv'], "/login?lang=$lang", noRedirectHttpClient)
+            var response = http(['Accept-Language': 'sv'], "/login?lang=$lang", noRedirectHttpClient)
 
         then: 'the language from the Accept-Language header is used'
             response.assertStatus(200)
@@ -79,7 +79,7 @@ class LocaleResolutionSpec extends Specification implements HttpClientSupport {
     }
 
     private static String sessionCookieOf(TestHttpResponse response) {
-        def cookie = response.headers().allValues('Set-Cookie')
+        var cookie = response.headers().allValues('Set-Cookie')
                 .collectMany { HttpCookie.parse(it) }
                 .find { it.name == 'JSESSIONID' }
         assert cookie, 'No session cookie in response'

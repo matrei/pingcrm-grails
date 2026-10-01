@@ -18,8 +18,8 @@ class PhotoUploadValidatorSpec extends Specification {
 
     void 'a file at the configured limit is accepted'() {
         given:
-            def file = fileOfSize(MAX_FILE_SIZE, 'image/jpeg')
-            def errors = errors()
+            var file = fileOfSize(MAX_FILE_SIZE, 'image/jpeg')
+            var errors = errors()
 
         expect:
             validator.validate(file, errors)
@@ -28,8 +28,8 @@ class PhotoUploadValidatorSpec extends Specification {
 
     void 'a file over the configured limit is rejected'() {
         given:
-            def file = fileOfSize(MAX_FILE_SIZE + 1, 'image/jpeg')
-            def errors = errors()
+            var file = fileOfSize(MAX_FILE_SIZE + 1, 'image/jpeg')
+            var errors = errors()
 
         expect:
             !validator.validate(file, errors)
@@ -39,8 +39,8 @@ class PhotoUploadValidatorSpec extends Specification {
 
     void 'an unsupported content type is rejected'() {
         given:
-            def file = fileOfSize(1, 'application/pdf')
-            def errors = errors()
+            var file = fileOfSize(1, 'application/pdf')
+            var errors = errors()
 
         expect:
             !validator.validate(file, errors)

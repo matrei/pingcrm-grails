@@ -41,14 +41,14 @@ class ContactService extends DomainService<Contact> {
 
     @ReadOnly @Override
     List<Contact> list(Paginator paginator, Map filters) {
-        def criteria = criteriaWith(filters)
-        def pagination = paginator.queryParamsAnd(sort: [lastName: 'asc', firstName: 'asc'])
+        var criteria = criteriaWith(filters)
+        var pagination = paginator.queryParamsAnd(sort: [lastName: 'asc', firstName: 'asc'])
         (filters.trashed ? Contact.withDeleted { criteria.list(pagination) } : criteria.list(pagination)) as List<Contact>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
-        def criteria = criteriaWith(filters)
+        var criteria = criteriaWith(filters)
         (filters.trashed ? Contact.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
@@ -59,7 +59,7 @@ class ContactService extends DomainService<Contact> {
 
     @Transactional @Override
     Contact create(Object bindingSource) {
-        def contact = new Contact()
+        var contact = new Contact()
         contact.setProperties(bindingSource)
         contact.account = userService.currentUser.account
         bindContactToOrganization(contact, bindingSource)
@@ -77,8 +77,8 @@ class ContactService extends DomainService<Contact> {
     @Transactional
     private void bindContactToOrganization(Contact contact, Object bindingSource) {
         if (bindingSource['organizationId']) {
-            def organizationId = bindingSource['organizationId'] as Serializable
-            def organization = organizationService.get(organizationId, true)
+            var organizationId = bindingSource['organizationId'] as Serializable
+            var organization = organizationService.get(organizationId, true)
             if (organization) contact.organization = organization
         } else {
             if (contact.organization) {
@@ -90,13 +90,13 @@ class ContactService extends DomainService<Contact> {
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
         // Resolved outside the criteria closure, where unknown properties resolve to the criteria (DELEGATE_FIRST)
-        def account = userService.currentUser.account
+        var account = userService.currentUser.account
         new DetachedCriteria(Contact).build {
             join('organization', JoinType.LEFT)
             createAlias('organization', 'org')
             eq('account', account)
             if (filters.search) {
-                def search = lc(filters.search)
+                var search = lc(filters.search)
                 or {
                     ilike('firstName', "%$search%")
                     ilike('lastName', "%$search%")

@@ -28,7 +28,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             init()
 
         when: 'logging off'
-            def response = httpAsLoggedInUser(httpMethod, '/logoff')
+            var response = httpAsLoggedInUser(httpMethod, '/logoff')
 
         then: 'the user is redirected to the start page with 303 See Other, so the browser follows with a GET request'
             response.statusCode() == 303
@@ -44,7 +44,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
     void 'anonymous #description requests to secured pages are redirected to the login page'() {
 
         when: 'requesting a secured page without being logged in'
-            def response = http(headers, '/contacts', noRedirectHttpClient)
+            var response = http(headers, '/contacts', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
             response.statusCode() == 303
@@ -59,7 +59,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
     void 'logging in with invalid credentials redirects to the authentication failure page'() {
 
         when: 'logging in with invalid credentials'
-            def response = httpPost([:], '/login/authenticate', 'username=nobody&password=wrong',
+            var response = httpPost([:], '/login/authenticate', 'username=nobody&password=wrong',
                     'application/x-www-form-urlencoded', noRedirectHttpClient)
 
         then: 'the user is redirected to the authentication failure page'
@@ -79,7 +79,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
     void 'unknown URLs redirect anonymous users to the login page'() {
 
         when: 'requesting an unknown URL without being logged in'
-            def response = http('/hello', noRedirectHttpClient)
+            var response = http('/hello', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
             response.statusCode() == 303

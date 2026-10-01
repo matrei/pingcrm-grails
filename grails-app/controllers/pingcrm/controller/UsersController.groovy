@@ -72,9 +72,9 @@ class UsersController extends AppController<User> {
     @Override
     def index(Paginator ignore) {
 
-        def filters = params.subMap(filterNames)
-        def users = appService.list(User, null, filters)
-        def usersPublicData = publicDataMapper.map(users as List<PublicData>, indexProperties)
+        var filters = params.subMap(filterNames)
+        var users = appService.list(User, null, filters)
+        var usersPublicData = publicDataMapper.map(users as List<PublicData>, indexProperties)
         usersPublicData = usersPublicData.collect { userData ->
             addPhotoUrl(
                     userData,
@@ -99,10 +99,10 @@ class UsersController extends AppController<User> {
     @Override
     def edit(Long id) {
 
-        def user = findOrRedirect(id)
+        var user = findOrRedirect(id)
         if (!user) return null
 
-        def userPublicData = publicDataMapper.map(user, editProperties)
+        var userPublicData = publicDataMapper.map(user, editProperties)
         addPhotoUrl(
                 userPublicData,
                 [w: 60, h: 60, fit: 'crop']
@@ -129,7 +129,7 @@ class UsersController extends AppController<User> {
             return
         }
 
-        def user = userService.createUser(userCmd)
+        var user = userService.createUser(userCmd)
         if (userCmd.hasErrors()) {
             chain(
                     action: 'create',
@@ -176,7 +176,7 @@ class UsersController extends AppController<User> {
             return
         }
 
-        def user = userService.updateUser(userCmd)
+        var user = userService.updateUser(userCmd)
         if (userCmd.hasErrors()) {
             chain(
                     action: 'edit',
@@ -250,7 +250,7 @@ class UsersController extends AppController<User> {
 
     private Map addPhotoUrl(Map user, Map photoParams) {
         if (user.photo) {
-            def photoUrl = grailsLinkGenerator.link(
+            var photoUrl = grailsLinkGenerator.link(
                     controller: 'images',
                     action: 'thumbnail',
                     params: photoParams + [path: user.photo]

@@ -2,7 +2,7 @@ plugins {
     id('groovy-gradle-plugin')
 }
 
-def versions = new Properties()
+var versions = new Properties()
 file('../gradle.properties').withInputStream {
     versions.load(it)
 }

@@ -51,17 +51,17 @@ class AppUserDetailsService implements UserDetailsService {
     )
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        def user = User.createCriteria().get {
+        var user = User.createCriteria().get {
             ilike('email', username?.toLowerCase(Locale.ENGLISH))
         } as User
         if (!user || user.deleted) throw new UsernameNotFoundException('User not found')
 
-        def roles = user.roles
+        var roles = user.roles
 
         // or if you are using role groups:
         // def roles = user.authorities.collect { it.authorities }.flatten().unique()
 
-        def authorities = roles.collect {
+        var authorities = roles.collect {
             new SimpleGrantedAuthority(it.authority)
         }
 

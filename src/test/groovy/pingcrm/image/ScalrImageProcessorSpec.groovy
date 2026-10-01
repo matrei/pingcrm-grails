@@ -30,11 +30,11 @@ class ScalrImageProcessorSpec extends Specification {
     void 'an image is rotated #rotation'() {
 
         given: 'a landscape image with a marked top left pixel'
-            def image = new BufferedImage(20, 10, BufferedImage.TYPE_INT_RGB)
+            var image = new BufferedImage(20, 10, BufferedImage.TYPE_INT_RGB)
             image.setRGB(0, 0, MARKER)
 
         when: 'rotating the image'
-            def rotated = imageProcessor.rotate(image, rotation)
+            var rotated = imageProcessor.rotate(image, rotation)
 
         then: 'the image has the expected dimensions'
             rotated.width == width
@@ -53,7 +53,7 @@ class ScalrImageProcessorSpec extends Specification {
     void 'an image is not rotated when there is no rotation'() {
 
         given: 'an image'
-            def image = new BufferedImage(20, 10, BufferedImage.TYPE_INT_RGB)
+            var image = new BufferedImage(20, 10, BufferedImage.TYPE_INT_RGB)
 
         expect: 'the same image to be returned'
             imageProcessor.rotate(image, Rotation.NONE).is(image)

@@ -18,7 +18,7 @@ class ErrorHandlingSpec extends ContainerGebSpec {
     void 'it renders the #status error page'(page) {
 
         given: 'a logged in demo user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
             at(DashboardPage)
 

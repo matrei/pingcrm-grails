@@ -44,12 +44,12 @@ class BootStrap {
     void seedDatabase() {
 
         // Create user roles
-        def ownerRole = new Role(authority: 'ROLE_OWNER').save(failOnError: true)
-        def userRole = new Role(authority: 'ROLE_USER').save(failOnError: true)
+        var ownerRole = new Role(authority: 'ROLE_OWNER').save(failOnError: true)
+        var userRole = new Role(authority: 'ROLE_USER').save(failOnError: true)
 
         // Create the "owner" account
-        def account = new Account(name: 'Acme Corporation').save(failOnError: true)
-        def owner = new User(
+        var account = new Account(name: 'Acme Corporation').save(failOnError: true)
+        var owner = new User(
                 account: account,
                 firstName: 'John',
                 lastName: 'Doe',
@@ -61,9 +61,9 @@ class BootStrap {
         UserRole.create(owner, ownerRole)
 
         // Create all the user accounts
-        def faker = new Faker(Locale.of('en', 'US'))
+        var faker = new Faker(Locale.of('en', 'US'))
         5.times {
-            def user = new User(
+            var user = new User(
                     account: account,
                     firstName: faker.name().firstName(),
                     lastName: faker.name().lastName(),
@@ -76,9 +76,9 @@ class BootStrap {
         }
 
         // Create all the organisations
-        def organizations = []
+        var organizations = []
         100.times {
-            def organization = new Organization(
+            var organization = new Organization(
                     account: account,
                     name: faker.company().name(),
                     email: faker.internet().safeEmailAddress(),
@@ -93,7 +93,7 @@ class BootStrap {
         }
 
         // Create all the contacts
-        def organizationRandomizer = new Random()
+        var organizationRandomizer = new Random()
         100.times {
             new Contact(
                     account: account,

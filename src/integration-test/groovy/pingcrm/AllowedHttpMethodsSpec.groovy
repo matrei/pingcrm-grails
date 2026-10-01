@@ -32,7 +32,7 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     void 'HTTP #httpMethod is allowed for #requestPath'(String requestPath, String httpMethod, int statusCode) {
 
         when: 'accessing an url with a valid HTTP method'
-            def response = httpAsLoggedInUser(httpMethod, requestPath)
+            var response = httpAsLoggedInUser(httpMethod, requestPath)
 
         then: 'the response is as expected'
             response.assertStatus(statusCode)
@@ -81,7 +81,7 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     void 'HTTP #httpMethod is not allowed for #requestPath'(String requestPath, String httpMethod) {
 
         when: 'accessing an url with a forbidden HTTP method'
-            def response = httpAsLoggedInUser(httpMethod, requestPath)
+            var response = httpAsLoggedInUser(httpMethod, requestPath)
 
         then: 'the response is that the method is not allowed'
             response.assertStatus(405)
@@ -164,7 +164,7 @@ class AllowedHttpMethodsSpec extends Specification implements LoggedInHttpClient
     void 'HTTP GET is allowed for image controller'() {
 
         when: 'making a GET request to the image controller'
-            def response = httpAsLoggedInUser(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop')
+            var response = httpAsLoggedInUser(GET, '/img/user-1-123.jpg?w=60&h=60&fit=crop')
 
         then: 'the response is 404 (because the image is not found)'
             response.assertStatus(404)

@@ -21,12 +21,12 @@ class MainMenuSpec extends ContainerGebSpec {
     void 'being on a page highlights the corresponding menu item'(Class<BasePage> testPageClass) {
 
         given: 'a logged in user'
-        def loginPage = to(LoginPage)
+        var loginPage = to(LoginPage)
         loginPage.loginDemoUser()
         at(DashboardPage)
 
         when: 'going to a page'
-        def page = to(testPageClass)
+        var page = to(testPageClass)
 
         then: 'the corresponding menu item is highlighted'
         waitFor { page.menuItemIsSelected }

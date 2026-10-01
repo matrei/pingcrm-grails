@@ -52,7 +52,7 @@ class SupportedLocaleResolver extends SessionLocaleResolver {
 
     SupportedLocaleResolver(List<Locale> supportedLocales, Locale defaultLocale) {
         this.supportedLocales = supportedLocales
-        def acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver()
+        var acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver()
         acceptHeaderLocaleResolver.supportedLocales = supportedLocales
         acceptHeaderLocaleResolver.defaultLocale = defaultLocale
         defaultLocaleFunction = { HttpServletRequest request -> acceptHeaderLocaleResolver.resolveLocale(request) }
@@ -76,7 +76,7 @@ class SupportedLocaleResolver extends SessionLocaleResolver {
             super.setLocaleContext(request, response, localeContext)
             return
         }
-        def supportedLocale = findSupportedLocale(localeContext.locale)
+        var supportedLocale = findSupportedLocale(localeContext.locale)
         if (supportedLocale) {
             super.setLocaleContext(request, response, new SimpleLocaleContext(supportedLocale))
         }
@@ -99,13 +99,13 @@ class SupportedLocaleResolver extends SessionLocaleResolver {
         if (!request.queryString) {
             return
         }
-        def localeParam = UriComponentsBuilder.fromUriString("?${request.queryString}").build()
+        var localeParam = UriComponentsBuilder.fromUriString("?${request.queryString}").build()
                 .queryParams.getFirst(paramName)
         if (!localeParam) {
             return
         }
         try {
-            def locale = StringUtils.parseLocale(URLDecoder.decode(localeParam, 'UTF-8'))
+            var locale = StringUtils.parseLocale(URLDecoder.decode(localeParam, 'UTF-8'))
             if (locale) {
                 setLocaleContext(request, null, new SimpleLocaleContext(locale))
             }

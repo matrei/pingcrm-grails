@@ -93,7 +93,7 @@ class SecurityConfig {
         bean('securityFilterChain', SecurityFilterChain) { HttpSecurity http, AppUserDetailsService appUserDetailsService, RememberMeServices rememberMeServices, RequestCache requestCache ->
             // Redirect with 303 See Other, so the browser always follows the redirect with a GET request.
             // With a 302, a browser keeps the method of e.g. an Inertia DELETE request (as when logging off).
-            def seeOtherRedirectStrategy = new DefaultRedirectStrategy(statusCode: HttpStatus.SEE_OTHER)
+            var seeOtherRedirectStrategy = new DefaultRedirectStrategy(statusCode: HttpStatus.SEE_OTHER)
             http
                 .userDetailsService(appUserDetailsService)
                 .authorizeHttpRequests {

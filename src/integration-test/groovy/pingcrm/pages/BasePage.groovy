@@ -11,7 +11,7 @@ abstract class BasePage extends Page implements LocalizedPage {
     static at = {
 
         // delegate here is the original page _instance_ (i.e. the subclass)
-        def h1 = delegate.class.heading
+        var h1 = delegate.class.heading
         if (h1 == null) throw new IllegalStateException("No heading defined for page ${delegate.class.name}")
         delegate.expectedHeading == js.exec('return document.querySelector("h1").textContent')
         menuItemIsSelected // Without this I have gotten StaleElementReferenceException

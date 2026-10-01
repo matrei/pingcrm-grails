@@ -63,8 +63,8 @@ class SessionTracker implements HttpSessionListener, HttpSessionIdListener {
 
     static void invalidateSessionsForUserId(Serializable id) {
         sessions.each { Serializable sessionId, HttpSession session ->
-            def sc = session.getAttribute(SPRING_SECURITY_CONTEXT_KEY) as SecurityContext
-            def user = sc?.authentication?.principal as AppUserDetails
+            var sc = session.getAttribute(SPRING_SECURITY_CONTEXT_KEY) as SecurityContext
+            var user = sc?.authentication?.principal as AppUserDetails
             if (!user || user.id == id) {
                 session.invalidate()
             }

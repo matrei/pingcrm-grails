@@ -58,10 +58,10 @@ class ImagesController {
 
         try {
 
-            def image= fileService.createImageThumbnail(cmd.path, [width: cmd.w, height: cmd.h, fit: cmd.fit, quality: cmd.quality])
+            var image= fileService.createImageThumbnail(cmd.path, [width: cmd.w, height: cmd.h, fit: cmd.fit, quality: cmd.quality])
 
-            def contentType = 'image/jpg'
-            def formatName = 'JPG'
+            var contentType = 'image/jpg'
+            var formatName = 'JPG'
 
             if (image.type == BufferedImage.TYPE_INT_ARGB) {
                 contentType = 'image/png'

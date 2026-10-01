@@ -38,7 +38,7 @@ class I18nConfig {
         // Resolve the locale from the Accept-Language header (or ?lang= for the session),
         // but only to the locales the UI is translated into
         bean('localeResolver', SupportedLocaleResolver) { GrailsApplication grailsApplication ->
-            def uiLocales = grailsApplication.config.getProperty('pingcrm.i18n.locales', List, ['en']).collect {
+            var uiLocales = grailsApplication.config.getProperty('pingcrm.i18n.locales', List, ['en']).collect {
                 Locale.forLanguageTag(it as String)
             }
             new SupportedLocaleResolver(uiLocales, uiLocales.first())

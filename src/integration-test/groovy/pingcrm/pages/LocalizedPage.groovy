@@ -15,7 +15,7 @@ trait LocalizedPage {
     String lang
 
     String getExpectedHeading() {
-        def heading = this.class.heading
+        var heading = this.class.heading
         heading instanceof Map ? heading[lang ?: 'en'] : heading
     }
 

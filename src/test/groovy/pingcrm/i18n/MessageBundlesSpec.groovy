@@ -12,8 +12,8 @@ class MessageBundlesSpec extends Specification {
     void 'the #locale bundle has a translation for every application message'() {
 
         given: 'the application messages of the default and the translated bundle'
-            def defaultCodes = applicationMessageCodes('messages.properties')
-            def translatedCodes = applicationMessageCodes("messages_${locale}.properties")
+            var defaultCodes = applicationMessageCodes('messages.properties')
+            var translatedCodes = applicationMessageCodes("messages_${locale}.properties")
 
         expect: 'both bundles contain the same message codes'
             defaultCodes - translatedCodes == [] as Set
@@ -24,7 +24,7 @@ class MessageBundlesSpec extends Specification {
     }
 
     private static Set<String> applicationMessageCodes(String bundleName) {
-        def bundle = new Properties()
+        var bundle = new Properties()
         new File("grails-app/i18n/$bundleName").withInputStream { bundle.load(it) }
         bundle.stringPropertyNames().findAll { code ->
             APPLICATION_MESSAGE_PREFIXES.any { code.startsWith(it) }

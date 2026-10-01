@@ -34,20 +34,20 @@ class OrganizationCrudSpec extends ContainerGebSpec {
 
     @OnceBefore @Transactional
     void createNonOwnerUser() {
-        def nonOwnerRole = Role.findByAuthority('ROLE_USER')
-        def account = Account.get(1)
-        def nonOwnerUser = new User(nonOwnerUserDetails + [account: account]).save(failOnError: true)
+        var nonOwnerRole = Role.findByAuthority('ROLE_USER')
+        var account = Account.get(1)
+        var nonOwnerUser = new User(nonOwnerUserDetails + [account: account]).save(failOnError: true)
         UserRole.create(nonOwnerUser, nonOwnerRole)
     }
 
     void 'both owners and non-owners can view a list of all organizations'() {
         given: 'a logged in user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.login(user.email, user.password)
             at(DashboardPage)
 
         when: 'going to the organizations list page with a max query param of 101'
-            def orgPage = to(OrganizationListPage, max: 101)
+            var orgPage = to(OrganizationListPage, max: 101)
 
         then: 'there are 100 organizations listed'
             waitFor { 100 == orgPage.table.rowCount }
@@ -60,16 +60,16 @@ class OrganizationCrudSpec extends ContainerGebSpec {
     void 'both owners and non-owners can create a new user'() {
 
         given: 'logged in user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.login(user.email, user.password)
             at(DashboardPage)
 
         when: 'creating a new user'
-            def userCreatePage = to(UserCreatePage)
+            var userCreatePage = to(UserCreatePage)
             userCreatePage.createUser(newUserFirstname, newUserLastname, newUserEmail, newUserPassword)
 
         then: 'the user is created and shown on the list page'
-            def userListPage = to(UserListPage)
+            var userListPage = to(UserListPage)
             userListPage.findUserId(newUserEmail) > 1
 
         where:

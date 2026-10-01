@@ -44,15 +44,15 @@ class UserService extends DomainService<User> {
 
     @ReadOnly @Override
     List<User> list(Paginator paginator, Map filters) {
-        def criteria = criteriaWith(filters)
-        def sorting = [sort: [lastName: 'asc', firstName: 'asc']]
-        def queryParams = paginator ? paginator.queryParamsAnd(sorting) : sorting
+        var criteria = criteriaWith(filters)
+        var sorting = [sort: [lastName: 'asc', firstName: 'asc']]
+        var queryParams = paginator ? paginator.queryParamsAnd(sorting) : sorting
         (filters.trashed ? Organization.withDeleted { criteria.list(queryParams) } : criteria.list(queryParams)) as List<User>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
-        def criteria = criteriaWith(filters)
+        var criteria = criteriaWith(filters)
         (filters.trashed ? User.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
@@ -81,7 +81,7 @@ class UserService extends DomainService<User> {
 
     @Transactional
     User createUser(UserCommand userCmd) {
-        def user = new User()
+        var user = new User()
         userCmd.transferValuesTo(user)
         user.account = currentUser.account
 
@@ -112,7 +112,7 @@ class UserService extends DomainService<User> {
 
     @Transactional
     User updateUser(UserCommand userCmd) {
-        def user = get(userCmd.id, true)
+        var user = get(userCmd.id, true)
         if (!user) {
             userCmd.errors.reject(
                     'user.not.found',
@@ -136,11 +136,11 @@ class UserService extends DomainService<User> {
             }
         }
 
-        def roleChanged = (user.owner != userCmd.owner)
+        var roleChanged = (user.owner != userCmd.owner)
         if (roleChanged) {
-            def roleOwner = Role.findByAuthority('ROLE_OWNER')
-            def roleUser = Role.findByAuthority('ROLE_USER')
-            def userRole = UserRole.get(user, user.owner ? roleOwner : roleUser)
+            var roleOwner = Role.findByAuthority('ROLE_OWNER')
+            var roleUser = Role.findByAuthority('ROLE_USER')
+            var userRole = UserRole.get(user, user.owner ? roleOwner : roleUser)
             userRole.role = user.owner ? roleUser : roleOwner
             userRole.save()
         }
@@ -162,7 +162,7 @@ class UserService extends DomainService<User> {
     protected DetachedCriteria criteriaWith(Map filters) {
         new DetachedCriteria(User).build {
             if (filters.search) {
-                def search = lc(filters.search)
+                var search = lc(filters.search)
                 or {
                     ilike('firstName', "%$search%")
                     ilike('lastName', "%$search%")
@@ -180,7 +180,7 @@ class UserService extends DomainService<User> {
 
     @ReadOnly
     User getCurrentUser() {
-        def principal = SecurityContextHolder.context.authentication?.principal
+        var principal = SecurityContextHolder.context.authentication?.principal
         principal instanceof AppUserDetails ? User.get(principal.id) : null
     }
 

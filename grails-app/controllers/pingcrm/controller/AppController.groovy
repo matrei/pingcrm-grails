@@ -80,10 +80,10 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     abstract List getFilterNames()
 
     def index(Paginator paginator) {
-        def filters = params.subMap(filterNames)
-        def list = appService.list(domainClass, paginator, filters)
-        def totalCount = resolveTotalCount(list, filters)
-        def publicData = publicDataMapper.map(list as List<PublicData>, indexProperties)
+        var filters = params.subMap(filterNames)
+        var list = appService.list(domainClass, paginator, filters)
+        var totalCount = resolveTotalCount(list, filters)
+        var publicData = publicDataMapper.map(list as List<PublicData>, indexProperties)
 
         renderInertia(indexComponent, currentModel + [
             (collectionName): paginator.paginate(
@@ -101,7 +101,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def edit(Long id) {
-        def entity = findOrRedirect(id)
+        var entity = findOrRedirect(id)
         if (!entity) return null
 
         renderInertia(editComponent, currentModel + [
@@ -110,7 +110,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def store() {
-        def entity = appService.create(domainClass, request.JSON)
+        var entity = appService.create(domainClass, request.JSON)
         if (!entity) {
             flash.error = flashMessage('createFailed')
             seeOtherRedirect(action: 'create')
@@ -127,7 +127,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def update(Long id) {
-        def entity = findOrRedirect(id)
+        var entity = findOrRedirect(id)
         if (!entity) return
 
         if (!appService.bindAndSave(domainClass, entity, request.JSON)) {
@@ -140,7 +140,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def delete(Long id) {
-        def deleted = appService.delete(domainClass, id)
+        var deleted = appService.delete(domainClass, id)
         if (deleted) flash.success = flashMessage('deleted')
         else flash.error = flashMessage('deleteFailed')
 
@@ -148,7 +148,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     def restore(Long id) {
-        def restored = appService.restore(domainClass, id)
+        var restored = appService.restore(domainClass, id)
         if (restored) flash.success = flashMessage('restored')
         else flash.error = flashMessage('restoreFailed')
 
@@ -163,7 +163,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     protected D findOrRedirect(Serializable id) {
-        def entity = errors.hasErrors() ? null : appService.find(domainClass, id)
+        var entity = errors.hasErrors() ? null : appService.find(domainClass, id)
         if (!entity) {
             flash.error = flashMessage('notFound')
             seeOtherRedirect(action: 'index')
@@ -180,7 +180,7 @@ abstract class AppController<D extends LogicalDelete & PublicData> implements Va
     }
 
     protected final void addToModel(Map model) {
-        def modelMap = currentModel
+        var modelMap = currentModel
         modelMap.putAll(model)
         request.setAttribute(ATTRIBUTE_KEY_MODEL, modelMap)
     }

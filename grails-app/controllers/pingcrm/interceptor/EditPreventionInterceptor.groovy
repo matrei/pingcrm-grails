@@ -43,10 +43,10 @@ class EditPreventionInterceptor implements LocalizedMessages {
     }
 
     boolean before() {
-        def id = params.long('id')
+        var id = params.long('id')
         if (userService.isDemoUser(id)) {
             flash.error = localizedMessage("flash.user.demo.${actionName == 'delete' ? 'deleteNotAllowed' : 'updateNotAllowed'}")
-            def url = grailsLinkGenerator.link(controller: 'users', action: 'edit', id: id)
+            var url = grailsLinkGenerator.link(controller: 'users', action: 'edit', id: id)
             response.status = 303
             response.setHeader('Location', url)
             request.setAttribute(GrailsApplicationAttributes.REDIRECT_ISSUED, url)

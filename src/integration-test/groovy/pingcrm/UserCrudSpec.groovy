@@ -25,8 +25,8 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         and: 'some user information'
-            def email= 'test@test.com'
-            def password = 'secret'
+            var email= 'test@test.com'
+            var password = 'secret'
 
         when: 'creating a user'
             to(UserCreatePage).with {
@@ -39,8 +39,8 @@ class UserCrudSpec extends ContainerGebSpec {
             }
 
         and: 'getting the id of the new user from the user list'
-            def userListPage = at(UserListPage)
-            def userId = userListPage.findUserId(email)
+            var userListPage = at(UserListPage)
+            var userId = userListPage.findUserId(email)
 
         and: 'logging out the demo user'
             go('/logoff')
@@ -52,7 +52,7 @@ class UserCrudSpec extends ContainerGebSpec {
             at(DashboardPage)
 
         and: 'deleting the created and logged in user'
-            def userEditPage = new UserEditPage(userId)
+            var userEditPage = new UserEditPage(userId)
             to(userEditPage)
             withConfirm { userEditPage.deleteBtn.click() }
 
@@ -65,7 +65,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         when: 'going to the edit user page for the demo user'
-            def userEditPage = new UserEditPage(1)
+            var userEditPage = new UserEditPage(1)
             to(userEditPage)
 
         and: 'trying to update the user'
@@ -80,7 +80,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         when: 'going to the edit user page for the demo user'
-            def userEditPage = new UserEditPage(1)
+            var userEditPage = new UserEditPage(1)
             to(userEditPage)
 
         and: 'trying to delete the user'
@@ -95,7 +95,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         when: 'going to the edit user page for a user that is not the demo user'
-            def userEditPage = new UserEditPage(2)
+            var userEditPage = new UserEditPage(2)
             to(userEditPage)
 
         and: 'trying to update the user'
@@ -107,11 +107,11 @@ class UserCrudSpec extends ContainerGebSpec {
 
     void 'it is allowed to delete a user that is not the demo user'() {
         given: 'a logged in demo user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
 
         when: 'going to the edit user page for a user that is not the demo user'
-            def userEditPage = new UserEditPage(2)
+            var userEditPage = new UserEditPage(2)
             to(userEditPage)
 
         and: 'trying to delete the user'
@@ -126,7 +126,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         and: 'is on the create user page'
-            def userCreatePage = new UserCreatePage()
+            var userCreatePage = new UserCreatePage()
             to(userCreatePage)
 
         and: 'submits valid user details'
@@ -139,7 +139,7 @@ class UserCrudSpec extends ContainerGebSpec {
             )
 
         then: 'the user is redirected to the user list page'
-            def userListPage = at(UserListPage)
+            var userListPage = at(UserListPage)
 
         and: 'a success message is shown'
             userListPage.flashSuccess == 'User created.'
@@ -157,7 +157,7 @@ class UserCrudSpec extends ContainerGebSpec {
             ) > 0
 
         cleanup: 'remove the generated avatar image'
-            def generatedImage = "src/main/webapp/users/$userListPage.firstAvatarImageFilename" as File
+            var generatedImage = "src/main/webapp/users/$userListPage.firstAvatarImageFilename" as File
             generatedImage.delete()
     }
 
@@ -166,7 +166,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         and: 'is on the create user page'
-            def userCreatePage = new UserCreatePage()
+            var userCreatePage = new UserCreatePage()
             to(userCreatePage)
 
         and: 'submitting the form with a photo that has a too large file size'
@@ -189,7 +189,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         and: 'is on the edit user page for a user that is not the demo user'
-            def userEditPage = new UserEditPage(2)
+            var userEditPage = new UserEditPage(2)
             to(userEditPage)
 
         and: 'trying to upload an avatar image'
@@ -200,7 +200,7 @@ class UserCrudSpec extends ContainerGebSpec {
             userEditPage.flashSuccess == 'User updated.'
 
         and: 'the avatar image is shown'
-            def avatarImage = userEditPage.avatarImage
+            var avatarImage = userEditPage.avatarImage
             waitFor {
                 js.exec(
                         avatarImage,
@@ -213,7 +213,7 @@ class UserCrudSpec extends ContainerGebSpec {
             ) > 0
 
         cleanup: 'remove the generated avatar image'
-            def generatedImage = "src/main/webapp/users/$userEditPage.avatarImageFilename" as File
+            var generatedImage = "src/main/webapp/users/$userEditPage.avatarImageFilename" as File
             generatedImage.delete()
     }
 
@@ -222,7 +222,7 @@ class UserCrudSpec extends ContainerGebSpec {
             loginDemoUser()
 
         and: 'is on the edit user page for a user that is not the demo user'
-            def userEditPage = new UserEditPage(3)
+            var userEditPage = new UserEditPage(3)
             to(userEditPage)
 
         and: 'trying to upload an image file that is to big'
@@ -236,7 +236,7 @@ class UserCrudSpec extends ContainerGebSpec {
     }
 
     LoginPage loginDemoUser() {
-        def loginPage = to(LoginPage)
+        var loginPage = to(LoginPage)
         loginPage.loginDemoUser()
         loginPage
     }

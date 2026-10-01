@@ -11,7 +11,7 @@ class StaticResourcesCachingSpec extends Specification implements HttpClientSupp
     void 'bundled javascript and css are cached for one year'() {
 
         when: 'requesting a bundled resource'
-            def response = http("/static/dist/js/$resourceFile")
+            var response = http("/static/dist/js/$resourceFile")
 
         then: 'the cache header is correct'
             response.assertHeaders(200,
@@ -28,7 +28,7 @@ class StaticResourcesCachingSpec extends Specification implements HttpClientSupp
     void 'favicon is cached for one hour'() {
 
         when: 'requesting the favicon'
-            def response = http('/static/favicon.svg')
+            var response = http('/static/favicon.svg')
 
         then: 'the cache header is correct'
             response.assertHeaders(200,

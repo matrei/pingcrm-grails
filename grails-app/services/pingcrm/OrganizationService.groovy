@@ -38,14 +38,14 @@ class OrganizationService extends DomainService<Organization> {
 
     @ReadOnly @Override
     List<Organization> list(Paginator paginator, Map filters) {
-        def criteria = criteriaWith(filters)
-        def pagination = paginator.queryParamsAnd(sort: 'name')
+        var criteria = criteriaWith(filters)
+        var pagination = paginator.queryParamsAnd(sort: 'name')
         (filters.trashed ? Organization.withDeleted { criteria.list(pagination) } : criteria.list(pagination)) as List<Organization>
     }
 
     @ReadOnly @Override
     int count(Map filters) {
-        def criteria = criteriaWith(filters)
+        var criteria = criteriaWith(filters)
         (filters.trashed ? Organization.withDeleted { criteria.count() } : criteria.count()) as int
     }
 
@@ -57,7 +57,7 @@ class OrganizationService extends DomainService<Organization> {
 
     @Transactional @Override
     Organization create(Object bindingSource) {
-        def organization = new Organization()
+        var organization = new Organization()
         organization.setProperties(bindingSource)
         organization.account = userService.currentUser.account
         organization.save()
@@ -72,7 +72,7 @@ class OrganizationService extends DomainService<Organization> {
     @Override
     protected DetachedCriteria criteriaWith(Map filters) {
         // Resolved outside the criteria closure, where unknown properties resolve to the criteria (DELEGATE_FIRST)
-        def account = userService.currentUser.account
+        var account = userService.currentUser.account
         new DetachedCriteria(Organization).build {
             eq('account', account)
             if (filters.search) {

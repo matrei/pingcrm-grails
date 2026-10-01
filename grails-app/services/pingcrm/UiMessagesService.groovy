@@ -62,7 +62,7 @@ class UiMessagesService {
     }
 
     private Collection<String> getUiMessageCodes() {
-        def bundle = new Properties()
+        var bundle = new Properties()
         getClass().classLoader.getResourceAsStream(DEFAULT_BUNDLE)?.withCloseable {
             bundle.load(it)
         }

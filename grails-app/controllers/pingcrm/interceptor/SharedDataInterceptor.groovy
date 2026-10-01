@@ -46,9 +46,9 @@ class SharedDataInterceptor {
 
     boolean before() {
 
-        def sharedData = inertiaSharedData
+        var sharedData = inertiaSharedData
 
-        def user = appService.currentUser
+        var user = appService.currentUser
         if (user) {
             sharedData << [
                 auth: [
@@ -71,7 +71,7 @@ class SharedDataInterceptor {
             ]
         ]
 
-        def locale = LocaleContextHolder.locale
+        var locale = LocaleContextHolder.locale
         sharedData << [
             locale: locale.toLanguageTag(),
             // Sent once and then cached by the client (until the locale changes)

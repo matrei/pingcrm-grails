@@ -35,7 +35,7 @@ class LoginSpec extends ContainerGebSpec {
     void 'the demo user can log in'() {
 
         when: 'the demo user tries to log in'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
 
         then: 'the demo demo user is logged-in'
@@ -45,9 +45,9 @@ class LoginSpec extends ContainerGebSpec {
     void 'the demo user can log out'() {
 
         given: 'a logged-in demo user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
-            def dashboardPage = at(DashboardPage)
+            var dashboardPage = at(DashboardPage)
 
         when: 'logging out with the logout button in the user menu'
             dashboardPage.logout()
@@ -59,18 +59,18 @@ class LoginSpec extends ContainerGebSpec {
     void 'users can log in'() {
 
         given: 'a logged-in demo user'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
             at(DashboardPage)
 
         and: 'some user data'
-            def firstname = 'Luke'
-            def lastname = 'Skywalker'
-            def email = 'luke@usetheforce.com'
-            def password = 'secret'
+            var firstname = 'Luke'
+            var lastname = 'Skywalker'
+            var email = 'luke@usetheforce.com'
+            var password = 'secret'
 
         when: 'creating a new user'
-            def userCreatePage = to(UserCreatePage)
+            var userCreatePage = to(UserCreatePage)
             userCreatePage.createUser(firstname, lastname, email, password)
             at(UserListPage)
 
@@ -83,14 +83,14 @@ class LoginSpec extends ContainerGebSpec {
             loginPage.login(email, password)
 
         then: 'the user is logged in'
-            def dashboardPage = to(DashboardPage)
+            var dashboardPage = to(DashboardPage)
             dashboardPage.navbarName == "$firstname $lastname"
     }
 
     void 'trying to log in with invalid credentials fails'() {
 
         when: 'invalid credentials are used at login'
-            def loginPage = to(LoginPage)
+            var loginPage = to(LoginPage)
             loginPage.login('abc@123.se', 'abc123')
 
         then: 'the user is still at the login page'

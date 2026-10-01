@@ -11,14 +11,14 @@ class PaginatorSpec extends Specification {
     void 'pagination output is correct'() {
 
         given: 'a paginator'
-            def paginator = new Paginator(offset: offset)
-            def linkGenerator = Stub(LinkGenerator)
+            var paginator = new Paginator(offset: offset)
+            var linkGenerator = Stub(LinkGenerator)
             linkGenerator.link(_) >> 'a'
             paginator.linkGenerator = linkGenerator
             paginator.messageSource = Mock(MessageSource)
 
         when: 'paginating the items'
-            def result = paginator.paginate([], [:], [
+            var result = paginator.paginate([], [:], [
                 total: total,
                 max: maxItemsPerPage,
                 omitPrev: omitPrev,

@@ -42,8 +42,8 @@ class LoginController implements LocalizedMessages {
 
     def authfail() {
 
-        def errors = [:]
-        def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
+        var errors = [:]
+        var exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
 
         if (exception) {
             switch (exception) {

@@ -96,8 +96,8 @@ class Paginator implements Validateable {
      */
     Map paginate(List data, Map currentRequestParams, Map paginationData = [:]) {
 
-        def pgData = new TypeConvertingMap(paginationData)
-        def params = currentRequestParams instanceof TypeConvertingMap ?
+        var pgData = new TypeConvertingMap(paginationData)
+        var params = currentRequestParams instanceof TypeConvertingMap ?
                 currentRequestParams :
                 new TypeConvertingMap(currentRequestParams)
 
@@ -105,15 +105,15 @@ class Paginator implements Validateable {
             throw new IllegalArgumentException('paginationData is missing required entry [total]')
         }
 
-        def locale = paginationData.locale as Locale ?: Locale.ENGLISH
+        var locale = paginationData.locale as Locale ?: Locale.ENGLISH
 
-        def total = pgData.int('total', 0)
-        def offset = pgData.int('offset', offsetOrDefault)
-        def maxItemsPerPage = params.int('max', maxOrDefault)
-        def maxSteps = pgData.int('maxSteps', 10)
+        var total = pgData.int('total', 0)
+        var offset = pgData.int('offset', offsetOrDefault)
+        var maxItemsPerPage = params.int('max', maxOrDefault)
+        var maxSteps = pgData.int('maxSteps', 10)
         if (!maxItemsPerPage) maxItemsPerPage = pgData.int('max', 10)
 
-        def linkParams = [:]
+        var linkParams = [:]
         linkParams.putAll(params)
         if (pgData.params instanceof Map) linkParams.putAll((Map)pgData.params)
         linkParams.offset = offset - maxItemsPerPage
@@ -122,16 +122,16 @@ class Paginator implements Validateable {
         if (params.order) linkParams.order = params.order
 
         // determine paging variables
-        def stepsEnabled = maxSteps > 0
+        var stepsEnabled = maxSteps > 0
         int currentStep = ((offset / maxItemsPerPage) as int) + 1
         int firstStep = 1
         int lastStep = (total / maxItemsPerPage).setScale(0, RoundingMode.CEILING).intValue()
 
-        def links = []
+        var links = []
 
         // display previous link when not on first step unless omitPrev is true
         if (!pgData.boolean('omitPrev')) {
-            def label = (pgData.prev ?:
+            var label = (pgData.prev ?:
                     messageSource.getMessage(
                             'paginate.prev',
                             null,
@@ -183,7 +183,7 @@ class Paginator implements Validateable {
                 ]
             }
             //show a gap if begin step isn't immediately after first step, and if were not omitting first or prev
-            def gapLabel = (pgData.gap ?:
+            var gapLabel = (pgData.gap ?:
                     messageSource.getMessage(
                             'paginate.gap',
                             null,
@@ -232,7 +232,7 @@ class Paginator implements Validateable {
         // display next link when not on last step unless omit next is true
         if (!pgData.boolean('omitNext')) {
             linkParams.offset = offset + maxItemsPerPage
-            def nextLabel = pgData.next ?
+            var nextLabel = pgData.next ?
                     pgData.next :
                     messageSource.getMessage(
                             'paginate.next',

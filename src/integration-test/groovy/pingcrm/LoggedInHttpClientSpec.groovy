@@ -23,12 +23,12 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
         }
 
         // Get the csrf token
-        def response = http('/login', noRedirectHttpClient)
+        var response = http('/login', noRedirectHttpClient)
         assert response.statusCode() == 200
         csrfToken = cookieValue(response, 'XSRF-TOKEN')
 
         // Login
-        def requestBody = MultipartBody.builder()
+        var requestBody = MultipartBody.builder()
                 .addPart('username', 'johndoe@example.com')
                 .addPart('password', 'secret')
                 .addPart('remember-me', '0')
@@ -47,7 +47,7 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
      * Sends a body-less request as the logged-in user, without following redirects.
      */
     TestHttpResponse httpAsLoggedInUser(String httpMethod, String path) {
-        def request = newHttpRequestWith(path) {
+        var request = newHttpRequestWith(path) {
             method(httpMethod, HttpRequest.BodyPublishers.noBody())
             header('Cookie', "JSESSIONID=$sessionId")
             header('X-XSRF-TOKEN', csrfToken)
@@ -56,7 +56,7 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
     }
 
     private static String cookieValue(TestHttpResponse response, String name) {
-        def cookie = response.headers().allValues('Set-Cookie')
+        var cookie = response.headers().allValues('Set-Cookie')
                 .collectMany { HttpCookie.parse(it) }
                 .find { it.name == name }
         assert cookie, "No '$name' cookie in response"

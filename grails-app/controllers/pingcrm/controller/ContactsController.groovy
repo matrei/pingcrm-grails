@@ -45,19 +45,19 @@ class ContactsController extends AppController<Contact> {
 
     @Override
     def create() {
-        def organizations = appService.currentUser.account.organizations
-        def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
+        var organizations = appService.currentUser.account.organizations
+        var organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
         renderInertia(createComponent, [organizations: organizationsPublicData])
     }
 
     @Override
     def edit(Long id) {
-        def contact = findOrRedirect(id)
+        var contact = findOrRedirect(id)
         if (!contact) return
 
-        def contactPublicData = publicDataMapper.map(contact, editProperties)
-        def organizations = appService.currentUser.account.organizations
-        def organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
+        var contactPublicData = publicDataMapper.map(contact, editProperties)
+        var organizations = appService.currentUser.account.organizations
+        var organizationsPublicData = publicDataMapper.map(organizations as List<PublicData>, organizationProperties)
 
         renderInertia(editComponent, [
             contact: contactPublicData,

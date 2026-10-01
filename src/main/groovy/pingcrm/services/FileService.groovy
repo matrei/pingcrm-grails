@@ -46,10 +46,10 @@ class FileService {
 
     BufferedImage createImageThumbnail(String path, Map options) throws FileNotFoundException, IOException {
 
-        def file = new File(System.getProperty('java.io.tmpdir'), path)
+        var file = new File(System.getProperty('java.io.tmpdir'), path)
         if (!file) throw new FileNotFoundException(path)
 
-        def image
+        var image
         try { image = imageService.resizeImage(file, options) }
         catch (Exception e) {
             log.info('Image handling exception: {}', e.message)
@@ -62,17 +62,17 @@ class FileService {
 
         if (uploadedFile.empty) return null
 
-        def storage = resolveFileStorage(storagePath, true)
+        var storage = resolveFileStorage(storagePath, true)
         if (!storage) return null
 
-        def fileExt = findSupportedFileExtension(uploadedFile.contentType)
+        var fileExt = findSupportedFileExtension(uploadedFile.contentType)
         if (!fileExt) {
             log.debug('File with contentType {} not accepted.', uploadedFile.contentType)
             return null
         }
 
         try {
-            def f = File.createTempFile(namePrefix, fileExt, storage)
+            var f = File.createTempFile(namePrefix, fileExt, storage)
             try {
                 uploadedFile.transferTo(f)
                 return f.name
@@ -87,13 +87,13 @@ class FileService {
     }
 
     static boolean deleteFile(String filename, String storagePath) {
-        def storage = resolveFileStorage(storagePath)
-        def f = new File(storage, filename)
+        var storage = resolveFileStorage(storagePath)
+        var f = new File(storage, filename)
         f.delete()
     }
 
     static File resolveFileStorage(String storagePath, boolean create = false) {
-        def storage = new File(storagePath)
+        var storage = new File(storagePath)
         if (create && !storage.exists()) {
             log.info('Creating storage dir: {}', storage.absolutePath)
             if (!storage.mkdirs()) {

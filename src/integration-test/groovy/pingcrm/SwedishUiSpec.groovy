@@ -19,17 +19,17 @@ class SwedishUiSpec extends ContainerGebSpec {
     void 'the UI can be used in Swedish'() {
 
         when: 'opening the login page in Swedish and logging in'
-            def loginPage = to(new LoginPage(lang: 'sv'))
+            var loginPage = to(new LoginPage(lang: 'sv'))
             loginPage.loginDemoUser()
 
         then: 'the dashboard is in Swedish'
-            def dashboardPage = at(new DashboardPage(lang: 'sv'))
+            var dashboardPage = at(new DashboardPage(lang: 'sv'))
 
         when: 'navigating to the contacts page'
             dashboardPage.menuItem('/contacts').click()
 
         then: 'the contacts page is in Swedish'
-            def contactsPage = at(new ContactsListPage(lang: 'sv'))
+            var contactsPage = at(new ContactsListPage(lang: 'sv'))
             contactsPage.table.columnHeaders == ['Namn', 'Organisation', 'Ort', 'Telefon']
     }
 }

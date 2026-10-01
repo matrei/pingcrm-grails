@@ -26,7 +26,7 @@ class AboutControllerSpec extends Specification implements LoggedInHttpClientSpe
     void 'controller returns git information'() {
 
         when: 'accessing the about page'
-            def response = httpAsLoggedInUser('GET', '/about')
+            var response = httpAsLoggedInUser('GET', '/about')
 
         then: 'the response contains the git commit information'
             response.assertContains('ebed8d6')

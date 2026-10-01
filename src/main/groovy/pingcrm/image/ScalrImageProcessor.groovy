@@ -50,7 +50,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
         if (targetWidth < 0) throw new IllegalArgumentException('targetWidth must be >= 0')
         if (targetHeight < 0) throw new IllegalArgumentException('targetHeight must be >= 0')
 
-        def scalrScalingMethod = toScalrMethod(scalingQuality)
+        var scalrScalingMethod = toScalrMethod(scalingQuality)
 
         BufferedImage result = null
 
@@ -58,7 +58,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
         int currentHeight = src.height
 
         // <= 1 is a square or landscape-oriented image, > 1 is a portrait.
-        def ratio = currentHeight / currentWidth
+        var ratio = currentHeight / currentWidth
 
         if (DEBUG) {
             log(
@@ -129,7 +129,7 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
                 }
 
                 // Calculate resize
-                def cropRatio = (targetWidth / cropWidth).max(targetHeight / cropHeight)
+                var cropRatio = (targetWidth / cropWidth).max(targetHeight / cropHeight)
                 targetWidth  = roundedInt(cropWidth * cropRatio)
                 targetHeight = roundedInt(cropHeight * cropRatio)
 
@@ -236,12 +236,12 @@ class ScalrImageProcessor extends Scalr implements ImageProcessor {
 
     @Override
     BufferedImage rotate(BufferedImage src, Rotation rotation) {
-        def scalrRotation = toScalrRotation(rotation)
+        var scalrRotation = toScalrRotation(rotation)
         scalrRotation ? rotate(src, scalrRotation, null) : src
     }
 
     static Method toScalrMethod(ScalingQuality scalingQuality) {
-        def scalrMethod = Method.AUTOMATIC
+        var scalrMethod = Method.AUTOMATIC
         switch (scalingQuality) {
             case ScalingQuality.SPEED: scalrMethod = Method.SPEED; break
             case ScalingQuality.BALANCED: scalrMethod = Method.BALANCED; break

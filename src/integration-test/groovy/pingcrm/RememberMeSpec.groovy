@@ -31,14 +31,14 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
     void 'logging in with remember me sets an http only, same-site remember-me cookie'() {
 
         when: 'logging in with remember me'
-            def response = loginWithRememberMe()
+            var response = loginWithRememberMe()
 
         then: 'the login is successful'
             response.statusCode() == 302
             response.headerValue('Location') == "$httpBaseUrl/"
 
         and: 'a remember-me cookie with the expected attributes is set'
-            def cookie = setCookieHeader(response, REMEMBER_ME_COOKIE)
+            var cookie = setCookieHeader(response, REMEMBER_ME_COOKIE)
             cookie.contains('HttpOnly')
             cookie.contains('SameSite=Lax')
             cookie.contains('Max-Age=1209600')
@@ -47,10 +47,10 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
     void 'the remember-me cookie logs the user in without a session'() {
 
         given: 'a remember-me cookie from logging in'
-            def rememberMeCookie = cookieOf(loginWithRememberMe(), REMEMBER_ME_COOKIE)
+            var rememberMeCookie = cookieOf(loginWithRememberMe(), REMEMBER_ME_COOKIE)
 
         when: 'requesting a secured page with only the remember-me cookie'
-            def response = http(['Cookie': rememberMeCookie], '/', noRedirectHttpClient)
+            var response = http(['Cookie': rememberMeCookie], '/', noRedirectHttpClient)
 
         then: 'the page is shown'
             response.statusCode() == 200
@@ -59,14 +59,14 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
     void 'logging off removes the remember-me cookie'() {
 
         given: 'a session and a remember-me cookie from logging in'
-            def loginResponse = loginWithRememberMe()
-            def cookies = "${cookieOf(loginResponse, 'JSESSIONID')}; ${cookieOf(loginResponse, REMEMBER_ME_COOKIE)}"
+            var loginResponse = loginWithRememberMe()
+            var cookies = "${cookieOf(loginResponse, 'JSESSIONID')}; ${cookieOf(loginResponse, REMEMBER_ME_COOKIE)}"
 
         when: 'logging off'
-            def response = http(['Cookie': cookies], '/logoff', noRedirectHttpClient)
+            var response = http(['Cookie': cookies], '/logoff', noRedirectHttpClient)
 
         then: 'the remember-me cookie is removed (emptied and expired)'
-            def cookie = HttpCookie.parse(setCookieHeader(response, REMEMBER_ME_COOKIE)).first()
+            var cookie = HttpCookie.parse(setCookieHeader(response, REMEMBER_ME_COOKIE)).first()
             cookie.value == ''
             cookie.hasExpired()
     }
@@ -77,7 +77,7 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
     }
 
     private static String setCookieHeader(TestHttpResponse response, String name) {
-        def header = response.headers().allValues('Set-Cookie').find { it.startsWith("$name=") }
+        var header = response.headers().allValues('Set-Cookie').find { it.startsWith("$name=") }
         assert header, "No '$name' cookie set"
         header
     }
