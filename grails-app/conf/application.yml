@@ -9,6 +9,7 @@ info:
 grails:
     views:
         gsp:
+            # Can be removed if xml becomes the default, see https://github.com/apache/grails-core/issues/16459
             htmlcodec: xml
 hibernate:
     jdbc:
