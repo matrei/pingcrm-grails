@@ -1,3 +1,4 @@
+<%@ page compileStatic="true" model="Object exception; Object message; Object path" %>
 <!doctype html>
 <html>
 <head>

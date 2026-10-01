@@ -1,3 +1,4 @@
+<%@ page compileStatic="true" %>
 <!doctype html>
 <html>
     <head>
