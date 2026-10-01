@@ -1,17 +1,7 @@
-spring:
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-      file-size-threshold: 0
----
-pingcrm:
-  upload:
-    maxFileSize: 524288
----
 inertia:
   ssr:
     enabled: true
+    # Same as the default, but grails-inertia does not apply the default when starting the SSR server
     url: 'http://localhost:13714/render'
 ---
 csrf:
