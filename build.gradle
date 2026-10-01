@@ -142,24 +142,15 @@ tasks.register('viteBuild', NpmTask) {
     inputs.files(layout.projectDirectory.files('package.json', 'package-lock.json', 'vite.config.js', 'jsconfig.json'))
 
     outputs.dir(layout.projectDirectory.dir('src/main/resources/public/dist'))
+    outputs.dir(layout.projectDirectory.dir('src/main/resources/ssr'))
 
     it.args = ['run', 'build']
 
     dependsOn('npmInstall')
 }
 
-tasks.register('copyNodeModulesForSsr', Copy) {
-    group = 'build'
-    description = 'Copy node_modules for SSR'
-
-    from(layout.projectDirectory.dir('node_modules'))
-    into(layout.buildDirectory.dir('resources/main/node_modules'))
-
-    dependsOn('npmInstall')
-}
-
 tasks.named('processResources') {
-    dependsOn('viteBuild', 'copyNodeModulesForSsr')
+    dependsOn('viteBuild')
 }
 
 /*

@@ -29,6 +29,11 @@ export default defineConfig(({ command }) => ({
       })
   ],
 
+  ssr: {
+    // Bundles the dependencies into the SSR bundle so that it runs without node_modules
+    noExternal: true,
+  },
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src/main/javascript', import.meta.url))
