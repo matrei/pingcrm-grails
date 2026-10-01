@@ -12,6 +12,7 @@ import pingcrm.UserService
 import pingcrm.config.AppInfo
 import pingcrm.config.GitInfo
 import pingcrm.config.UploadConfig
+import pingcrm.image.ImageProcessor
 import pingcrm.image.ImageService
 import pingcrm.image.ScalrImageProcessor
 import pingcrm.services.FileService
@@ -19,19 +20,17 @@ import pingcrm.services.PhotoUploadValidator
 
 class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMappings> {
 
-    Closure doWithSpring() {
-        { ->
-            appService(AppService)
-            userService(UserService)
-            appInfo(AppInfo)
-            gitInfo(GitInfo)
-            mapper(PublicDataMapper)
-            imageProcessor(ScalrImageProcessor)
-            imageService(ImageService)
-            fileService(FileService)
-            uploadConfig(UploadConfig)
-            photoUploadValidator(PhotoUploadValidator)
-        }
+    def beans = {
+        bean(AppService)
+        bean(UserService)
+        bean(AppInfo)
+        bean(GitInfo)
+        bean('mapper', PublicDataMapper)
+        bean('imageProcessor', ImageProcessor, ScalrImageProcessor)
+        bean(ImageService) { ImageProcessor imageProcessor -> }
+        bean(FileService) { ImageService imageService -> }
+        bean(UploadConfig)
+        bean(PhotoUploadValidator) { UploadConfig uploadConfig -> }
     }
 
     void setup() {
