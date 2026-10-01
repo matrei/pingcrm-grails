@@ -1,8 +1,6 @@
 inertia:
   ssr:
     enabled: true
-    # Same as the default, but grails-inertia does not apply the default when starting the SSR server
-    url: 'http://localhost:13714/render'
 ---
 csrf:
   cookie:
