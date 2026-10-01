@@ -81,4 +81,4 @@ pingcrm:
             - en
             - sv
     upload:
-        maxFileSize: 524288
+        maxFileSize: 512KB

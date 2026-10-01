@@ -91,7 +91,7 @@ class UsersController extends AppController<User> {
     @Override
     def create() {
         addToModel([
-            maxPhotoSize: uploadConfig.maxFileSize
+            maxPhotoSize: uploadConfig.maxFileSize.toBytes()
         ])
         super.create()
     }
@@ -110,7 +110,7 @@ class UsersController extends AppController<User> {
 
         renderInertia(editComponent, [
             user: userPublicData,
-            maxPhotoSize: uploadConfig.maxFileSize
+            maxPhotoSize: uploadConfig.maxFileSize.toBytes()
         ])
     }
 

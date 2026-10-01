@@ -18,6 +18,7 @@ package pingcrm.config
 import groovy.transform.CompileStatic
 
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.util.unit.DataSize
 
 /**
  * A configuration class for file upload settings.
@@ -29,5 +30,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 @ConfigurationProperties('pingcrm.upload')
 class UploadConfig {
 
-    long maxFileSize
+    DataSize maxFileSize
 }

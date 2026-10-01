@@ -1,6 +1,7 @@
 package pingcrm.services
 
 import org.springframework.mock.web.MockMultipartFile
+import org.springframework.util.unit.DataSize
 import org.springframework.validation.BeanPropertyBindingResult
 import org.springframework.web.multipart.MultipartFile
 
@@ -13,7 +14,7 @@ class PhotoUploadValidatorSpec extends Specification {
     private static final long MAX_FILE_SIZE = 512 * 1024
 
     private final PhotoUploadValidator validator = new PhotoUploadValidator(
-            new UploadConfig(maxFileSize: MAX_FILE_SIZE)
+            new UploadConfig(maxFileSize: DataSize.ofBytes(MAX_FILE_SIZE))
     )
 
     void 'a file at the configured limit is accepted'() {

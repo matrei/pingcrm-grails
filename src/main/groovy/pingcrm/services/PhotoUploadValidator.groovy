@@ -31,9 +31,9 @@ class PhotoUploadValidator {
     boolean validate(MultipartFile file, Errors errors) {
         if (!file) return true
 
-        if (file.size > uploadConfig.maxFileSize) {
+        if (file.size > uploadConfig.maxFileSize.toBytes()) {
             errors.rejectValue('photo', 'user.photo.max.size.exceeded',
-                    [FileUtils.byteCountToDisplaySize(uploadConfig.maxFileSize)] as Object[],
+                    [FileUtils.byteCountToDisplaySize(uploadConfig.maxFileSize.toBytes())] as Object[],
                     'The maximum file size of {0} was exceeded.')
             return false
         }
