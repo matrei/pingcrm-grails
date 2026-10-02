@@ -1,6 +1,7 @@
 package pingcrm
 
 import java.net.http.HttpClient
+import java.net.http.HttpRequest
 
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -63,7 +64,12 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
             var cookies = "${cookieOf(loginResponse, 'JSESSIONID')}; ${cookieOf(loginResponse, REMEMBER_ME_COOKIE)}"
 
         when: 'logging off'
-            var response = http(['Cookie': cookies], '/logoff', noRedirectHttpClient)
+            var csrfToken = csrfToken(cookies)
+            var response = sendHttpRequest(newHttpRequestWith('/logoff') {
+                method('DELETE', HttpRequest.BodyPublishers.noBody())
+                header('Cookie', "$cookies; XSRF-TOKEN=$csrfToken")
+                header('X-XSRF-TOKEN', csrfToken)
+            }, noRedirectHttpClient)
 
         then: 'the remember-me cookie is removed (emptied and expired)'
             var cookie = HttpCookie.parse(setCookieHeader(response, REMEMBER_ME_COOKIE)).first()
@@ -72,8 +78,18 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
     }
 
     private TestHttpResponse loginWithRememberMe() {
-        httpPost([:], '/login/authenticate', 'username=johndoe@example.com&password=secret&remember-me=1',
+        var csrfToken = csrfToken()
+        httpPost(['Cookie': "XSRF-TOKEN=$csrfToken", 'X-XSRF-TOKEN': csrfToken], '/login/authenticate',
+                'username=johndoe@example.com&password=secret&remember-me=1',
                 'application/x-www-form-urlencoded', noRedirectHttpClient)
+    }
+
+    /**
+     * Gets a new CSRF token from the XSRF-TOKEN cookie set on the start page (or the login page).
+     */
+    private String csrfToken(String cookies = null) {
+        var response = http(cookies ? ['Cookie': cookies] : [:], cookies ? '/' : '/login', noRedirectHttpClient)
+        cookieOf(response, 'XSRF-TOKEN').substring('XSRF-TOKEN='.length())
     }
 
     private static String setCookieHeader(TestHttpResponse response, String name) {

@@ -38,7 +38,22 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             redirectPath(httpAsLoggedInUser('GET', '/')) == '/login'
 
         where:
-            httpMethod << ['GET', 'POST', 'DELETE']
+            httpMethod << ['POST', 'DELETE']
+    }
+
+    void 'logging off with HTTP GET is not possible'() {
+
+        given: 'a logged in user'
+            init()
+
+        when: 'trying to log off with GET, which is not protected against CSRF'
+            var response = httpAsLoggedInUser('GET', '/logoff')
+
+        then: 'the request is forbidden'
+            response.statusCode() == 403
+
+        and: 'the session is still logged in'
+            httpAsLoggedInUser('GET', '/').statusCode() == 200
     }
 
     void 'anonymous #description requests to secured pages are redirected to the login page'() {
@@ -59,7 +74,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
     void 'logging in with invalid credentials redirects to the authentication failure page'() {
 
         when: 'logging in with invalid credentials'
-            var response = httpPost([:], '/login/authenticate', 'username=nobody&password=wrong',
+            var response = httpPost(csrfHeaders(newCsrfToken()), '/login/authenticate', 'username=nobody&password=wrong',
                     'application/x-www-form-urlencoded', noRedirectHttpClient)
 
         then: 'the user is redirected to the authentication failure page'

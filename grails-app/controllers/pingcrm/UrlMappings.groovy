@@ -62,7 +62,6 @@ class UrlMappings {
         '/test-500-error' (controller: 'errorTest', action: 'generateInternalServerError')
 
         '/error' (view: '/error')
-        '/page-expired' (controller: 'errorHandling', action: 'pageExpired')
         '403' (controller: 'errorHandling', action: 'forbidden')
         '404' (controller: 'errorHandling', action: 'notFound')
         '500' (controller: 'errorHandling', action: 'internalServerError')

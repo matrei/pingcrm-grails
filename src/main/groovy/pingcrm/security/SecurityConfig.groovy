@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -34,9 +35,11 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.RememberMeServices
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices
+import org.springframework.security.web.csrf.CsrfFilter
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher
+import org.springframework.security.web.util.matcher.OrRequestMatcher
 
 import grails.compiler.beans.GrailsBeans
 
@@ -74,9 +77,6 @@ class SecurityConfig {
 
         // Keeps track of sessions so all sessions of a deleted user can be invalidated
         bean(SessionTracker)
-
-        // Replaces the grails-csrf plugin's default handler, which only responds with 403 Forbidden
-        bean(PageExpiredCsrfFailureHandler)
 
         bean('rememberMeServices', RememberMeServices) { AppUserDetailsService appUserDetailsService ->
             new TokenBasedRememberMeServices(rememberMeKey, appUserDetailsService).tap {
@@ -128,8 +128,11 @@ class SecurityConfig {
                 }
                 .logout {
                     it
-                        // Log off with any HTTP method (the UI uses DELETE)
-                        .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher('/logoff'))
+                        // Log off with POST or DELETE (the UI uses DELETE), which are protected against CSRF
+                        .logoutRequestMatcher(new OrRequestMatcher(
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, '/logoff'),
+                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.DELETE, '/logoff')
+                        ))
                         .logoutSuccessHandler(
                                 new SimpleUrlLogoutSuccessHandler(
                                         defaultTargetUrl: '/',
@@ -149,10 +152,11 @@ class SecurityConfig {
                 .requestCache {
                     it.requestCache(requestCache)
                 }
-                // CSRF protection is handled by the grails-csrf plugin
+                // Sets an XSRF-TOKEN cookie, and accepts its value in the X-XSRF-TOKEN header (sent by Inertia)
                 .csrf {
-                    it.disable()
+                    it.spa()
                 }
+                .addFilterAfter(new CsrfCookieFilter(), CsrfFilter)
                 .build()
         }
     }

@@ -23,9 +23,7 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
         }
 
         // Get the csrf token
-        var response = http('/login', noRedirectHttpClient)
-        assert response.statusCode() == 200
-        csrfToken = cookieValue(response, 'XSRF-TOKEN')
+        csrfToken = newCsrfToken()
 
         // Login
         var requestBody = MultipartBody.builder()
@@ -33,12 +31,12 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
                 .addPart('password', 'secret')
                 .addPart('remember-me', '0')
                 .build()
-        response = httpPostMultipart(['X-XSRF-TOKEN': csrfToken], '/login/authenticate', requestBody, noRedirectHttpClient)
+        var response = httpPostMultipart(csrfHeaders(csrfToken), '/login/authenticate', requestBody, noRedirectHttpClient)
         assert response.statusCode() == 302
         assert response.headerValue('Location') == "$httpBaseUrl/"
         sessionId = cookieValue(response, 'JSESSIONID')
 
-        // Get the csrf token again
+        // Get the csrf token again, as logging in replaces it
         response = http(['Cookie': "JSESSIONID=$sessionId"], '/', noRedirectHttpClient)
         csrfToken = cookieValue(response, 'XSRF-TOKEN')
     }
@@ -49,13 +47,29 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
     TestHttpResponse httpAsLoggedInUser(String httpMethod, String path) {
         var request = newHttpRequestWith(path) {
             method(httpMethod, HttpRequest.BodyPublishers.noBody())
-            header('Cookie', "JSESSIONID=$sessionId")
+            header('Cookie', "JSESSIONID=$sessionId; XSRF-TOKEN=$csrfToken")
             header('X-XSRF-TOKEN', csrfToken)
         }
         sendHttpRequest(request, noRedirectHttpClient)
     }
 
-    private static String cookieValue(TestHttpResponse response, String name) {
+    /**
+     * Gets a new CSRF token from the XSRF-TOKEN cookie set on the login page.
+     */
+    String newCsrfToken() {
+        var response = http('/login', noRedirectHttpClient)
+        assert response.statusCode() == 200
+        cookieValue(response, 'XSRF-TOKEN')
+    }
+
+    /**
+     * The headers that send a CSRF token, both in the XSRF-TOKEN cookie and in the X-XSRF-TOKEN header.
+     */
+    static Map<String, String> csrfHeaders(String csrfToken, String cookies = null) {
+        ['Cookie': cookies ? "$cookies; XSRF-TOKEN=$csrfToken" : "XSRF-TOKEN=$csrfToken", 'X-XSRF-TOKEN': csrfToken]
+    }
+
+    static String cookieValue(TestHttpResponse response, String name) {
         var cookie = response.headers().allValues('Set-Cookie')
                 .collectMany { HttpCookie.parse(it) }
                 .find { it.name == name }

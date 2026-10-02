@@ -1,7 +1,3 @@
 inertia:
   ssr:
     enabled: true
----
-csrf:
-  cookie:
-    secure: false

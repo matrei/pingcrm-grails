@@ -11,8 +11,7 @@ import pingcrm.pages.LoginPage
 class SwedishUiSpec extends ContainerGebSpec {
 
     void cleanup() {
-        // Do not leak the session language into other specs
-        go('/logoff')
+        // Do not leak the session (and its language) into other specs
         browser.clearCookies()
     }
 

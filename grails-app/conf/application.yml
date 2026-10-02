@@ -60,10 +60,6 @@ server:
         redirect-context-root: false
 inertia:
     favicon: /static/favicon.svg
-csrf:
-    cookie:
-        # Inertia reads the XSRF-TOKEN cookie and sends it back in the X-XSRF-TOKEN header
-        enabled: true
 spring:
     servlet:
         multipart:

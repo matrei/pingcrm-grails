@@ -15,7 +15,7 @@ class LoginSpec extends ContainerGebSpec {
     void 'accessing the application without logging in is not allowed'() {
 
         given: 'the user is not logged in'
-            go('/logoff')
+            browser.clearCookies()
 
         when: 'trying to access the dashboard page without logging in'
             via(securedPage)
@@ -72,10 +72,10 @@ class LoginSpec extends ContainerGebSpec {
         when: 'creating a new user'
             var userCreatePage = to(UserCreatePage)
             userCreatePage.createUser(firstname, lastname, email, password)
-            at(UserListPage)
+            var userListPage = at(UserListPage)
 
         and: 'logging off'
-            go('/logoff')
+            userListPage.logout()
             at(LoginPage)
 
         and: 'trying to log in with the credentials of the new user'

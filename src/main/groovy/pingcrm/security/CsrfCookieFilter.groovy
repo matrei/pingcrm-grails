@@ -17,31 +17,28 @@ package pingcrm.security
 
 import groovy.transform.CompileStatic
 
+import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 
-import io.github.matrei.grailsplugin.csrf.CsrfFailureHandler
-import io.github.matrei.grailsplugin.csrf.CsrfFailureReason
+import org.springframework.security.web.csrf.CsrfToken
+import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * Tells the user that the page has expired when a request fails CSRF protection
- * because the session has no token, typically because the session has expired.
- * Other failures are rejected with {@code 403 Forbidden}.
+ * Loads the CSRF token on every request, so that Spring Security sets the XSRF-TOKEN cookie,
+ * which Inertia sends back in the X-XSRF-TOKEN header.
+ * Spring Security otherwise only loads the token, and sets the cookie, when something uses it.
  *
  * @author Mattias Reichel
  * @since 5.0.0
  */
 @CompileStatic
-class PageExpiredCsrfFailureHandler implements CsrfFailureHandler {
-
-    static final String PAGE_EXPIRED_URI = '/page-expired'
+class CsrfCookieFilter extends OncePerRequestFilter {
 
     @Override
-    void handle(HttpServletRequest request, HttpServletResponse response, CsrfFailureReason reason) {
-        if (reason == CsrfFailureReason.MISSING_STORED_TOKEN) {
-            request.getRequestDispatcher(PAGE_EXPIRED_URI).forward(request, response)
-        } else {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, reason.message)
-        }
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+        var csrfToken = request.getAttribute(CsrfToken.name) as CsrfToken
+        csrfToken?.token
+        chain.doFilter(request, response)
     }
 }

@@ -67,7 +67,6 @@ dependencies {
 
     // 3rd party Grails Plugins
     implementation "org.grails.plugins:grails-logical-delete:$grailsLogicalDeleteVersion"
-    implementation "io.github.matrei:grails-csrf:$grailsCsrfVersion"
     implementation "io.github.matrei:grails-inertia:$grailsInertiaVersion"
     //implementation project(':grails-inertia')
 

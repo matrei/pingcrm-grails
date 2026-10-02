@@ -43,7 +43,7 @@ class UserCrudSpec extends ContainerGebSpec {
             var userId = userListPage.findUserId(email)
 
         and: 'logging out the demo user'
-            go('/logoff')
+            userListPage.logout()
 
         and: 'logging in the created user'
             to(LoginPage).with {
