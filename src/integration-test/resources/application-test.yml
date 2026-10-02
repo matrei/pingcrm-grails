@@ -4,5 +4,4 @@ inertia:
 ---
 csrf:
   cookie:
-    domain: 'host.testcontainers.internal'
     secure: false
