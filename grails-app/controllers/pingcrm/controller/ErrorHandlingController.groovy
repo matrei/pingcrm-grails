@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView
 import grails.plugin.inertia.Inertia
 import grails.util.Environment
 
+import org.grails.web.util.GrailsApplicationAttributes
+
 import pingcrm.i18n.LocalizedMessages
 
 /**
@@ -44,14 +46,16 @@ class ErrorHandlingController implements LocalizedMessages {
         respondWith(500)
     }
 
-    def csrfTokenMismatch() {
+    /**
+     * Forwarded to by {@link pingcrm.security.PageExpiredCsrfFailureHandler}.
+     */
+    def pageExpired() {
         flash.error = localizedMessage('flash.csrf.expired')
-        var referer = request.getHeader('referer')
-        if (referer) {
-            redirect(uri: referer)
-        } else {
-            redirect(uri: '/login')
-        }
+        // Redirect with 303 See Other, so the browser follows the redirect with a GET request
+        var url = request.getHeader('referer') ?: '/login'
+        response.status = 303
+        response.setHeader('Location', url)
+        request.setAttribute(GrailsApplicationAttributes.REDIRECT_ISSUED, url)
     }
 
     def serviceUnavailable() {

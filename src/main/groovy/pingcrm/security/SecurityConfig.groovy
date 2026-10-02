@@ -75,6 +75,9 @@ class SecurityConfig {
         // Keeps track of sessions so all sessions of a deleted user can be invalidated
         bean(SessionTracker)
 
+        // Replaces the grails-csrf plugin's default handler, which only responds with 403 Forbidden
+        bean(PageExpiredCsrfFailureHandler)
+
         bean('rememberMeServices', RememberMeServices) { AppUserDetailsService appUserDetailsService ->
             new TokenBasedRememberMeServices(rememberMeKey, appUserDetailsService).tap {
                 cookieName = rememberMeCookieName

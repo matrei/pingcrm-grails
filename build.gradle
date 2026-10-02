@@ -67,6 +67,7 @@ dependencies {
 
     // 3rd party Grails Plugins
     implementation "org.grails.plugins:grails-logical-delete:$grailsLogicalDeleteVersion"
+    implementation "io.github.matrei:grails-csrf:$grailsCsrfVersion"
     implementation "io.github.matrei:grails-inertia:$grailsInertiaVersion"
     //implementation project(':grails-inertia')
 
@@ -78,7 +79,6 @@ dependencies {
     runtimeOnly 'org.apache.grails:grails-services'
     runtimeOnly 'org.apache.grails:grails-url-mappings'
 
-    runtimeOnly "io.github.matrei:grails-csrf:$grailsCsrfVersion"
     runtimeOnly 'org.springframework.boot:spring-boot-autoconfigure'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-logging'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
