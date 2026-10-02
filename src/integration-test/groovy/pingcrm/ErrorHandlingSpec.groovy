@@ -2,6 +2,8 @@ package pingcrm
 
 import spock.lang.Unroll
 
+import geb.Page
+
 import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 
@@ -15,21 +17,21 @@ import pingcrm.pages.LoginPage
 class ErrorHandlingSpec extends ContainerGebSpec {
 
     @Unroll
-    void 'it renders the #status error page'(page) {
+    void 'it renders the #status error page'(int status, Class<? extends Page> errorPage) {
 
         given: 'a logged in demo user'
             var loginPage = to(LoginPage)
             loginPage.loginDemoUser()
             at(DashboardPage)
 
-        when: 'going to a page that throws an exception'
-            go(page.url as String)
+        when: 'going to a page that responds with an error status'
+            via(errorPage)
 
-        then: 'the user is redirected to the 500 page'
-            at(page)
+        then: 'the error page for that status is shown'
+            at(errorPage)
 
         where:
-            status | page
+            status | errorPage
             500    | Error500Page
             404    | Error404Page
             403    | Error403Page

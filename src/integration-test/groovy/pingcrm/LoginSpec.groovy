@@ -1,5 +1,7 @@
 package pingcrm
 
+import geb.Page
+
 import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 
@@ -12,7 +14,7 @@ import pingcrm.pages.UserListPage
 @Integration
 class LoginSpec extends ContainerGebSpec {
 
-    void 'accessing the application without logging in is not allowed'() {
+    void 'accessing the application without logging in is not allowed'(Class<? extends Page> securedPage) {
 
         given: 'the user is not logged in'
             browser.clearCookies()
