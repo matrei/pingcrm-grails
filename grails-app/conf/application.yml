@@ -19,7 +19,8 @@ dataSource:
     url: jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;TIME ZONE=UTC
     username: sa
     password: ''
-    # Uncomment the next two lines to log SQL queries (also look in logback.xml)
+    # Uncomment the next two lines to print SQL statements to the console
+    # (or uncomment the logging levels below to log them, with their parameter values)
     #logSql: true
     #formatSql: true
     #properties: https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
@@ -47,6 +48,12 @@ dataSource:
         # schema: # Default: none
         # threadFactory: # This property is only available via programmatic configuration or IoC container.
         # scheduledExecutor: # This property is only available via programmatic configuration or IoC container.
+
+# Uncomment to log SQL statements, and the values bound to their parameters, in the application log
+#logging:
+#    level:
+#        org.hibernate.SQL: debug
+#        org.hibernate.orm.jdbc.bind: trace
 
 environments.test.dataSource.dbCreate: update
 server:
