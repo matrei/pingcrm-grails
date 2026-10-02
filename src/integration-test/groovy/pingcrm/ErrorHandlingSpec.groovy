@@ -20,8 +20,7 @@ class ErrorHandlingSpec extends ContainerGebSpec {
     void 'it renders the #status error page'(int status, Class<? extends Page> errorPage) {
 
         given: 'a logged in demo user'
-            var loginPage = to(LoginPage)
-            loginPage.loginDemoUser()
+            to(LoginPage).loginDemoUser()
             at(DashboardPage)
 
         when: 'going to a page that responds with an error status'

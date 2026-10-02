@@ -42,8 +42,7 @@ class OrganizationCrudSpec extends ContainerGebSpec {
 
     void 'both owners and non-owners can view a list of all organizations'() {
         given: 'a logged in user'
-            var loginPage = to(LoginPage)
-            loginPage.login(user.email, user.password)
+            to(LoginPage).login(user.email, user.password)
             at(DashboardPage)
 
         when: 'going to the organizations list page with a max query param of 101'
@@ -60,8 +59,7 @@ class OrganizationCrudSpec extends ContainerGebSpec {
     void 'both owners and non-owners can create a new user'() {
 
         given: 'logged in user'
-            var loginPage = to(LoginPage)
-            loginPage.login(user.email, user.password)
+            to(LoginPage).login(user.email, user.password)
             at(DashboardPage)
 
         when: 'creating a new user'

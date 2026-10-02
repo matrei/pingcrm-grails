@@ -21,8 +21,7 @@ class MainMenuSpec extends ContainerGebSpec {
     void 'being on a page highlights the corresponding menu item'(Class<BasePage> testPageClass) {
 
         given: 'a logged in user'
-        var loginPage = to(LoginPage)
-        loginPage.loginDemoUser()
+        to(LoginPage).loginDemoUser()
         at(DashboardPage)
 
         when: 'going to a page'

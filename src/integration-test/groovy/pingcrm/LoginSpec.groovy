@@ -37,8 +37,7 @@ class LoginSpec extends ContainerGebSpec {
     void 'the demo user can log in'() {
 
         when: 'the demo user tries to log in'
-            var loginPage = to(LoginPage)
-            loginPage.loginDemoUser()
+            to(LoginPage).loginDemoUser()
 
         then: 'the demo demo user is logged-in'
             at(DashboardPage)
@@ -47,8 +46,7 @@ class LoginSpec extends ContainerGebSpec {
     void 'the demo user can log out'() {
 
         given: 'a logged-in demo user'
-            var loginPage = to(LoginPage)
-            loginPage.loginDemoUser()
+            to(LoginPage).loginDemoUser()
             var dashboardPage = at(DashboardPage)
 
         when: 'logging out with the logout button in the user menu'
@@ -61,8 +59,7 @@ class LoginSpec extends ContainerGebSpec {
     void 'users can log in'() {
 
         given: 'a logged-in demo user'
-            var loginPage = to(LoginPage)
-            loginPage.loginDemoUser()
+            to(LoginPage).loginDemoUser()
             at(DashboardPage)
 
         and: 'some user data'
@@ -81,8 +78,7 @@ class LoginSpec extends ContainerGebSpec {
             at(LoginPage)
 
         and: 'trying to log in with the credentials of the new user'
-            loginPage = at(LoginPage)
-            loginPage.login(email, password)
+            at(LoginPage).login(email, password)
 
         then: 'the user is logged in'
             var dashboardPage = to(DashboardPage)

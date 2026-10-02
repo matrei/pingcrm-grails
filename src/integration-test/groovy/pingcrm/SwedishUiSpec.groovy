@@ -18,8 +18,7 @@ class SwedishUiSpec extends ContainerGebSpec {
     void 'the UI can be used in Swedish'() {
 
         when: 'opening the login page in Swedish and logging in'
-            var loginPage = to(new LoginPage(lang: 'sv'))
-            loginPage.loginDemoUser()
+            to(new LoginPage(lang: 'sv')).loginDemoUser()
 
         then: 'the dashboard is in Swedish'
             var dashboardPage = at(new DashboardPage(lang: 'sv'))

@@ -107,8 +107,7 @@ class UserCrudSpec extends ContainerGebSpec {
 
     void 'it is allowed to delete a user that is not the demo user'() {
         given: 'a logged in demo user'
-            var loginPage = to(LoginPage)
-            loginPage.loginDemoUser()
+            loginDemoUser()
 
         when: 'going to the edit user page for a user that is not the demo user'
             var userEditPage = new UserEditPage(2)
@@ -235,9 +234,7 @@ class UserCrudSpec extends ContainerGebSpec {
 
     }
 
-    LoginPage loginDemoUser() {
-        var loginPage = to(LoginPage)
-        loginPage.loginDemoUser()
-        loginPage
+    void loginDemoUser() {
+        to(LoginPage).loginDemoUser()
     }
 }
