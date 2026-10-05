@@ -1,0 +1,72 @@
+{
+  "groups": [
+    {
+      "name": "pingcrm",
+      "description": "Ping CRM"
+    },
+    {
+      "name": "pingcrm.security.rememberMe",
+      "description": "Remember-me login, which logs the user in again from a cookie when the session has ended"
+    },
+    {
+      "name": "pingcrm.i18n",
+      "description": "Languages of the UI"
+    },
+    {
+      "name": "pingcrm.upload",
+      "type": "pingcrm.config.UploadConfig",
+      "sourceType": "pingcrm.config.UploadConfig",
+      "description": "File uploads"
+    }
+  ],
+  "properties": [
+    {
+      "name": "pingcrm.security.rememberMe.key",
+      "type": "java.lang.String",
+      "description": "The key that remember-me cookies are signed with. Use a unique secret per installation, as anyone who knows it can create cookies that log in as any user."
+    },
+    {
+      "name": "pingcrm.security.rememberMe.cookieName",
+      "type": "java.lang.String",
+      "description": "The name of the remember-me cookie.",
+      "defaultValue": "remember-me"
+    },
+    {
+      "name": "pingcrm.security.rememberMe.sameSite",
+      "type": "java.lang.String",
+      "description": "The SameSite attribute of the remember-me cookie.",
+      "defaultValue": "Lax"
+    },
+    {
+      "name": "pingcrm.i18n.locales",
+      "type": "java.util.List<java.lang.String>",
+      "description": "The languages the UI is translated into (grails-app/i18n/messages*.properties), as language tags. The first one is used when the browser asks for none of them.",
+      "defaultValue": ["en"]
+    },
+    {
+      "name": "pingcrm.upload.maxFileSize",
+      "type": "org.springframework.util.unit.DataSize",
+      "sourceType": "pingcrm.config.UploadConfig",
+      "description": "The maximum size of an uploaded user photo, e.g. 512KB."
+    }
+  ],
+  "hints": [
+    {
+      "name": "pingcrm.security.rememberMe.sameSite",
+      "values": [
+        {
+          "value": "Strict",
+          "description": "Only sent with requests from the application's own site."
+        },
+        {
+          "value": "Lax",
+          "description": "Also sent when following a link to the application from another site."
+        },
+        {
+          "value": "None",
+          "description": "Sent with all requests, also cross-site ones. Requires a secure cookie."
+        }
+      ]
+    }
+  ]
+}
