@@ -112,13 +112,6 @@ tasks.withType(Test).configureEach {
 
     systemProperty('grails.geb.atCheckWaiting.enabled', true)
     systemProperty('grails.geb.recording.mode', 'RECORD_FAILING')
-
-    // Workaround: GORM's @ManagedEntity transform (grails-data-hibernate7 8.0.0-RC1) initializes
-    // $$_hibernate_instanceId to -1, tripping an `assert instanceId == 0` in Hibernate 7.4
-    // when saving a new entity. Hibernate overwrites the value on association, so it is harmless.
-    // Remove once the transform initializes the field to 0.
-    // See: https://github.com/apache/grails-core/issues/16423
-    jvmArgs('-da:org.hibernate.engine.internal.EntityEntryContext')
 /*
     jvmArgs += [
             '-Xmx2g', '-Xdebug', '-Xnoagent', '-Djava.compiler=NONE',
