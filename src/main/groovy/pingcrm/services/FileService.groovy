@@ -47,7 +47,7 @@ class FileService {
     BufferedImage createImageThumbnail(String path, Map options) throws FileNotFoundException, IOException {
 
         var file = new File(System.getProperty('java.io.tmpdir'), path)
-        if (!file) throw new FileNotFoundException(path)
+        if (!file.isFile()) throw new FileNotFoundException(path)
 
         var image
         try { image = imageService.resizeImage(file, options) }
