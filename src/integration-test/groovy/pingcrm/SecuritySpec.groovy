@@ -24,9 +24,6 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
 
     void 'logging off with HTTP #httpMethod ends the session'() {
 
-        given: 'a logged in user'
-            init()
-
         when: 'logging off'
             var response = httpAsLoggedInUser(httpMethod, '/logoff')
 
@@ -37,14 +34,14 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
         and: 'the session is no longer logged in'
             redirectPath(httpAsLoggedInUser('GET', '/')) == '/login'
 
+        cleanup: 'log in again, as the other features use the shared session'
+            init()
+
         where:
             httpMethod << ['POST', 'DELETE']
     }
 
     void 'logging off with HTTP GET is not possible'() {
-
-        given: 'a logged in user'
-            init()
 
         when: 'trying to log off with GET, which is not protected against CSRF'
             var response = httpAsLoggedInUser('GET', '/logoff')
@@ -84,9 +81,6 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
     }
 
     void 'unknown URLs are forbidden for logged in users'() {
-
-        given: 'a logged in user'
-            init()
 
         expect: 'unknown URLs to be forbidden'
             httpAsLoggedInUser('GET', '/hello').assertStatus(403)
