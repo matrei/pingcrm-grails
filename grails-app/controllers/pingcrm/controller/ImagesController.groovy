@@ -16,12 +16,16 @@
 package pingcrm.controller
 
 import java.awt.image.BufferedImage
+import java.time.Duration
 
 import javax.imageio.ImageIO
 
 import groovy.transform.CompileStatic
 
 import jakarta.inject.Inject
+
+import org.springframework.http.CacheControl
+import org.springframework.http.HttpHeaders
 
 import grails.compiler.GrailsCompileStatic
 import grails.validation.Validateable
@@ -41,6 +45,14 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
  */
 @CompileStatic
 class ImagesController {
+
+    // An uploaded image gets a new file name, and the size is part of the URL,
+    // so the image at a URL never changes and the browser can keep it.
+    // It is private, as the images are only shown to logged-in users.
+    private static final String CACHE_CONTROL = CacheControl.maxAge(Duration.ofDays(365))
+            .cachePrivate()
+            .immutable()
+            .headerValue
 
     private final FileService fileService
 
@@ -69,6 +81,7 @@ class ImagesController {
             }
 
             response.contentType = contentType
+            response.setHeader(HttpHeaders.CACHE_CONTROL, CACHE_CONTROL)
             ImageIO.write(image, formatName, response.outputStream)
 
         }
