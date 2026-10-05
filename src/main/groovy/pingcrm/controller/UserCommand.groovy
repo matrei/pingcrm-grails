@@ -48,6 +48,14 @@ class UserCommand implements Validateable {
     Boolean owner
     MultipartFile photo
     private String photoFilename
+
+    /**
+     * Sets the uploaded photo. An empty file, as sent by a form where no file was chosen, is no photo.
+     */
+    void setPhoto(MultipartFile photo) {
+        this.photo = photo?.empty ? null : photo
+    }
+
     String createPhotoPath() {
         photoFilename ?
                 "$photoStorage${File.separator}$photoFilename" :
