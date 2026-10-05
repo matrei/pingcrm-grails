@@ -6,11 +6,6 @@ info:
         repoUrl: 'https://github.com/matrei/pingcrm-grails'
 # Uncomment for enabling h2 database console (also look at the permitted URLs in pingcrm.security.SecurityConfig)
 # spring.h2.console.enabled: true
-grails:
-    views:
-        gsp:
-            # Can be removed if xml becomes the default, see https://github.com/apache/grails-core/issues/16459
-            htmlcodec: xml
 hibernate:
     jdbc:
         time_zone: UTC
