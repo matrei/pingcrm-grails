@@ -60,7 +60,7 @@ class ImagesController {
 
             var image= fileService.createImageThumbnail(cmd.path, [width: cmd.w, height: cmd.h, fit: cmd.fit, quality: cmd.quality])
 
-            var contentType = 'image/jpg'
+            var contentType = 'image/jpeg'
             var formatName = 'JPG'
 
             if (image.type == BufferedImage.TYPE_INT_ARGB) {
