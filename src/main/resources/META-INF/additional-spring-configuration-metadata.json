@@ -44,6 +44,11 @@
       "defaultValue": ["en"]
     },
     {
+      "name": "hibernate.jdbc.time_zone",
+      "type": "java.lang.String",
+      "description": "The time zone Hibernate uses when it binds and reads timestamps and times, as a time zone ID such as UTC. GORM passes settings under hibernate through to Hibernate. Ping CRM sets it to UTC, like the H2 URL, so that timestamps are written and read in UTC, whatever the default time zone of the JVM is. Defaults to the default time zone of the JVM."
+    },
+    {
       "name": "pingcrm.upload.maxFileSize",
       "type": "org.springframework.util.unit.DataSize",
       "sourceType": "pingcrm.config.UploadConfig",
