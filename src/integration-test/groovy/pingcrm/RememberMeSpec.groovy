@@ -35,8 +35,9 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
             var response = loginWithRememberMe()
 
         then: 'the login is successful'
-            response.statusCode() == 302
-            response.headerValue('Location') == "$httpBaseUrl/"
+            response.assertHeaders(302,
+                'Location': "$httpBaseUrl/"
+            )
 
         and: 'a remember-me cookie with the expected attributes is set'
             var cookie = setCookieHeader(response, REMEMBER_ME_COOKIE)
@@ -54,7 +55,7 @@ class RememberMeSpec extends Specification implements HttpClientSupport {
             var response = http(['Cookie': rememberMeCookie], '/', noRedirectHttpClient)
 
         then: 'the page is shown'
-            response.statusCode() == 200
+            response.assertStatus(200)
     }
 
     void 'logging off removes the remember-me cookie'() {

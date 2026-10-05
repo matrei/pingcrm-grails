@@ -37,19 +37,19 @@ class CsrfSpec extends Specification implements LoggedInHttpClientSpec {
     void 'a request with the CSRF token is accepted'() {
 
         expect:
-            sendPut(csrfHeaders(csrfToken, "JSESSIONID=$sessionId")).statusCode() == 303
+            sendPut(csrfHeaders(csrfToken, "JSESSIONID=$sessionId")).assertStatus(303)
     }
 
     void 'a request without a CSRF token is forbidden'() {
 
         expect:
-            sendPut(['Cookie': "JSESSIONID=$sessionId; XSRF-TOKEN=$csrfToken"]).statusCode() == 403
+            sendPut(['Cookie': "JSESSIONID=$sessionId; XSRF-TOKEN=$csrfToken"]).assertStatus(403)
     }
 
     void 'a request with a CSRF token that does not match the cookie is forbidden'() {
 
         expect:
-            sendPut(['Cookie': "JSESSIONID=$sessionId; XSRF-TOKEN=$csrfToken", 'X-XSRF-TOKEN': 'invalid']).statusCode() == 403
+            sendPut(['Cookie': "JSESSIONID=$sessionId; XSRF-TOKEN=$csrfToken", 'X-XSRF-TOKEN': 'invalid']).assertStatus(403)
     }
 
     void 'logging in without a CSRF token is forbidden'() {
@@ -59,7 +59,7 @@ class CsrfSpec extends Specification implements LoggedInHttpClientSpec {
                     'application/x-www-form-urlencoded', noRedirectHttpClient)
 
         then: 'the login is rejected'
-            response.statusCode() == 403
+            response.assertStatus(403)
     }
 
     private TestHttpResponse sendPut(Map<String, String> headers) {

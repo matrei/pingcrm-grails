@@ -44,7 +44,7 @@ class UsersControllerSpec extends Specification implements LoggedInHttpClientSpe
             var response = httpPostMultipart(csrfHeaders(csrfToken, "JSESSIONID=$sessionId"), "/users/$USER_ID", requestBody, noRedirectHttpClient)
 
         then: 'the user is updated, without a photo'
-            response.statusCode() == 303
+            response.assertStatus(303)
             var props = editPageProps()
             (props.flash as Map).success == 'User updated.'
             !(props.user as Map).photo

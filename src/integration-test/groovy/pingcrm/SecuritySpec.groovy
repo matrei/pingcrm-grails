@@ -31,7 +31,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             var response = httpAsLoggedInUser(httpMethod, '/logoff')
 
         then: 'the user is redirected to the start page with 303 See Other, so the browser follows with a GET request'
-            response.statusCode() == 303
+            response.assertStatus(303)
             redirectPath(response) == '/'
 
         and: 'the session is no longer logged in'
@@ -50,10 +50,10 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             var response = httpAsLoggedInUser('GET', '/logoff')
 
         then: 'the request is forbidden'
-            response.statusCode() == 403
+            response.assertStatus(403)
 
         and: 'the session is still logged in'
-            httpAsLoggedInUser('GET', '/').statusCode() == 200
+            httpAsLoggedInUser('GET', '/').assertStatus(200)
     }
 
     void 'anonymous #description requests to secured pages are redirected to the login page'() {
@@ -62,7 +62,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             var response = http(headers, '/contacts', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
-            response.statusCode() == 303
+            response.assertStatus(303)
             redirectPath(response) == '/login'
 
         where:
@@ -78,8 +78,9 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
                     'application/x-www-form-urlencoded', noRedirectHttpClient)
 
         then: 'the user is redirected to the authentication failure page'
-            response.statusCode() == 302
-            response.headerValue('Location') == "$httpBaseUrl/login/authfail?login_error=1"
+            response.assertHeaders(302,
+                'Location': "$httpBaseUrl/login/authfail?login_error=1"
+            )
     }
 
     void 'unknown URLs are forbidden for logged in users'() {
@@ -88,7 +89,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             init()
 
         expect: 'unknown URLs to be forbidden'
-            httpAsLoggedInUser('GET', '/hello').statusCode() == 403
+            httpAsLoggedInUser('GET', '/hello').assertStatus(403)
     }
 
     void 'unknown URLs redirect anonymous users to the login page'() {
@@ -97,7 +98,7 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             var response = http('/hello', noRedirectHttpClient)
 
         then: 'the response is a redirect to the login page'
-            response.statusCode() == 303
+            response.assertStatus(303)
             redirectPath(response) == '/login'
     }
 

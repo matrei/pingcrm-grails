@@ -30,7 +30,7 @@ class ImagesControllerSpec extends Specification implements LoggedInHttpClientSp
 
     void 'a thumbnail is a JPEG image that the browser can keep'() {
 
-        given: 'a user with a photo'
+        given: 'a user'
             var user = editPageUser()
             var requestBody = MultipartBody.builder()
                     .addPart('firstName', user.firstName as String)
@@ -39,19 +39,22 @@ class ImagesControllerSpec extends Specification implements LoggedInHttpClientSp
                     .addPart('owner', user.owner ? '1' : '0')
                     .addPart('photo', 'avatar.jpg', 'image/jpeg', new File('src/integration-test/resources/assets/avatar.jpg').bytes)
                     .build()
+
+        when: 'uploading a photo of the user'
             var uploadResponse = httpPostMultipart(csrfHeaders(csrfToken, "JSESSIONID=$sessionId"), "/users/$USER_ID", requestBody, noRedirectHttpClient)
-            assert uploadResponse.statusCode() == 303
-            var thumbnailUrl = editPageUser().photo as String
+
+        then: 'the photo is saved'
+            uploadResponse.assertStatus(303)
 
         when: 'requesting the thumbnail of the photo'
+            var thumbnailUrl = editPageUser().photo as String
             var response = httpAsLoggedInUser('GET', thumbnailUrl)
 
-        then: 'it is a JPEG image'
-            response.statusCode() == 200
-            response.headerValue('Content-Type') == 'image/jpeg'
-
-        and: 'the browser can keep it, as the image at a URL never changes'
-            response.headerValue('Cache-Control') == 'max-age=31536000, private, immutable'
+        then: 'it is a JPEG image that the browser can keep, as the image at a URL never changes'
+            response.assertHeaders(200,
+                'Content-Type': 'image/jpeg',
+                'Cache-Control': 'max-age=31536000, private, immutable'
+            )
 
         cleanup: 'remove the uploaded photo'
             if (thumbnailUrl) {

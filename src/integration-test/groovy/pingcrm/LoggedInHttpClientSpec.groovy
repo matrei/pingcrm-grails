@@ -32,8 +32,9 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
                 .addPart('remember-me', '0')
                 .build()
         var response = httpPostMultipart(csrfHeaders(csrfToken), '/login/authenticate', requestBody, noRedirectHttpClient)
-        assert response.statusCode() == 302
-        assert response.headerValue('Location') == "$httpBaseUrl/"
+        response.assertHeaders(302,
+            'Location': "$httpBaseUrl/"
+        )
         sessionId = cookieValue(response, 'JSESSIONID')
 
         // Get the csrf token again, as logging in replaces it
@@ -58,7 +59,7 @@ trait LoggedInHttpClientSpec implements HttpClientSupport {
      */
     String newCsrfToken() {
         var response = http('/login', noRedirectHttpClient)
-        assert response.statusCode() == 200
+        response.assertStatus(200)
         cookieValue(response, 'XSRF-TOKEN')
     }
 
