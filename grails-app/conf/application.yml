@@ -6,6 +6,11 @@ info:
         repoUrl: 'https://github.com/matrei/pingcrm-grails'
 # Uncomment for enabling h2 database console (also look at the permitted URLs in pingcrm.security.SecurityConfig)
 # spring.h2.console.enabled: true
+grails:
+    banner:
+        art:
+            # Indigo, like the UI (one of the 256 terminal colours)
+            color: 105
 hibernate:
     jdbc:
         time_zone: UTC
