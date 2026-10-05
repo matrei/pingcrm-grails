@@ -87,8 +87,7 @@ class UserService extends DomainService<User> {
 
         if (!user.save()) return user // return with validation errors
 
-        UserRole.create(user, user.owner ? Role.findByAuthority('ROLE_OWNER') :
-                                           Role.findByAuthority('ROLE_USER'))
+        UserRole.create(user, roleFor(user.owner))
 
         userCmd.id = user.id
 
@@ -138,17 +137,19 @@ class UserService extends DomainService<User> {
 
         var roleChanged = (user.owner != userCmd.owner)
         if (roleChanged) {
-            var roleOwner = Role.findByAuthority('ROLE_OWNER')
-            var roleUser = Role.findByAuthority('ROLE_USER')
-            var userRole = UserRole.get(user, user.owner ? roleOwner : roleUser)
-            userRole.role = user.owner ? roleUser : roleOwner
-            userRole.save()
+            // The role is part of the id of a UserRole, so it is replaced rather than changed
+            UserRole.remove(user, roleFor(user.owner))
+            UserRole.create(user, roleFor(userCmd.owner))
         }
 
         userCmd.transferValuesTo(user)
 
         if (user.save() && oldPhotoPath) deletePhoto(oldPhotoPath)
         return user
+    }
+
+    private static Role roleFor(Boolean owner) {
+        Role.findByAuthority(owner ? 'ROLE_OWNER' : 'ROLE_USER')
     }
 
     private static deletePhoto(String photoPath) {

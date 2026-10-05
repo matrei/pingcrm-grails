@@ -3,6 +3,7 @@ package pingcrm
 import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
 
+import pingcrm.auth.UserRole
 import pingcrm.pages.DashboardPage
 import pingcrm.pages.LoginPage
 import pingcrm.pages.UserCreatePage
@@ -102,6 +103,35 @@ class UserCrudSpec extends ContainerGebSpec {
             userEditPage.save()
 
         then: 'a success message is shown'
+            userEditPage.flashSuccess == 'User updated.'
+    }
+
+    void 'the owner property of a user that is not the demo user can be changed'() {
+        given: 'a logged in demo user'
+            loginDemoUser()
+
+        when: 'going to the edit user page for a user that is not the demo user'
+            var userEditPage = new UserEditPage(4)
+            to(userEditPage)
+
+        and: 'making the user an owner'
+            userEditPage.ownerSelect.selected = 'true'
+            userEditPage.save()
+
+        then: 'a success message is shown'
+            userEditPage.flashSuccess == 'User updated.'
+
+        and: 'the user has the owner role instead of the user role'
+            authoritiesOf(4) == ['ROLE_OWNER']
+
+        when: 'making the user a non-owner again'
+            userEditPage.ownerSelect.selected = 'false'
+            userEditPage.save()
+
+        then: 'the user has the user role instead of the owner role'
+            waitFor { authoritiesOf(4) == ['ROLE_USER'] }
+
+        and: 'a success message is shown'
             userEditPage.flashSuccess == 'User updated.'
     }
 
@@ -236,5 +266,11 @@ class UserCrudSpec extends ContainerGebSpec {
 
     void loginDemoUser() {
         to(LoginPage).loginDemoUser()
+    }
+
+    private static List<String> authoritiesOf(Long userId) {
+        UserRole.withNewTransaction {
+            UserRole.findAllRolesForUser(User.get(userId))*.authority
+        }
     }
 }

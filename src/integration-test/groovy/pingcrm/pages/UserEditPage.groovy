@@ -2,6 +2,7 @@ package pingcrm.pages
 
 import geb.Page
 import geb.module.FileInput
+import geb.module.Select
 
 class UserEditPage extends Page {
 
@@ -57,6 +58,12 @@ class UserEditPage extends Page {
             }
             $(selectors.flashSuccess)
                     .text()
+        }
+
+        ownerSelect {
+            $('form')
+                    .find('select')
+                    .module(Select)
         }
 
         photoField {

@@ -95,7 +95,6 @@ class UserRole implements Serializable {
 		instance.save(flush: flush)
 	}
 
-	@SuppressWarnings('unused')
 	static boolean remove(User u, Role r) {
 		if (u != null && r != null) {
 			return where {
