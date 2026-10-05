@@ -82,7 +82,6 @@ pingcrm:
         rememberMe:
             cookieName: pingcrm-remember-me
             key: this-should-be-unique-per-application
-            sameSite: Lax
     i18n:
         # The languages the UI is translated into (grails-app/i18n/messages*.properties), the first one is the default
         locales:
