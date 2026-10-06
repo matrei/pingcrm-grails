@@ -16,6 +16,7 @@
 
 <script setup>
 
+import { DashboardController, UsersController } from '@/routes'
 defineProps({
   auth: { type: Object, default: () => ({}) }
 })
@@ -28,7 +29,7 @@ defineProps({
       <div class="md:h-screen md:flex md:flex-col">
         <div class="md:flex md:shrink-0">
           <div class="bg-indigo-900 md:shrink-0 md:w-56 px-6 py-4 flex items-center justify-between md:justify-center">
-            <inertia-link class="mt-1" href="/">
+            <inertia-link class="mt-1" :href="DashboardController.index()">
               <logo class="fill-white" width="120" height="28" />
             </inertia-link>
             <dropdown class="md:hidden" placement="bottom-end">
@@ -52,8 +53,8 @@ defineProps({
               </div>
               <template #dropdown>
                 <div class="mt-2 py-2 shadow-xl bg-white rounded-sm text-sm">
-                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="`/users/${auth.user.id}/edit`">{{ $t('ui.menu.profile') }}</inertia-link>
-                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" href="/users">{{ $t('ui.menu.manageUsers') }}</inertia-link>
+                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="UsersController.edit(auth.user.id)">{{ $t('ui.menu.profile') }}</inertia-link>
+                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="UsersController.index()">{{ $t('ui.menu.manageUsers') }}</inertia-link>
                   <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white w-full text-left" href="/logoff" method="delete" as="button">{{ $t('ui.menu.logout') }}</inertia-link>
                 </div>
               </template>

@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { UsersController } from '@/routes'
 import { router, useForm } from '@inertiajs/vue3'
 import { formatFileSizeBinary } from '@/Use/use-files.js'
 import { t } from '@/Use/use-i18n'
@@ -40,7 +41,7 @@ const form = useForm({
 })
 
 const update = () => {
-  form.post(`/users/${props.user.id}`, {
+  form.submit(UsersController.updateUser.post(props.user.id), {
     forceFormData: true,
     onSuccess: () => form.reset('password', 'photo')
   })
@@ -48,13 +49,13 @@ const update = () => {
 
 const destroy = () => {
   if (confirm(t('ui.users.confirmDelete'))) {
-    router.delete(`/users/${props.user.id}`)
+    router.delete(UsersController.delete(props.user.id))
   }
 }
 
 const restore = () => {
   if (confirm(t('ui.users.confirmRestore'))) {
-    router.put(`/users/${props.user.id}/restore`)
+    router.put(UsersController.restore(props.user.id))
   }
 }
 
@@ -74,7 +75,7 @@ watch(() => form.photo, val => {
   <div>
     <div class="mb-8 flex justify-start max-w-3xl">
       <h1 class="font-bold text-3xl">
-        <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/users">{{ $t('ui.users.title') }}</inertia-link>
+        <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="UsersController.index()">{{ $t('ui.users.title') }}</inertia-link>
         <span class="text-indigo-400 font-medium">&nbsp;/</span>
         {{ form.firstName }} {{ form.lastName }}
       </h1>

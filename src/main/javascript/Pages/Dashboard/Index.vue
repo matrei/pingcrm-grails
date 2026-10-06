@@ -19,6 +19,10 @@ import layout from '@/Shared/Layout.vue'
 export default { layout }
 </script>
 
+<script setup>
+import { ErrorTestController } from '@/routes'
+</script>
+
 <template>
   <inertia-head :title="$t('ui.dashboard.title')" />
   <h1 class="mb-8 font-bold text-3xl">{{ $t('ui.dashboard.title') }}</h1>
@@ -29,7 +33,7 @@ export default { layout }
     <a class="text-indigo-500 underline hover:text-orange-600" href="https://grails.org">Grails</a>{{ $t('ui.dashboard.welcome.end') }}
   </p>
   <div class="leading-[50px]">
-    <inertia-link href="/test-500-error" class="btn-indigo">{{ $t('ui.dashboard.trigger500') }}</inertia-link>&nbsp;
+    <inertia-link :href="ErrorTestController.generateInternalServerError()" class="btn-indigo">{{ $t('ui.dashboard.trigger500') }}</inertia-link>&nbsp;
     <inertia-link href="/static/test-404-error" class="btn-indigo">{{ $t('ui.dashboard.trigger404') }}</inertia-link>&nbsp;
     <inertia-link href="/hello" class="btn-indigo">{{ $t('ui.dashboard.trigger403') }}</inertia-link>
   </div>

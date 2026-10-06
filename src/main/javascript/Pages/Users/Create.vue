@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { UsersController } from '@/routes'
 import { useForm } from '@inertiajs/vue3'
 import { formatFileSizeBinary } from '@/Use/use-files.js'
 import { t } from '@/Use/use-i18n'
@@ -48,7 +49,7 @@ watch(() => form.photo, val => {
   }
 })
 
-const store = () => { form.post('/users', { forceFormData: true }) }
+const store = () => { form.submit(UsersController.storeUser(), { forceFormData: true }) }
 
 </script>
 
@@ -56,7 +57,7 @@ const store = () => { form.post('/users', { forceFormData: true }) }
   <inertia-head :title="$t('ui.users.create')" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/users">{{ $t('ui.users.title') }}</inertia-link>
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="UsersController.index()">{{ $t('ui.users.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span> {{ $t('ui.common.create') }}
     </h1>
     <div class="bg-white rounded-md shadow-sm overflow-hidden max-w-3xl">

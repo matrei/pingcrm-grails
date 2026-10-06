@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { ContactsController } from '@/routes'
 import { regionName } from '@/Use/use-i18n'
 import { useForm } from '@inertiajs/vue3'
 
@@ -39,7 +40,7 @@ const form = useForm({
   postalCode: null,
 })
 
-const store = () => form.post('/contacts')
+const store = () => form.submit(ContactsController.store())
 
 </script>
 
@@ -47,7 +48,7 @@ const store = () => form.post('/contacts')
   <inertia-head :title="$t('ui.contacts.create')" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/contacts">{{ $t('ui.contacts.title') }}</inertia-link>
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="ContactsController.index()">{{ $t('ui.contacts.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span> {{ $t('ui.common.create') }}
     </h1>
     <div class="bg-white rounded-md shadow-sm overflow-hidden max-w-3xl">

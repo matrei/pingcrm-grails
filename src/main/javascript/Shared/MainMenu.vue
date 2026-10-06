@@ -16,6 +16,7 @@
 
 <script setup>
 
+import { AboutController, ContactsController, DashboardController, OrganizationsController, ReportsController, UsersController } from '@/routes'
 import { usePage } from '@inertiajs/vue3'
 
 const isUrl = (...urls) => {
@@ -34,25 +35,25 @@ const isUrl = (...urls) => {
 
       <div>
         <div class="mb-4">
-          <inertia-link class="flex items-center group py-3" href="/">
+          <inertia-link class="flex items-center group py-3" :href="DashboardController.index()">
             <icon name="dashboard" class="w-4 h-4 mr-2" :class="$page.component === 'Dashboard/Index' ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="$page.component === 'Dashboard/Index' ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.dashboard') }}</div>
           </inertia-link>
         </div>
         <div class="mb-4">
-          <inertia-link class="flex items-center group py-3" href="/organizations">
+          <inertia-link class="flex items-center group py-3" :href="OrganizationsController.index()">
             <icon name="office" class="w-4 h-4 mr-2" :class="isUrl('organizations') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="isUrl('organizations') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.organizations') }}</div>
           </inertia-link>
         </div>
         <div class="mb-4">
-          <inertia-link class="flex items-center group py-3" href="/contacts">
+          <inertia-link class="flex items-center group py-3" :href="ContactsController.index()">
             <icon name="users" class="w-4 h-4 mr-2" :class="isUrl('contacts') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="isUrl('contacts') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.contacts') }}</div>
           </inertia-link>
         </div>
         <div class="mb-4">
-          <inertia-link class="flex items-center group py-3" href="/reports">
+          <inertia-link class="flex items-center group py-3" :href="ReportsController.index()">
             <icon name="printer" class="w-4 h-4 mr-2" :class="isUrl('reports') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="isUrl('reports') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.reports') }}</div>
           </inertia-link>
@@ -60,13 +61,13 @@ const isUrl = (...urls) => {
       </div>
       <div>
         <div class="mb-4">
-          <inertia-link class="flex items-center group py-3" href="/users">
+          <inertia-link class="flex items-center group py-3" :href="UsersController.index()">
             <icon name="book" class="w-4 h-4 mr-2" :class="isUrl('users') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="isUrl('users') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.users') }}</div>
           </inertia-link>
         </div>
         <div>
-          <inertia-link class="flex items-center group py-3" href="/about">
+          <inertia-link class="flex items-center group py-3" :href="AboutController.index()">
             <icon name="apple" class="w-4 h-4 mr-2" :class="isUrl('about') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
             <div :class="isUrl('about') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.about') }}</div>
           </inertia-link>

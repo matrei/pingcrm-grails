@@ -20,6 +20,7 @@ export default { layout }
 
 <script setup>
 
+import { OrganizationsController, ContactsController } from '@/routes'
 import { regionName, t } from '@/Use/use-i18n'
 import { router, useForm } from '@inertiajs/vue3'
 
@@ -36,17 +37,17 @@ const form = useForm({
   postalCode: props.organization.postalCode,
 })
 
-const update = () => form.put(`/organizations/${props.organization.id}`)
+const update = () => form.submit(OrganizationsController.update(props.organization.id))
 
 const destroy = () => {
   if (confirm(t('ui.organizations.confirmDelete'))) {
-    router.delete(`/organizations/${props.organization.id}`)
+    router.delete(OrganizationsController.delete(props.organization.id))
   }
 }
 
 const restore = () => {
   if (confirm(t('ui.organizations.confirmRestore'))) {
-    router.put(`/organizations/${props.organization.id}/restore`)
+    router.put(OrganizationsController.restore(props.organization.id))
   }
 }
 
@@ -56,7 +57,7 @@ const restore = () => {
   <inertia-head :title="form.name" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/organizations">{{ $t('ui.organizations.title') }}</inertia-link>
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="OrganizationsController.index()">{{ $t('ui.organizations.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span>
       {{ form.name }}
     </h1>
@@ -98,23 +99,23 @@ const restore = () => {
         <tbody>
           <tr v-for="contact in organization.contacts" :key="contact.id" class="hover:bg-slate-100 focus-within:bg-slate-100">
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="`/contacts/${contact.id}/edit`">
+              <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="ContactsController.edit(contact.id)">
                 {{ contact.name }}
                 <icon v-if="contact.deleted" name="trash" class="shrink-0 w-3 h-3 fill-slate-400 ml-2" />
               </inertia-link>
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+              <inertia-link class="px-6 py-4 flex items-center" :href="ContactsController.edit(contact.id)" tabindex="-1">
                 {{ contact.city }}
               </inertia-link>
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+              <inertia-link class="px-6 py-4 flex items-center" :href="ContactsController.edit(contact.id)" tabindex="-1">
                 {{ contact.phone }}
               </inertia-link>
             </td>
             <td class="border-t w-px">
-              <inertia-link class="px-4 flex items-center" :href="`/contacts/${contact.id}/edit`" tabindex="-1">
+              <inertia-link class="px-4 flex items-center" :href="ContactsController.edit(contact.id)" tabindex="-1">
                 <icon name="cheveron-right" class="block w-6 h-6 fill-slate-400" />
               </inertia-link>
             </td>
