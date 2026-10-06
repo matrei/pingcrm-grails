@@ -24,10 +24,7 @@ import { i18n } from '@/Use/use-i18n'
 const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
 
 createInertiaApp({
-  resolve: async (name) => {
-    const pages = import.meta.glob('./Pages/**/*.vue')
-    return (await pages[`./Pages/${name}.vue`]()).default
-  },
+  pages: './Pages',
   title: title => title ? `${title} - ${pageTitleSuffix}` : pageTitleSuffix,
   setup ({el, App, props, plugin}) {
     createApp({render: () => h(App, props)})

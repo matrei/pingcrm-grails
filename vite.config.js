@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import inertia from '@inertiajs/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vue from '@vitejs/plugin-vue'
@@ -19,6 +20,9 @@ export default defineConfig(({ command }) => ({
   },
 
   plugins: [
+      // Turns the pages shorthand of createInertiaApp into a page resolver.
+      // Its SSR support is for Laravel; grails-inertia runs the built SSR bundle itself.
+      inertia({ ssr: false }),
       vue(),
       tailwindcss(),
       Components({

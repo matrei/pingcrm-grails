@@ -27,10 +27,7 @@ createServer(page =>
     createInertiaApp({
         page,
         render: renderToString,
-        resolve: async (name) => {
-            const pages = import.meta.glob('./Pages/**/*.vue')
-            return (await pages[`./Pages/${name}.vue`]()).default
-        },
+        pages: './Pages',
         title: title => title ? `${title} - ${pageTitleSuffix}` : pageTitleSuffix,
         setup({ App, props, plugin }) {
             return createSSRApp({
