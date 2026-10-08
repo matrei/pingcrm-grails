@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { ContactsController } from '@/routes'
 import { regionName, t } from '@/Use/use-i18n'
 import { router, useForm } from '@inertiajs/vue3'
 
@@ -42,17 +43,17 @@ const form = useForm({
   postalCode: props.contact.postalCode,
 })
 
-const update = () => form.put(`/contacts/${props.contact.id}`)
+const update = () => form.submit(ContactsController.update(props.contact.id))
 
 const destroy = () => {
   if (confirm(t('ui.contacts.confirmDelete'))) {
-    router.delete(`/contacts/${props.contact.id}`)
+    router.delete(ContactsController.delete(props.contact.id))
   }
 }
 
 const restore = () => {
   if (confirm(t('ui.contacts.confirmRestore'))) {
-    router.put(`/contacts/${props.contact.id}/restore`)
+    router.put(ContactsController.restore(props.contact.id))
   }
 }
 
@@ -62,7 +63,7 @@ const restore = () => {
   <inertia-head :title="`${form.firstName} ${form.lastName}`" />
   <div>
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" href="/contacts">{{ $t('ui.contacts.title') }}</inertia-link>
+      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="ContactsController.index()">{{ $t('ui.contacts.title') }}</inertia-link>
       <span class="text-indigo-400 font-medium">&nbsp;/</span>
       {{ form.firstName }} {{ form.lastName }}
     </h1>

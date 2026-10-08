@@ -67,6 +67,13 @@ server:
         redirect-context-root: false
 inertia:
     favicon: /static/favicon.svg
+    routes:
+        except:
+            # The error pages are rendered for response codes, not visited
+            - 'errorHandling.*'
+            # Inherited from AppController, replaced by storeUser and updateUser
+            - 'users.store'
+            - 'users.update'
 spring:
     servlet:
         multipart:

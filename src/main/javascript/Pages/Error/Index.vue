@@ -16,6 +16,7 @@
 
 <script setup>
 
+import { DashboardController } from '@/routes'
 import { t } from '@/Use/use-i18n'
 
 const props = defineProps({
@@ -44,7 +45,7 @@ const errorMsg = computed(() => {
         </div>
         <div class="px-10 py-4 bg-slate-100 border-t border-slate-100 flex gap-1 justify-center">
           <a href="#" onclick="history.back();return false;" class="btn-indigo" type="submit">{{ $t('ui.error.back') }}</a>
-          <inertia-link href="/" class="btn-indigo" type="submit">{{ $t('ui.error.home') }}</inertia-link>
+          <inertia-link :href="DashboardController.index()" class="btn-indigo" type="submit">{{ $t('ui.error.home') }}</inertia-link>
         </div>
       </div>
     </div>

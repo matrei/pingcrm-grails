@@ -21,6 +21,7 @@ export default { layout }
 
 <script setup>
 
+import { UsersController } from '@/routes'
 import { router } from '@inertiajs/vue3'
 import pickBy from 'lodash/pickBy'
 import throttle from 'lodash/throttle'
@@ -39,7 +40,7 @@ const form = reactive({
 watch(
   form,
   throttle(function () {
-      router.get('/users', pickBy(form), { preserveState: true })
+      router.get(UsersController.index(), pickBy(form), { preserveState: true })
   }, 150), {deep: true}
 )
 
@@ -69,7 +70,7 @@ const reset = () => {
           <option value="only">{{ $t('ui.filter.trashed.only') }}</option>
         </select>
       </search-filter>
-      <inertia-link class="btn-indigo" href="/users/create">
+      <inertia-link class="btn-indigo" :href="UsersController.create()">
         <span class="md:hidden">{{ $t('ui.common.create') }}</span>
         <span class="hidden md:inline">{{ $t('ui.users.create') }}</span>
       </inertia-link>
@@ -86,24 +87,24 @@ const reset = () => {
         <tbody>
           <tr v-for="user in users" :key="user.id" class="hover:bg-slate-100 focus-within:bg-slate-100">
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="UsersController.edit(user.id)">
                 <img v-if="user.photo" class="block w-5 h-5 rounded-full mr-2 -my-2" :src="user.photo" />
                 {{ user.name }}
                 <icon v-if="user.deleted" name="trash" class="shrink-0 w-3 h-3 fill-slate-400 ml-2" />
               </inertia-link>
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="`/users/${user.id}/edit`" tabindex="-1">
+              <inertia-link class="px-6 py-4 flex items-center" :href="UsersController.edit(user.id)" tabindex="-1">
                 {{ user.email }}
               </inertia-link>
             </td>
             <td class="border-t">
-              <inertia-link class="px-6 py-4 flex items-center" :href="`/users/${user.id}/edit`" tabindex="-1">
+              <inertia-link class="px-6 py-4 flex items-center" :href="UsersController.edit(user.id)" tabindex="-1">
                 {{ $t(user.owner ? 'ui.role.owner' : 'ui.role.user') }}
               </inertia-link>
             </td>
             <td class="border-t w-px">
-              <inertia-link class="px-4 flex items-center" :href="`/users/${user.id}/edit`" tabindex="-1">
+              <inertia-link class="px-4 flex items-center" :href="UsersController.edit(user.id)" tabindex="-1">
                 <icon name="cheveron-right" class="block w-6 h-6 fill-slate-400" />
               </inertia-link>
             </td>
