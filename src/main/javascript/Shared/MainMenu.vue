@@ -19,12 +19,10 @@
 import { AboutController, ContactsController, DashboardController, OrganizationsController, ReportsController, UsersController } from '@/routes'
 import { usePage } from '@inertiajs/vue3'
 
-const isUrl = (...urls) => {
-  let currentUrl = usePage().url.substring(1)
-  if (urls[0] === '') {
-    return currentUrl === ''
-  }
-  return urls.filter(url => currentUrl.startsWith(url)).length
+const isUrl = (action) => {
+  const path = usePage().url.split('?')[0]
+  const url = action.url()
+  return path === url || path.startsWith(`${url}/`)
 }
 
 </script>
@@ -42,34 +40,34 @@ const isUrl = (...urls) => {
         </div>
         <div class="mb-4">
           <inertia-link class="flex items-center group py-3" :href="OrganizationsController.index()">
-            <icon name="office" class="w-4 h-4 mr-2" :class="isUrl('organizations') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-            <div :class="isUrl('organizations') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.organizations') }}</div>
+            <icon name="office" class="w-4 h-4 mr-2" :class="isUrl(OrganizationsController.index) ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+            <div :class="isUrl(OrganizationsController.index) ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.organizations') }}</div>
           </inertia-link>
         </div>
         <div class="mb-4">
           <inertia-link class="flex items-center group py-3" :href="ContactsController.index()">
-            <icon name="users" class="w-4 h-4 mr-2" :class="isUrl('contacts') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-            <div :class="isUrl('contacts') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.contacts') }}</div>
+            <icon name="users" class="w-4 h-4 mr-2" :class="isUrl(ContactsController.index) ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+            <div :class="isUrl(ContactsController.index) ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.contacts') }}</div>
           </inertia-link>
         </div>
         <div class="mb-4">
           <inertia-link class="flex items-center group py-3" :href="ReportsController.index()">
-            <icon name="printer" class="w-4 h-4 mr-2" :class="isUrl('reports') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-            <div :class="isUrl('reports') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.reports') }}</div>
+            <icon name="printer" class="w-4 h-4 mr-2" :class="isUrl(ReportsController.index) ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+            <div :class="isUrl(ReportsController.index) ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.reports') }}</div>
           </inertia-link>
         </div>
       </div>
       <div>
         <div class="mb-4">
           <inertia-link class="flex items-center group py-3" :href="UsersController.index()">
-            <icon name="book" class="w-4 h-4 mr-2" :class="isUrl('users') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-            <div :class="isUrl('users') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.users') }}</div>
+            <icon name="book" class="w-4 h-4 mr-2" :class="isUrl(UsersController.index) ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+            <div :class="isUrl(UsersController.index) ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.users') }}</div>
           </inertia-link>
         </div>
         <div>
           <inertia-link class="flex items-center group py-3" :href="AboutController.index()">
-            <icon name="apple" class="w-4 h-4 mr-2" :class="isUrl('about') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-            <div :class="isUrl('about') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.about') }}</div>
+            <icon name="apple" class="w-4 h-4 mr-2" :class="isUrl(AboutController.index) ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+            <div :class="isUrl(AboutController.index) ? 'text-white' : 'text-indigo-300 group-hover:text-white'">{{ $t('ui.menu.about') }}</div>
           </inertia-link>
         </div>
       </div>

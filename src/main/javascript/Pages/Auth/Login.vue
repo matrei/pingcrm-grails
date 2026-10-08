@@ -16,6 +16,7 @@
 
 <script setup>
 
+import { contextPath } from '@/routes'
 import { useForm } from '@inertiajs/vue3'
 
 const form = useForm({
@@ -25,7 +26,7 @@ const form = useForm({
 })
 
 const login = () => {
-  form.post('/login/authenticate', { forceFormData: true });
+  form.post(`${contextPath}/login/authenticate`, { forceFormData: true });
 }
 
 </script>

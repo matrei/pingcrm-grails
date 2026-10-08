@@ -20,7 +20,7 @@ export default { layout }
 </script>
 
 <script setup>
-import { ErrorTestController } from '@/routes'
+import { contextPath, ErrorTestController } from '@/routes'
 </script>
 
 <template>
@@ -34,7 +34,7 @@ import { ErrorTestController } from '@/routes'
   </p>
   <div class="leading-[50px]">
     <inertia-link :href="ErrorTestController.generateInternalServerError()" class="btn-indigo">{{ $t('ui.dashboard.trigger500') }}</inertia-link>&nbsp;
-    <inertia-link href="/static/test-404-error" class="btn-indigo">{{ $t('ui.dashboard.trigger404') }}</inertia-link>&nbsp;
-    <inertia-link href="/hello" class="btn-indigo">{{ $t('ui.dashboard.trigger403') }}</inertia-link>
+    <inertia-link :href="`${contextPath}/static/test-404-error`" class="btn-indigo">{{ $t('ui.dashboard.trigger404') }}</inertia-link>&nbsp;
+    <inertia-link :href="`${contextPath}/hello`" class="btn-indigo">{{ $t('ui.dashboard.trigger403') }}</inertia-link>
   </div>
 </template>

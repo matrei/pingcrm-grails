@@ -16,7 +16,7 @@
 
 <script setup>
 
-import { DashboardController, UsersController } from '@/routes'
+import { contextPath, DashboardController, UsersController } from '@/routes'
 defineProps({
   auth: { type: Object, default: () => ({}) }
 })
@@ -55,7 +55,7 @@ defineProps({
                 <div class="mt-2 py-2 shadow-xl bg-white rounded-sm text-sm">
                   <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="UsersController.edit(auth.user.id)">{{ $t('ui.menu.profile') }}</inertia-link>
                   <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="UsersController.index()">{{ $t('ui.menu.manageUsers') }}</inertia-link>
-                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white w-full text-left" href="/logoff" method="delete" as="button">{{ $t('ui.menu.logout') }}</inertia-link>
+                  <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white w-full text-left" :href="`${contextPath}/logoff`" method="delete" as="button">{{ $t('ui.menu.logout') }}</inertia-link>
                 </div>
               </template>
             </dropdown>
