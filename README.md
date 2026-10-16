@@ -83,7 +83,7 @@ To create a runnable war for production (in `build/libs`)
 ```
 that can be run with:
 ```shell
-java -jar build/libs/pingcrm-grails-5.0.0-SNAPSHOT.war
+java -jar build/libs/pingcrm-grails-5.0.1-SNAPSHOT.war
 ```
 The `-plain` war and jar next to it are not runnable.
 
@@ -100,8 +100,8 @@ You can change the location by setting the `inertia.ssr.bundle` config property.
 
 To use SSR with the war, extract the bundle from it and point `inertia.ssr.bundle` to it:
 ```shell
-unzip build/libs/pingcrm-grails-5.0.0-SNAPSHOT.war 'WEB-INF/classes/ssr/*' -d build/ssr
-java -jar build/libs/pingcrm-grails-5.0.0-SNAPSHOT.war --inertia.ssr.enabled=true --inertia.ssr.bundle=build/ssr/WEB-INF/classes/ssr/ssr.js
+unzip build/libs/pingcrm-grails-5.0.1-SNAPSHOT.war 'WEB-INF/classes/ssr/*' -d build/ssr
+java -jar build/libs/pingcrm-grails-5.0.1-SNAPSHOT.war --inertia.ssr.enabled=true --inertia.ssr.bundle=build/ssr/WEB-INF/classes/ssr/ssr.js
 ```
 
 ## 🙏 Credits
