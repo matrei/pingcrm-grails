@@ -96,6 +96,17 @@ class SecuritySpec extends Specification implements LoggedInHttpClientSpec {
             redirectPath(response) == '/login'
     }
 
+    void 'redirects do not add the session id to the URL'() {
+
+        when: 'requesting a page that redirects, without a session cookie'
+            var response = http('/login/authfail', noRedirectHttpClient)
+
+        then: 'the session id is only in the cookie, not in the redirect URL'
+            response.assertHeaders(302,
+                'Location': "$httpBaseUrl/login"
+            )
+    }
+
     private static String redirectPath(TestHttpResponse response) {
         URI.create(response.headerValue('Location')).path
     }

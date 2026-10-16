@@ -61,6 +61,8 @@ server:
         session:
             cookie:
                 same-site: Lax
+            # Only track sessions with the cookie, so that the session id is never added to URLs
+            tracking-modes: cookie
     forward-headers-strategy: NATIVE
     tomcat:
         max-swallow-size: 110MB
