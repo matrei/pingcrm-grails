@@ -24,7 +24,7 @@ import org.springframework.validation.Errors
 import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
- * A validation message renderer that uses the Grails validation tag library.
+ * A validation message renderer that uses the Apache Grails validation tag library.
  *
  * @author Mattias Reichel
  * @since 1.0.0

@@ -30,7 +30,7 @@ import { contextPath, ErrorTestController } from '@/routes'
     {{ $t('ui.dashboard.welcome.beforeInertia') }}
     <a class="text-indigo-500 underline hover:text-orange-600" href="https://inertiajs.com">Inertia.js</a>
     {{ $t('ui.dashboard.welcome.beforeGrails') }}
-    <a class="text-indigo-500 underline hover:text-orange-600" href="https://grails.org">Grails</a>{{ $t('ui.dashboard.welcome.end') }}
+    <a class="text-indigo-500 underline hover:text-orange-600" href="https://grails.apache.org">Apache Grails</a>{{ $t('ui.dashboard.welcome.end') }}
   </p>
   <div class="leading-[50px]">
     <inertia-link :href="ErrorTestController.generateInternalServerError()" class="btn-indigo">{{ $t('ui.dashboard.trigger500') }}</inertia-link>&nbsp;

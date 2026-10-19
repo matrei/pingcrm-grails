@@ -21,7 +21,7 @@ import { renderToString } from '@vue/server-renderer'
 
 import { i18n } from '@/Use/use-i18n'
 
-const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
+const pageTitleSuffix = 'Apache Grails Inertia Demo (Ping CRM)'
 
 createServer(page =>
     createInertiaApp({

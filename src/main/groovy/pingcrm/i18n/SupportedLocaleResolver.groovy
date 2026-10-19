@@ -36,7 +36,7 @@ import org.springframework.web.util.UriComponentsBuilder
  *
  * The {@code ?lang=} parameter is applied as soon as the locale of a request is resolved,
  * so the new locale is used for the whole request regardless of the order of the handler interceptors
- * (Grails' own {@code ParamsAwareLocaleChangeInterceptor} will just set the same locale again).
+ * (Apache Grails' own {@code ParamsAwareLocaleChangeInterceptor} will just set the same locale again).
  *
  * @author Mattias Reichel
  * @since 5.0.0

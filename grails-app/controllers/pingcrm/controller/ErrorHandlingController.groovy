@@ -49,7 +49,7 @@ class ErrorHandlingController {
     private ModelAndView respondWith(int status, String description = null) {
 
         /*
-         * If we're in development mode, we let Grails handle the error pages.
+         * If we're in development mode, we let Apache Grails handle the error pages.
          * This will pop up in a modal window, which is useful for debugging.
          */
         if (development) {

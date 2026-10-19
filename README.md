@@ -1,12 +1,12 @@
-# 🖥️ Ping CRM on Grails
+# 🖥️ Ping CRM on Apache Grails
 
 [![Java CI](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml/badge.svg?event=push)](https://github.com/matrei/pingcrm-grails/actions/workflows/gradle.yml)
 
-A demo application built with **[Grails](https://grails.apache.org)** and **[Vue.js](https://vuejs.org)** to illustrate how **[Inertia.js](https://inertiajs.com/)** works.\
+A demo application built with **[Apache Grails](https://grails.apache.org)** and **[Vue.js](https://vuejs.org)** to illustrate how **[Inertia.js](https://inertiajs.com/)** works.\
 It uses the [Grails Adapter for Inertia.js](https://github.com/matrei/grails-inertia-plugin) plugin.
 
 >[!NOTE]
->This is a port to Grails/Groovy of the [original Ping CRM](https://github.com/inertiajs/pingcrm) written in Laravel/PHP.
+>This is a port to Apache Grails/Groovy of the [original Ping CRM](https://github.com/inertiajs/pingcrm) written in Laravel/PHP.
 
 ![Screenshot of the Ping CRM application](screenshot.png)
 
@@ -107,4 +107,4 @@ java -jar build/libs/pingcrm-grails-5.0.1-SNAPSHOT.war --inertia.ssr.enabled=tru
 ## 🙏 Credits
 
 * Original work by Jonathan Reinink (@reinink) and contributors
-* Port to Grails by Mattias Reichel (@mattias_reichel)
+* Port to Apache Grails by Mattias Reichel (@mattias_reichel)

@@ -21,7 +21,7 @@ import '@/Styles/index.css'
 
 import { i18n } from '@/Use/use-i18n'
 
-const pageTitleSuffix = 'Grails Inertia Demo (Ping CRM)'
+const pageTitleSuffix = 'Apache Grails Inertia Demo (Ping CRM)'
 
 createInertiaApp({
   pages: './Pages',

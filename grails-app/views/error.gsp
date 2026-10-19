@@ -3,7 +3,7 @@
 <html>
 <head>
     <%-- This page is rendered in development mode. --%>
-    <title>Grails Runtime Exception</title>
+    <title>Apache Grails Runtime Exception</title>
 </head>
 <body>
 <g:if test="${Throwable.isInstance(exception)}">
